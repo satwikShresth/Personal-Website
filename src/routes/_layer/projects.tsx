@@ -11,6 +11,7 @@ import {
   Heading,
   Icon,
   IconButton,
+  Image,
   Link,
   Text,
   VStack,
@@ -23,14 +24,15 @@ import {
   FaServer,
   FaTerminal,
 } from 'react-icons/fa';
-import { FiArchive, FiAward, FiCode, FiDatabase, FiLayers, FiMonitor } from 'react-icons/fi';
+import SHELVED from "/shelved.png"
+import { FiArchive } from 'react-icons/fi';
 import { useColorModeValue } from '@/components/ui/color-mode';
 
 // Projects data with icons
 const projects = [
   {
     name: "Shelved",
-    icon: FiArchive,
+    image: <Image src={SHELVED} />,
     liveUrl: "https://shelved.satwik.dev",
     githubUrl: "https://github.com/satwikShresth/shelved",
     techStack: ["Docker", "Deno", "Express.js", "JavaScript", "Knex.js", "Node.js", "Postgres"],
@@ -91,10 +93,7 @@ const ProjectItem = ({ project, index }) => {
     'linear(to-br, teal.50, gray.50)',
     'linear(to-br, teal.900, gray.900)'
   );
-  const iconColor = useColorModeValue('teal.500', 'teal.300');
   const borderColor = useColorModeValue('gray.200', 'gray.700');
-  const cardBg = useColorModeValue('white', 'gray.800');
-  const iconBg = useColorModeValue('gray.50', 'gray.700');
 
   return (
     <Box
@@ -132,14 +131,11 @@ const ProjectItem = ({ project, index }) => {
           <Flex
             width={{ base: "80px", md: "100px" }}
             height={{ base: "80px", md: "100px" }}
-            bg={iconBg}
-            color={iconColor}
-            borderRadius="2xl"
             justify="center"
             align="center"
-            boxShadow="lg"
           >
-            <Icon as={project.icon} boxSize={{ base: 8, md: 10 }} />
+            {project.icon && <Icon as={project.icon} boxSize={{ base: 8, md: 10 }} />}
+            {project?.image}
           </Flex>
         </GridItem>
 

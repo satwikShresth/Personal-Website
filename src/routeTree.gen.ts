@@ -16,8 +16,9 @@ import { Route as LayerIndexImport } from './routes/_layer/index'
 import { Route as LayerResumeImport } from './routes/_layer/resume'
 import { Route as LayerProjectsImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyImport } from './routes/_layer/photography'
-import { Route as LayerBrawlstarsImport } from './routes/_layer/brawlstars'
+import { Route as LayerExperienceImport } from './routes/_layer/experience'
 import { Route as LayerBlogImport } from './routes/_layer/blog'
+import { Route as LayerBlogIndexImport } from './routes/_layer/blog/index'
 
 // Create/Update Routes
 
@@ -50,9 +51,9 @@ const LayerPhotographyRoute = LayerPhotographyImport.update({
   getParentRoute: () => LayerRoute,
 } as any)
 
-const LayerBrawlstarsRoute = LayerBrawlstarsImport.update({
-  id: '/brawlstars',
-  path: '/brawlstars',
+const LayerExperienceRoute = LayerExperienceImport.update({
+  id: '/experience',
+  path: '/experience',
   getParentRoute: () => LayerRoute,
 } as any)
 
@@ -60,6 +61,12 @@ const LayerBlogRoute = LayerBlogImport.update({
   id: '/blog',
   path: '/blog',
   getParentRoute: () => LayerRoute,
+} as any)
+
+const LayerBlogIndexRoute = LayerBlogIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LayerBlogRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -80,11 +87,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayerBlogImport
       parentRoute: typeof LayerImport
     }
-    '/_layer/brawlstars': {
-      id: '/_layer/brawlstars'
-      path: '/brawlstars'
-      fullPath: '/brawlstars'
-      preLoaderRoute: typeof LayerBrawlstarsImport
+    '/_layer/experience': {
+      id: '/_layer/experience'
+      path: '/experience'
+      fullPath: '/experience'
+      preLoaderRoute: typeof LayerExperienceImport
       parentRoute: typeof LayerImport
     }
     '/_layer/photography': {
@@ -115,14 +122,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayerIndexImport
       parentRoute: typeof LayerImport
     }
+    '/_layer/blog/': {
+      id: '/_layer/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof LayerBlogIndexImport
+      parentRoute: typeof LayerBlogImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface LayerBlogRouteChildren {
+  LayerBlogIndexRoute: typeof LayerBlogIndexRoute
+}
+
+const LayerBlogRouteChildren: LayerBlogRouteChildren = {
+  LayerBlogIndexRoute: LayerBlogIndexRoute,
+}
+
+const LayerBlogRouteWithChildren = LayerBlogRoute._addFileChildren(
+  LayerBlogRouteChildren,
+)
+
 interface LayerRouteChildren {
-  LayerBlogRoute: typeof LayerBlogRoute
-  LayerBrawlstarsRoute: typeof LayerBrawlstarsRoute
+  LayerBlogRoute: typeof LayerBlogRouteWithChildren
+  LayerExperienceRoute: typeof LayerExperienceRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
   LayerProjectsRoute: typeof LayerProjectsRoute
   LayerResumeRoute: typeof LayerResumeRoute
@@ -130,8 +156,8 @@ interface LayerRouteChildren {
 }
 
 const LayerRouteChildren: LayerRouteChildren = {
-  LayerBlogRoute: LayerBlogRoute,
-  LayerBrawlstarsRoute: LayerBrawlstarsRoute,
+  LayerBlogRoute: LayerBlogRouteWithChildren,
+  LayerExperienceRoute: LayerExperienceRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,
   LayerProjectsRoute: LayerProjectsRoute,
   LayerResumeRoute: LayerResumeRoute,
@@ -142,32 +168,34 @@ const LayerRouteWithChildren = LayerRoute._addFileChildren(LayerRouteChildren)
 
 export interface FileRoutesByFullPath {
   '': typeof LayerRouteWithChildren
-  '/blog': typeof LayerBlogRoute
-  '/brawlstars': typeof LayerBrawlstarsRoute
+  '/blog': typeof LayerBlogRouteWithChildren
+  '/experience': typeof LayerExperienceRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
   '/': typeof LayerIndexRoute
+  '/blog/': typeof LayerBlogIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/blog': typeof LayerBlogRoute
-  '/brawlstars': typeof LayerBrawlstarsRoute
+  '/experience': typeof LayerExperienceRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
   '/': typeof LayerIndexRoute
+  '/blog': typeof LayerBlogIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layer': typeof LayerRouteWithChildren
-  '/_layer/blog': typeof LayerBlogRoute
-  '/_layer/brawlstars': typeof LayerBrawlstarsRoute
+  '/_layer/blog': typeof LayerBlogRouteWithChildren
+  '/_layer/experience': typeof LayerExperienceRoute
   '/_layer/photography': typeof LayerPhotographyRoute
   '/_layer/projects': typeof LayerProjectsRoute
   '/_layer/resume': typeof LayerResumeRoute
   '/_layer/': typeof LayerIndexRoute
+  '/_layer/blog/': typeof LayerBlogIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -175,22 +203,24 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/blog'
-    | '/brawlstars'
+    | '/experience'
     | '/photography'
     | '/projects'
     | '/resume'
     | '/'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/blog' | '/brawlstars' | '/photography' | '/projects' | '/resume' | '/'
+  to: '/experience' | '/photography' | '/projects' | '/resume' | '/' | '/blog'
   id:
     | '__root__'
     | '/_layer'
     | '/_layer/blog'
-    | '/_layer/brawlstars'
+    | '/_layer/experience'
     | '/_layer/photography'
     | '/_layer/projects'
     | '/_layer/resume'
     | '/_layer/'
+    | '/_layer/blog/'
   fileRoutesById: FileRoutesById
 }
 
@@ -219,7 +249,7 @@ export const routeTree = rootRoute
       "filePath": "_layer.tsx",
       "children": [
         "/_layer/blog",
-        "/_layer/brawlstars",
+        "/_layer/experience",
         "/_layer/photography",
         "/_layer/projects",
         "/_layer/resume",
@@ -228,10 +258,13 @@ export const routeTree = rootRoute
     },
     "/_layer/blog": {
       "filePath": "_layer/blog.tsx",
-      "parent": "/_layer"
+      "parent": "/_layer",
+      "children": [
+        "/_layer/blog/"
+      ]
     },
-    "/_layer/brawlstars": {
-      "filePath": "_layer/brawlstars.tsx",
+    "/_layer/experience": {
+      "filePath": "_layer/experience.tsx",
       "parent": "/_layer"
     },
     "/_layer/photography": {
@@ -249,6 +282,10 @@ export const routeTree = rootRoute
     "/_layer/": {
       "filePath": "_layer/index.tsx",
       "parent": "/_layer"
+    },
+    "/_layer/blog/": {
+      "filePath": "_layer/blog/index.tsx",
+      "parent": "/_layer/blog"
     }
   }
 }

@@ -1,11 +1,11 @@
 export const NAV_ITEMS = [
   {
-    label: 'Projects',
-    href: '/projects',
+    label: 'Experience',
+    href: '/experience',
   },
   {
-    label: 'Resume',
-    href: '/resume',
+    label: 'Projects',
+    href: '/projects',
   },
   {
     label: 'Tech Blog',
@@ -14,9 +14,5 @@ export const NAV_ITEMS = [
   {
     label: 'Photography',
     href: '/photography',
-  },
-  {
-    label: 'Brawl Stars',
-    href: '/brawlstars',
   },
 ]

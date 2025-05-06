@@ -12,27 +12,27 @@ import {
   Link,
   Text,
 } from '@chakra-ui/react';
+import photo from "/my_photo.jpeg"
 import {
   FaArrowRight,
-  FaCode,
   FaGithub,
   FaLinkedin,
 } from 'react-icons/fa';
+import { GrDocumentPdf } from 'react-icons/gr';
 
 export const Route = createFileRoute('/_layer/')({
   component: () => (
-    <Center minH="84vh" width="100%">
-      <Box mb={20} width="100%">
-        <Container maxW="container.xl">
-          {/* Main Content */}
+    <Center height="100%" width="100%">
+      <Box mb={20} width="100%" height={"100%"}>
+        <Container maxW="90%">
           <Flex
-            direction={{ base: "column", md: "row" }}
+            direction={"row"}
             justify="space-between"
-            align={{ base: "center", md: "flex-start" }}
+            align={"flex-start"}
             gap={{ base: 8, md: 12 }}
           >
             <Box
-              w={{ base: "60%", sm: "50%", md: "30%", lg: "40%" }}
+              width={"70vh"}
               borderRadius="full"
               overflow="hidden"
               aspectRatio={.8}
@@ -41,15 +41,7 @@ export const Route = createFileRoute('/_layer/')({
               mx={{ base: "auto", md: 0 }}
               alignSelf={{ base: "center", md: "flex-start" }}
             >
-              <Box
-                w="full"
-                h="full"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Icon as={FaCode} w={20} h={20} color="accent" />
-              </Box>
+              <Image src={photo} />
             </Box>
             <Box
               flex="1"
@@ -59,11 +51,10 @@ export const Route = createFileRoute('/_layer/')({
               <Heading
                 as="h1"
                 fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
-                color="accent"
                 lineHeight="1.1"
                 mb={6}
               >
-                Hey, I'm Satwik<Box as="span" color="text">.</Box>
+                Satwik <Box as="span" color="accent">Shresth</Box>
               </Heading>
               <Heading
                 as="h2"
@@ -120,6 +111,15 @@ export const Route = createFileRoute('/_layer/')({
                   borderRadius={"lg"}
                 >
                   About Me
+                </Button>
+                <Button
+                  as={Link}
+                  variant={"outline"}
+                  href="/resume.pdf"
+                  borderRadius={"lg"}
+                >
+                  <Icon as={GrDocumentPdf} w={6} h={6} />
+                  Resume
                 </Button>
                 <Button
                   as={Link}
