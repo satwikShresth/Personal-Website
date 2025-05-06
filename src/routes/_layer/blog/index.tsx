@@ -10,8 +10,9 @@ import {
   Text
 } from '@chakra-ui/react';
 import { FaCalendarAlt } from 'react-icons/fa';
+import { useMDXComponents } from '@mdx-js/react';
 import type { Metadata } from '@/components/mdx/types';
-import Welcome, { metadata } from '@/components/mdx/Welcome.mdx';
+import Posts from '@/components/mdx';
 import { useColorModeValue } from '@/components/ui/color-mode';
 import authorImage from "/my_photo.jpeg"
 
@@ -22,9 +23,8 @@ export const Route = createFileRoute('/_layer/blog/')({
 function BlogComponent() {
   const headingColor = useColorModeValue('gray.800', 'white');
   const accentColor = useColorModeValue('teal.500', 'teal.300');
-  const metadataTyped = metadata as Metadata;
-
-  const [firstTitlePart, secondTitlePart] = metadataTyped.title.split().s
+  const Welcome = useMDXComponents(Posts.welcome.component);
+  const metadataTyped = Posts?.welcome?.metadata as Metadata;
   const publishDate = metadataTyped.date;
   const tags = metadataTyped.tags;
   const author = "Satwik Shresth";
@@ -127,7 +127,7 @@ function BlogComponent() {
 
       {/* Content section */}
       <Box className="mdx-content">
-        <Welcome />
+        {Welcome}
       </Box>
     </Container>
   );
