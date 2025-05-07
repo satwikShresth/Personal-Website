@@ -2,12 +2,12 @@ export const NAV_ITEMS = [
   {
     label: 'Experience',
     href: '/home',
-    section: 'experience-section',
+    section: '#experience-section',
   },
   {
     label: 'Projects',
     href: '/home',
-    section: 'project-section',
+    section: '#project-section',
   },
   {
     label: 'Blog',

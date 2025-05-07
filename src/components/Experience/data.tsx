@@ -29,7 +29,7 @@ export const experiences = [
       'Engineered async Windows inter-process communication solution among C++ applications, reducing latency by 80%',
       'Developed Python tool with Doxygen integrating 15,000 pages of documentation into a C++ robot host application'
     ],
-    image: <Image src={OPEX} height={70} />,
+    image: <Image src={OPEX} height={"24"} />,
     technologies: ['C++', 'Python', 'Windows IPC', 'Doxygen']
   },
   {

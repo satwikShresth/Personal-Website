@@ -19,7 +19,7 @@ const MobileNav = () => {
                key={`mobile-${label}`}
                as={Link}
                {...linkOptions({
-                  to: `${href}#${section}`,
+                  to: `${href}${section}`,
                   hashScrollIntoView: true,
                })}
                _hover={{ color: "accent" }}

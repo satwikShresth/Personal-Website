@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Box, Center, Separator, VStack } from '@chakra-ui/react'
-import HomePage from '@/components/Home'
+import IntroPage from '@/components/Intro'
 import ProjectsPage from '@/components/Project'
 import ExperiencePage from '@/components/Experience';
 
@@ -20,7 +20,7 @@ export const Route = createFileRoute('/_layer/home')({
     return (
       <Center>
         <VStack width="100%" mt={2} gap={"14"}>
-          <Box as={HomePage} />
+          <Box as={IntroPage} />
           <GradientSeparator />
           <Box as={ExperiencePage} />
           <GradientSeparator />

@@ -38,20 +38,20 @@ function ExperiencePage() {
             <Timeline.Item key={index}>
               <Timeline.Connector>
                 <Timeline.Separator />
-                <Timeline.Indicator boxSize={"16"} overflow={"clip"} borderRadius={"lg"} borderColor={accentColor} borderWidth={"medium"}>
+                <Timeline.Indicator boxSize={"20"} overflow={"clip"} borderRadius={"lg"} borderColor={accentColor} borderWidth={"medium"}>
                   {exp.image}
                 </Timeline.Indicator>
               </Timeline.Connector>
 
-              <Timeline.Content gap={6} mt={-1}>
+              <Timeline.Content gap={4} mt={-1}>
                 <Timeline.Title>
-                  <VStack align="start" >
+                  <VStack align="start">
                     <Heading as="h2" size="lg" fontWeight="bold">{exp.position}</Heading>
-                    <Flex gap={2} alignItems="center">
+                    <Flex gap={2} alignItems="center" mt={"-1"}>
                       <Text fontWeight="bold" fontSize="xl">{exp.company}</Text>
-                      <Text color="gray.300" fontSize="md" mt={1.4}>• {exp.location}</Text>
+                      <Text fontSize="md" mt={1.4}>• {exp.location}</Text>
                     </Flex>
-                    <Text fontSize="md" fontWeight="medium">{exp.team}</Text>
+                    <Text fontSize="md" fontWeight="medium" mt={-1}>{exp.team}</Text>
                     <Text fontSize="lg" fontWeight="semibold" color="teal.500" mt={1}>{exp.period}</Text>
                   </VStack>
                 </Timeline.Title>

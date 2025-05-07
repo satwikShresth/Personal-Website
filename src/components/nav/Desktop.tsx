@@ -18,7 +18,7 @@ const DesktopNav = () => (
                m={2}
                as={Link}
                {...linkOptions({
-                  to: `${navItem.href}#${navItem.section}`,
+                  to: `${navItem.href}${navItem.section}`,
                   hashScrollIntoView: true,
                })}
                fontSize="sm"
