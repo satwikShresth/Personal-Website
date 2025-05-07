@@ -14,6 +14,8 @@ import {
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { MDXProvider } from '@mdx-js/react';
 import { useColorModeValue } from '@/components/ui/color-mode';
+import { Blog } from '@/components/Blog';
+import mdx from '@/components/mdx';
 
 export const Route = createFileRoute('/_layer/blog')({
   component: () => {
@@ -220,18 +222,13 @@ export const Route = createFileRoute('/_layer/blog')({
         </Box>
       ),
     };
-
     return (
-      <Container maxW="container.lg">
-        <Box
-          borderRadius="xl"
-          p={2}
-          boxShadow="xl"
-        >
-          <MDXProvider components={{ ...components }}>
+      <Container>
+        <MDXProvider components={{ ...components }}>
+          <Blog.Root blogPosts={mdx}>
             <Outlet />
-          </MDXProvider>
-        </Box>
+          </Blog.Root>
+        </MDXProvider>
       </Container>
     );
   },

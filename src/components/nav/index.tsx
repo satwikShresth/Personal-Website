@@ -14,7 +14,7 @@ import {
    FiX
 } from 'react-icons/fi';
 
-import { Link } from '@tanstack/react-router';
+import { Link, linkOptions } from '@tanstack/react-router';
 import DesktopNav from './Desktop';
 import MobileNav from './Mobile';
 import { useColorMode, useColorModeValue } from '@/components/ui/color-mode';
@@ -39,6 +39,7 @@ export default function Navbar() {
                ml={{ base: -2 }}
                display={{ base: 'flex', md: 'none' }}>
                <IconButton
+                  borderRadius={"lg"}
                   onClick={onToggle}
                   variant="ghost"
                   aria-label="Toggle Navigation"
@@ -61,7 +62,7 @@ export default function Navbar() {
                   fontFamily="heading"
                   fontWeight="bold"
                   fontSize="xl"
-                  href="/"
+                  {...linkOptions({ to: "/" })}
                   color={useColorModeValue('gray.800', 'white')}
                >
                   Satwik

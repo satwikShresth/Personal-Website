@@ -2,37 +2,53 @@ import { createFileRoute } from '@tanstack/react-router';
 import {
   Badge,
   Box,
+  Button,
   Container,
   Flex,
+  HStack,
   Heading,
-  Image,
-  Separator,
-  Text
+  Icon,
+  Input,
+  Portal,
+  Select,
+  SimpleGrid,
+  Text,
+  VStack,
+  createListCollection,
 } from '@chakra-ui/react';
-import { FaCalendarAlt } from 'react-icons/fa';
-import { useMDXComponents } from '@mdx-js/react';
-import type { Metadata } from '@/components/mdx/types';
-import Posts from '@/components/mdx';
+import { FaFilter } from 'react-icons/fa';
+import { useBlogMetadataStore } from '@/components/Blog/store';
+import { Blog } from '@/components/Blog';
 import { useColorModeValue } from '@/components/ui/color-mode';
-import authorImage from "/my_photo.jpeg"
 
 export const Route = createFileRoute('/_layer/blog/')({
-  component: BlogComponent,
+  component: BlogPage
 });
 
-function BlogComponent() {
+function BlogPage() {
+  const {
+    selectedTags,
+    searchQuery,
+    getAllTags,
+    getFilteredPosts,
+    setSelectedTags,
+    setSearchQuery
+  } = useBlogMetadataStore();
   const headingColor = useColorModeValue('gray.800', 'white');
   const accentColor = useColorModeValue('teal.500', 'teal.300');
-  const Welcome = useMDXComponents(Posts.welcome.component);
-  const metadataTyped = Posts?.welcome?.metadata as Metadata;
-  const publishDate = metadataTyped.date;
-  const tags = metadataTyped.tags;
-  const author = "Satwik Shresth";
+
+  const tags = createListCollection({
+    items: getAllTags().map(value => ({ label: value, value }))
+  })
+  const filteredPosts = getFilteredPosts();
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
   return (
-    <Container maxW="container.xl" py={12}>
-      {/* Header section */}
-      <Box textAlign="left">
+    <>
+      <Box textAlign="left" mb={10}>
         <Heading
           as="h1"
           fontSize={{ base: "4xl", md: "6xl" }}
@@ -40,24 +56,7 @@ function BlogComponent() {
           color={headingColor}
           mb={6}
         >
-          {(() => {
-            const title = metadataTyped.title || "";
-            const words = title.trim().split(/\s+/);
-
-            if (words.length <= 1) {
-              return <Box as="span" color={accentColor}>{title}</Box>;
-            }
-
-            const lastWord = words.pop();
-            const normalText = words.join(' ');
-
-            return (
-              <>
-                {normalText}{' '}
-                <Box as="span" color={accentColor}>{lastWord}</Box>
-              </>
-            );
-          })()}
+          Explore <Box as="span" color={accentColor}>Blogs</Box>
         </Heading>
 
         <Text
@@ -66,71 +65,122 @@ function BlogComponent() {
           mx="auto"
           opacity={0.9}
           letterSpacing="wide"
-          mb={6}
         >
-          {metadataTyped.description}
+          My Journey as a professional in the industry
         </Text>
+      </Box>
 
-        {/* Metadata display */}
-        <Flex
-          mb={10}
-          flexWrap="wrap"
-          alignItems="center"
-        >
-          {/* Date */}
-          <Flex alignItems="center" mr={4}>
-            <Box color={accentColor} mr={2}>
-              <FaCalendarAlt />
-            </Box>
-            <Text fontSize="md">{publishDate}</Text>
-          </Flex>
+      <Flex
+        direction={{ base: 'column', md: 'row' }}
+        justify="space-between"
+        align={{ base: 'stretch', md: 'center' }}
+        gap={4}
+        mb={4}
+      >
+        {/* Search */}
+        <Box width={{ base: '100%', md: '40%' }}>
+          <Input
+            placeholder="Search articles..."
+            value={searchQuery}
+            onChange={handleSearchChange}
+            borderRadius="lg"
+          >
+          </Input>
+        </Box>
 
-          {/* Author */}
-          <Flex alignItems="center" mr={4}>
-            <Box
-              width="30px"
-              height="30px"
-              borderRadius="full"
-              overflow="hidden"
-              borderWidth="2px"
-              borderColor={accentColor}
-              mr={2}
-            >
-              <Image src={authorImage} alt={author} width="100%" height="100%" objectFit="cover" />
-            </Box>
-            <Text fontSize="md">{author}</Text>
-          </Flex>
+        {/* Filter Controls */}
+        <HStack >
+          <Select.Root
+            collection={tags}
+            multiple
+            width="150px"
+            value={selectedTags}
+            onValueChange={(e) => setSelectedTags(e.value)}
+          >
+            <Select.HiddenSelect />
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText placeholder="Tags" />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {tags?.items?.map((tags) => (
+                    <Select.Item item={tags} key={tags.value}>
+                      {tags.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+        </HStack>
+      </Flex>
 
-          {/* Tags */}
-          <Flex alignItems="center" flexWrap="wrap">
-            {tags.map((tag, idx) => (
-              <Badge
-                key={idx}
-                variant="solid"
-                colorScheme="teal"
-                fontSize="sm"
-                fontWeight="medium"
-                px={3}
-                py={1}
-                borderRadius="md"
-                mr={2}
-                mb={2}
-              >
-                {tag}
-              </Badge>
+      {/* Blog Posts Grid */}
+      <Box>
+        <HStack mb={4}>
+          <Heading as="h2" size="lg">
+            All Posts
+          </Heading>
+          <Badge colorScheme="teal" fontSize="md" borderRadius="full">
+            {filteredPosts.length}
+          </Badge>
+        </HStack>
+
+        {filteredPosts.length > 0 ? (
+          <SimpleGrid columns={{ base: 1, md: 2 }} >
+            {filteredPosts.map((post) => (
+              <Blog.Card
+                key={post.slug}
+                slug={post.slug || 'default-slug'}
+                title={post.title}
+                date={post.date}
+                description={post.description}
+                tags={post.tags}
+                estimatedReadTime={post.estimatedReadTime}
+                variant="normal"
+              />
             ))}
-          </Flex>
-        </Flex>
+          </SimpleGrid>
+        ) : (
+          <Box textAlign="center" py={10} borderRadius="lg">
+            <Icon as={FaFilter} fontSize="3xl" mb={3} />
+            <Text fontSize="lg">No posts match your filters.</Text>
+            <Text color="gray.500">Try adjusting your search or tag selections.</Text>
 
-        <Separator mb={8} width={"70%"} borderColor={`${accentColor}30`} />
-      </Box>
+            {selectedTags.length > 0 && (
+              <Button
+                borderRadius={"lg"}
+                mt={4}
+                colorScheme="teal"
+                variant="outline"
+                onClick={() => setSelectedTags([])}
+              >
+                Clear Tag Filters
+              </Button>
+            )}
 
-      {/* Content section */}
-      <Box className="mdx-content">
-        {Welcome}
+            {searchQuery && (
+              <Button
+                borderRadius={"lg"}
+                mt={4}
+                ml={selectedTags.length > 0 ? 2 : 0}
+                colorScheme="teal"
+                variant="outline"
+                onClick={() => setSearchQuery('')}
+              >
+                Clear Search
+              </Button>
+            )}
+          </Box>
+        )}
       </Box>
-    </Container>
+    </>
   );
 }
-
-export default BlogComponent;

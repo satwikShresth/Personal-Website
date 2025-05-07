@@ -9,11 +9,9 @@ export const Route = createFileRoute('/_layer')({
       <Center height="100%" width="100%" >
         <Flex direction="column" w="90%" h="100vh" >
           <NavBar />
-          <Flex flex="1" scrollbar={"hidden"} direction="column" p={4} overflowY="auto">
-            <Container mt={20}>
-              <Container maxWidth={"1600px"}>
-                <Outlet />
-              </Container>
+          <Flex flex="1" scrollbar={"hidden"} direction="column" overflowY="auto">
+            <Container mt={"6"} maxWidth={"1600px"}>
+              <Outlet />
             </Container>
           </Flex>
           <Footer />
