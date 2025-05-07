@@ -24,7 +24,7 @@ export default function Navbar() {
    const { colorMode, toggleColorMode } = useColorMode();
 
    return (
-      <Box position="sticky" top="0" zIndex="sticky">
+      <Box position="sticky" top="0" zIndex="sticky" borderRadius={"lg"}>
          <Flex
             bg="transparent"
             minH="60px"
