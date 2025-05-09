@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LayerImport } from './routes/_layer'
 import { Route as LayerIndexImport } from './routes/_layer/index'
 import { Route as LayerResumeImport } from './routes/_layer/resume'
+import { Route as LayerProjectsImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyImport } from './routes/_layer/photography'
 import { Route as LayerHomeImport } from './routes/_layer/home'
 import { Route as LayerBlogImport } from './routes/_layer/blog'
@@ -36,6 +37,12 @@ const LayerIndexRoute = LayerIndexImport.update({
 const LayerResumeRoute = LayerResumeImport.update({
   id: '/resume',
   path: '/resume',
+  getParentRoute: () => LayerRoute,
+} as any)
+
+const LayerProjectsRoute = LayerProjectsImport.update({
+  id: '/projects',
+  path: '/projects',
   getParentRoute: () => LayerRoute,
 } as any)
 
@@ -101,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayerPhotographyImport
       parentRoute: typeof LayerImport
     }
+    '/_layer/projects': {
+      id: '/_layer/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof LayerProjectsImport
+      parentRoute: typeof LayerImport
+    }
     '/_layer/resume': {
       id: '/_layer/resume'
       path: '/resume'
@@ -152,6 +166,7 @@ interface LayerRouteChildren {
   LayerBlogRoute: typeof LayerBlogRouteWithChildren
   LayerHomeRoute: typeof LayerHomeRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
+  LayerProjectsRoute: typeof LayerProjectsRoute
   LayerResumeRoute: typeof LayerResumeRoute
   LayerIndexRoute: typeof LayerIndexRoute
 }
@@ -160,6 +175,7 @@ const LayerRouteChildren: LayerRouteChildren = {
   LayerBlogRoute: LayerBlogRouteWithChildren,
   LayerHomeRoute: LayerHomeRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,
+  LayerProjectsRoute: LayerProjectsRoute,
   LayerResumeRoute: LayerResumeRoute,
   LayerIndexRoute: LayerIndexRoute,
 }
@@ -171,6 +187,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof LayerBlogRouteWithChildren
   '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
+  '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
   '/': typeof LayerIndexRoute
   '/blog/$post': typeof LayerBlogPostRoute
@@ -180,6 +197,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
+  '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
   '/': typeof LayerIndexRoute
   '/blog/$post': typeof LayerBlogPostRoute
@@ -192,6 +210,7 @@ export interface FileRoutesById {
   '/_layer/blog': typeof LayerBlogRouteWithChildren
   '/_layer/home': typeof LayerHomeRoute
   '/_layer/photography': typeof LayerPhotographyRoute
+  '/_layer/projects': typeof LayerProjectsRoute
   '/_layer/resume': typeof LayerResumeRoute
   '/_layer/': typeof LayerIndexRoute
   '/_layer/blog/$post': typeof LayerBlogPostRoute
@@ -205,18 +224,27 @@ export interface FileRouteTypes {
     | '/blog'
     | '/home'
     | '/photography'
+    | '/projects'
     | '/resume'
     | '/'
     | '/blog/$post'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/home' | '/photography' | '/resume' | '/' | '/blog/$post' | '/blog'
+  to:
+    | '/home'
+    | '/photography'
+    | '/projects'
+    | '/resume'
+    | '/'
+    | '/blog/$post'
+    | '/blog'
   id:
     | '__root__'
     | '/_layer'
     | '/_layer/blog'
     | '/_layer/home'
     | '/_layer/photography'
+    | '/_layer/projects'
     | '/_layer/resume'
     | '/_layer/'
     | '/_layer/blog/$post'
@@ -251,6 +279,7 @@ export const routeTree = rootRoute
         "/_layer/blog",
         "/_layer/home",
         "/_layer/photography",
+        "/_layer/projects",
         "/_layer/resume",
         "/_layer/"
       ]
@@ -269,6 +298,10 @@ export const routeTree = rootRoute
     },
     "/_layer/photography": {
       "filePath": "_layer/photography.tsx",
+      "parent": "/_layer"
+    },
+    "/_layer/projects": {
+      "filePath": "_layer/projects.tsx",
       "parent": "/_layer"
     },
     "/_layer/resume": {

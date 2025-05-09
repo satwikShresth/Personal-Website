@@ -6,9 +6,6 @@ import {
 import { Link, linkOptions } from '@tanstack/react-router';
 import { NAV_ITEMS } from './items';
 
-/**
- * Desktop navigation component with centered items
- */
 const DesktopNav = () => (
    <Stack direction="row" justify="center">
       {NAV_ITEMS.map((navItem) => (

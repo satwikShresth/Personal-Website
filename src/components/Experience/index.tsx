@@ -5,12 +5,10 @@ import { useColorModeValue } from '@/components/ui/color-mode';
 
 function ExperiencePage() {
   const headingColor = useColorModeValue('gray.800', 'white');
-  const accentColor = useColorModeValue('teal.500', 'teal.300');
 
   return (
-    <Container id={"experience-section"}>
-      <VStack align="stretch" mt={1}>
-
+    <Container >
+      <VStack align="stretch">
         <Box textAlign="left">
           <Heading
             as="h1"
@@ -19,7 +17,7 @@ function ExperiencePage() {
             color={headingColor}
             mb={2}
           >
-            Professional <Box as="span" color={accentColor}>Experience</Box>
+            Professional <Box as="span" color={"accent"}>Experience</Box>
           </Heading>
 
           <Text
@@ -33,12 +31,12 @@ function ExperiencePage() {
           </Text>
         </Box>
 
-        <Timeline.Root mt={10} variant="solid" size="xl" colorPalette="teal">
+        <Timeline.Root mt={10} variant="solid" size="xl">
           {experiences.map((exp, index) => (
             <Timeline.Item key={index}>
               <Timeline.Connector>
-                <Timeline.Separator />
-                <Timeline.Indicator boxSize={"20"} overflow={"clip"} borderRadius={"lg"} borderColor={accentColor} borderWidth={"medium"}>
+                <Timeline.Separator borderColor={"accent"} />
+                <Timeline.Indicator boxSize={"20"} overflow={"clip"} borderRadius={"lg"} borderColor={"accent"} borderWidth={"2px"}>
                   {exp.image}
                 </Timeline.Indicator>
               </Timeline.Connector>
@@ -52,7 +50,7 @@ function ExperiencePage() {
                       <Text fontSize="md" mt={1.4}>• {exp.location}</Text>
                     </Flex>
                     <Text fontSize="md" fontWeight="medium" mt={-1}>{exp.team}</Text>
-                    <Text fontSize="lg" fontWeight="semibold" color="teal.500" mt={1}>{exp.period}</Text>
+                    <Text fontSize="lg" fontWeight="semibold" color="accent" mt={1}>{exp.period}</Text>
                   </VStack>
                 </Timeline.Title>
 
@@ -60,10 +58,10 @@ function ExperiencePage() {
                   <VStack align="start" mt={2}>
                     {exp.responsibilities.map((resp, idx) => (
                       <Flex key={idx} alignItems="flex-start" gap={3}>
-                        <Box mt={1} color="teal.500">
+                        <Box mt={1} color="accent">
                           <FaCheckCircle size={20} />
                         </Box>
-                        <Text mt={1.5} fontSize="lg">{resp}</Text>
+                        <Text mt={1.5} color={"text"} fontSize="lg">{resp}</Text>
                       </Flex>
                     ))}
                   </VStack>
@@ -73,7 +71,6 @@ function ExperiencePage() {
                   {exp.technologies.map((tech, idx) => (
                     <Badge
                       key={idx}
-                      colorPalette="teal"
                       fontSize="md"
                       fontWeight="medium"
                       px={4}

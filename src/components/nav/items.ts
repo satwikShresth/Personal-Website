@@ -6,8 +6,8 @@ export const NAV_ITEMS = [
   },
   {
     label: 'Projects',
-    href: '/home',
-    section: '#project-section',
+    href: '/projects',
+    section: '',
   },
   {
     label: 'Blog',

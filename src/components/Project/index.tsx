@@ -13,11 +13,10 @@ import { useColorModeValue } from '@/components/ui/color-mode';
 
 function ProjectsPage() {
   const headingColor = useColorModeValue('gray.800', 'white');
-  const accentColor = useColorModeValue('teal.500', 'teal.300');
 
   return (
-    <Container id={"project-section"}>
-      <VStack align="stretch" mt={1}>
+    <Container>
+      <VStack align="stretch">
         <Box textAlign="left">
           <Heading
             as="h1"
@@ -26,7 +25,7 @@ function ProjectsPage() {
             color={headingColor}
             mb={2}
           >
-            Personal <Box as="span" color={accentColor}>Projects</Box>
+            Personal <Box as="span" color={"accent"}>Projects</Box>
           </Heading>
 
           <Text

@@ -24,7 +24,7 @@ export default function Navbar() {
    const { colorMode, toggleColorMode } = useColorMode();
 
    return (
-      <Box position="sticky" top="0" zIndex="sticky" borderRadius={"lg"}>
+      <Box borderRadius={"lg"}>
          <Flex
             bg="transparent"
             minH="60px"
@@ -59,6 +59,7 @@ export default function Navbar() {
                   position={{ base: "relative", md: "absolute" }}
                   left={{ md: "0" }}
                   textAlign={{ base: 'center', md: 'left' }}
+                  _hover={{ color: "accent" }}
                   fontFamily="heading"
                   fontWeight="bold"
                   fontSize="xl"
@@ -87,6 +88,7 @@ export default function Navbar() {
                   aria-label={`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`}
                   variant="ghost"
                   onClick={toggleColorMode}
+                  borderRadius={"lg"}
                >
                   {colorMode === 'light' ? <FiMoon size={20} /> : <FiSun size={20} />}
                </IconButton>

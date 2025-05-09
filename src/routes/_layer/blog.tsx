@@ -21,9 +21,7 @@ export const Route = createFileRoute('/_layer/blog')({
   component: () => {
     const textColor = useColorModeValue('gray.700', 'gray.200');
     const headingColor = useColorModeValue('gray.800', 'white');
-    const accentColor = useColorModeValue('teal.500', 'teal.300');
     const blockquoteBg = useColorModeValue('gray.50', 'gray.700');
-    const blockquoteBorder = useColorModeValue('teal.500', 'teal.300');
     const codeBg = useColorModeValue('gray.50', 'gray.700');
 
     const components = {
@@ -83,10 +81,8 @@ export const Route = createFileRoute('/_layer/blog')({
       ),
       a: (props: any) => (
         <Link
-          color={accentColor}
           fontWeight="medium"
           textDecoration="underline"
-          textDecorationColor={accentColor}
           _hover={{ textDecoration: "none" }}
           {...props}
         />
@@ -95,7 +91,7 @@ export const Route = createFileRoute('/_layer/blog')({
         <Box
           as="blockquote"
           borderLeftWidth="4px"
-          borderLeftColor={blockquoteBorder}
+          borderLeftColor={"accent"}
           bg={blockquoteBg}
           px={6}
           py={4}
@@ -128,7 +124,7 @@ export const Route = createFileRoute('/_layer/blog')({
           {...props}
         />
       ),
-      hr: (props: any) => <Separator my={8} borderColor={accentColor} opacity={0.6} {...props} />,
+      hr: (props: any) => <Separator my={8} opacity={0.6} {...props} />,
       img: (props: any) => (
         <Image
           my={6}
@@ -189,7 +185,7 @@ export const Route = createFileRoute('/_layer/blog')({
               {tags.map((tag: string, index: number) => (
                 <Badge
                   key={index}
-                  colorScheme="teal"
+                  color="accent"
                   fontSize="sm"
                   fontWeight="medium"
                   px={2}
@@ -203,7 +199,6 @@ export const Route = createFileRoute('/_layer/blog')({
           )}
         </Flex>
       ),
-      // Component for featured image at the top of blog posts
       FeaturedImage: ({ src, alt, caption }: any) => (
         <Box my={8}>
           <Image

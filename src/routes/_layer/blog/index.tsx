@@ -35,7 +35,6 @@ function BlogPage() {
     setSearchQuery
   } = useBlogMetadataStore();
   const headingColor = useColorModeValue('gray.800', 'white');
-  const accentColor = useColorModeValue('teal.500', 'teal.300');
 
   const tags = createListCollection({
     items: getAllTags().map(value => ({ label: value, value }))
@@ -56,7 +55,7 @@ function BlogPage() {
           color={headingColor}
           mb={6}
         >
-          Explore <Box as="span" color={accentColor}>Blogs</Box>
+          Explore <Box as="span" color={"accent"}>Blogs</Box>
         </Heading>
 
         <Text
@@ -128,7 +127,7 @@ function BlogPage() {
           <Heading as="h2" size="lg">
             All Posts
           </Heading>
-          <Badge colorScheme="teal" fontSize="md" borderRadius="full">
+          <Badge fontSize="md" borderRadius="full">
             {filteredPosts.length}
           </Badge>
         </HStack>
@@ -158,7 +157,7 @@ function BlogPage() {
               <Button
                 borderRadius={"lg"}
                 mt={4}
-                colorScheme="teal"
+                color="accent"
                 variant="outline"
                 onClick={() => setSelectedTags([])}
               >
@@ -171,7 +170,7 @@ function BlogPage() {
                 borderRadius={"lg"}
                 mt={4}
                 ml={selectedTags.length > 0 ? 2 : 0}
-                colorScheme="teal"
+                color="accent"
                 variant="outline"
                 onClick={() => setSearchQuery('')}
               >

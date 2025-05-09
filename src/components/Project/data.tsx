@@ -1,6 +1,6 @@
 import { Image } from "@chakra-ui/react";
 import SHELVED from "/shelved.png"
-import { FaBookOpen, FaRobot, FaServer, FaTerminal } from "react-icons/fa";
+import { FaBookOpen } from "react-icons/fa";
 import type { ReactNode } from "@tanstack/react-router";
 
 export interface Projects {
@@ -53,47 +53,6 @@ export const projects: Array<Projects> = [
       'Fully typed book management system with complete CRUD operations',
       'Security-focused with protection against XSS and CSRF attacks',
       'Containerized deployment via Docker Compose',
-    ],
-  },
-  {
-    name: 'Concurrent FTP UDP Server',
-    icon: FaServer,
-    githubUrl: 'https://github.com/satwikShresth/FileTransferProtocol',
-    techStack: ['C++', 'UDP', 'POSIX Threads', 'Make'],
-    description: [
-      'Thread pool architecture for handling multiple client connections',
-      'Custom channel-based communication for efficient data distribution',
-      'Thread-safe concurrent file operations',
-    ],
-  },
-  {
-    name: 'Path Finding Visualizer',
-    icon: FaRobot,
-    githubUrl: 'https://github.com/satwikShresth/PathFinding_Cpp',
-    techStack: ['SFML', 'CMake', 'C++'],
-    description: [
-      "Interactive visualization of A* and Dijkstra's algorithms",
-      "Dynamic maze generation with Kruskal's algorithm",
-    ],
-  },
-  {
-    name: 'NeoVim Configuration',
-    icon: FaTerminal,
-    githubUrl: 'https://github.com/satwikShresth/.config/tree/main/nvim',
-    techStack: [
-      'Ghostty',
-      'Lua',
-      'Neovim',
-      'Bash',
-      'tmux',
-      'jq',
-      'fzf',
-      'ripgrep',
-    ],
-    description: [
-      'VSCode-level functionality with <50ms load time',
-      'Integrated terminal workflow with tmux and telescope',
-      'Complete LSP setup with auto-completion and diagnostics',
     ],
   },
 ];

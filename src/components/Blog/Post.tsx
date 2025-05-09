@@ -11,7 +11,6 @@ interface PostProps {
 }
 function Post({ MdxCompoenent, metadata }: PostProps) {
   const headingColor = useColorModeValue('gray.800', 'white');
-  const accentColor = useColorModeValue('teal.500', 'teal.300');
   const publishDate = metadata.date;
   const tags = metadata.tags;
   const author = "Satwik Shresth";
@@ -33,7 +32,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
             const words = title.trim().split(/\s+/);
 
             if (words.length <= 1) {
-              return <Box as="span" color={accentColor}>{title}</Box>;
+              return <Box as="span" color={"accent"}>{title}</Box>;
             }
 
             const lastWord = words.pop();
@@ -42,7 +41,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
             return (
               <>
                 {normalText}{' '}
-                <Box as="span" color={accentColor}>{lastWord}</Box>
+                <Box as="span" color={"accent"}>{lastWord}</Box>
               </>
             );
           })()}
@@ -74,7 +73,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
                   mr={4}
                   key={idx}
                   variant="solid"
-                  colorScheme="teal"
+                  bgColor="accent"
                   fontSize="sm"
                   fontWeight="medium"
                   px={3}
@@ -82,7 +81,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
                   borderRadius="md"
                   mb={2}
                 >
-                  {tag}
+                  <Text color={"white"}>{tag}</Text>
                 </Badge>
               ))}
             </Flex>
@@ -97,7 +96,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
                   borderRadius="full"
                   overflow="hidden"
                   borderWidth="2px"
-                  borderColor={accentColor}
+                  borderColor={"accent"}
                   mr={2}
                 >
                   <Image src={authorImage} alt={author} width="100%" height="100%" objectFit="cover" />
@@ -107,7 +106,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
 
               {/* Date */}
               <Flex alignItems="center">
-                <Box color={accentColor} mr={2}>
+                <Box color={"accent"} mr={2}>
                   <FaCalendarAlt />
                 </Box>
                 <Text fontSize="md">{publishDate}</Text>
@@ -116,7 +115,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
           </VStack>
         </Flex>
 
-        <Separator mb={8} width={"70%"} borderColor={`${accentColor}30`} />
+        <Separator mb={8} width={"70%"} borderColor={"accent"} />
       </Box>
 
       <Box className="mdx-content">

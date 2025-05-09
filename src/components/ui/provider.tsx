@@ -90,8 +90,8 @@ const config = defineConfig({
         // Text colors
         text: {
           value: {
-            base: "{colors.gray.800}",
-            _dark: "{colors.gray.100}"
+            base: "black",
+            _dark: "white"
           }
         },
         // Background colors
@@ -111,8 +111,8 @@ const config = defineConfig({
         // Accent colors
         accent: {
           value: {
-            base: "{colors.brand.500}",
-            _dark: "{colors.brand.300}"
+            base: "#bd431f",
+            _dark: "#e18258"
           }
         },
         // Muted secondary text

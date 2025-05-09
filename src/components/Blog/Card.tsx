@@ -46,8 +46,6 @@ export function BlogCard({
 
   const isRead = readPosts.includes(slug);
 
-  // Color modes
-  const accentColor = useColorModeValue('teal.500', 'teal.300');
   const mutedColor = useColorModeValue('gray.500', 'gray.400');
 
   // Format date
@@ -70,26 +68,23 @@ export function BlogCard({
       <Card.Root
         direction={{ base: 'column', md: 'row' }}
         overflow="hidden"
-        variant="elevated"
         p={4}
         m={4}
         cursor={"pointer"}
-        boxShadow="md"
         height="100%"
         _hover={{
           transform: 'translateY(-4px)',
           boxShadow: 'xl',
-          borderColor: 'teal.200',
+          borderColor: 'accent',
         }}
         transition="all 0.3s ease"
         onClick={handleClick}
         position="relative"
       >
-        {/* Read indicator - subtle icon instead of badge */}
         {
           isRead && (
             <Tooltip content="You've read this article">
-              <Tag.Root>
+              <Tag.Root borderRadius={"xl"}>
                 <Tag.Label>
                   Read
                 </Tag.Label>
@@ -142,7 +137,7 @@ export function BlogCard({
             <Heading
               as="h2"
               size="lg"
-              color={accentColor}
+              color={"accent"}
               fontWeight="700"
               mb={3}
               lineHeight="1.2"
@@ -197,17 +192,15 @@ export function BlogCard({
   // Normal variant (default)
   return (
     <Card.Root
-      variant="elevated"
       borderRadius="xl"
       overflow="hidden"
-      height="100%"
       m={10}
-      boxShadow="md"
+      bgBlendMode={"lighten"}
       cursor={"pointer"}
       _hover={{
         transform: 'translateY(-4px)',
         boxShadow: 'xl',
-        borderColor: 'teal.200',
+        borderColor: 'accent',
       }}
       transition="all 0.3s ease"
       position="relative"
@@ -268,7 +261,7 @@ export function BlogCard({
         <Heading
           as="h2"
           fontSize="xl"
-          color={accentColor}
+          color={"accent"}
           fontWeight="700"
           mb={3}
           lineHeight="1.3"
