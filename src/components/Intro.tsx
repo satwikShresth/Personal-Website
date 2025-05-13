@@ -1,5 +1,6 @@
-import { Box, Button, Flex, HStack, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
-import PHOTO from "/my_photo.jpeg"
+import { Box, Button, Card, Flex, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
+import { Link as RLink, linkOptions } from "@tanstack/react-router";
+import PHOTO from "/my_photo.png"
 import { FaArrowRight, FaGithub, FaLinkedin } from "react-icons/fa";
 import { GrDocumentPdf } from "react-icons/gr";
 
@@ -7,13 +8,18 @@ function IntroPage() {
   return (
     <Flex flexWrap={"wrap"} >
       <Box
-        width={"500px"}
-        borderRadius="full"
+        alignSelf="center"
+        justifySelf="center"
+        width={"310px"}
+        height={"350px"}
+        borderRadius="lg"
         overflow="hidden"
         aspectRatio={.8}
         boxShadow="xl"
         as={Image}
         src={PHOTO}
+        ml={10}
+        mb={10}
       />
 
       <Box
@@ -23,51 +29,34 @@ function IntroPage() {
       >
         <Heading
           as="h1"
-          fontSize={"6xl"}
+          fontSize={"5xl"}
           lineHeight="1.1"
-          mb={6}
+          mb={2}
         >
           Satwik <Box as="span" color="accent">Shresth</Box>
         </Heading>
-        <Heading
-          as="h2"
-          fontSize={{ base: "xl", sm: "2xl", md: "3xl" }}
-          fontWeight="medium"
-          lineHeight="1.3"
-          mb={8}
-        >
-          Full Stack Engineer with experience in
-          <br />
-          high-performance systems and web solutions
-        </Heading>
-        <Box
-          mb={8}
-          p={6}
+        <Card.Root
+          mb={4}
+          p={5}
           borderRadius="xl"
-          bg="card"
-          boxShadow="md"
         >
-          <Flex
-            direction={{ base: "column", sm: "row" }}
-            align={{ base: "flex-start", sm: "center" }}
-            mb={4}
-          >
-            <Heading size="md" mb={{ base: 2, sm: 0 }}>Recently at</Heading>
-            <Link
-              href="https://sig.com"
-              ml={3}
+          <RLink to="/blog/$post" params={{ post: "sig" }}>
+            <Card.Title
+              as={Link}
+              fontSize={"md"}
             >
-              <HStack >
-                <Text fontSize="xl" fontWeight="bold">Susquehanna International Group</Text>
-                <FaArrowRight />
-              </HStack>
-            </Link>
-          </Flex>
-          <Text mb={3}>
-            Engineered high-performance C++ systems processing over 5.8 billion
-            market data messages daily with nanosecond latency
-          </Text>
-        </Box>
+              Recently at
+              <Text fontWeight="bold">Susquehanna International Group</Text>
+              <Icon as={FaArrowRight} h={"12px"} />
+            </Card.Title>
+          </RLink>
+          <Card.Description>
+            <Text >
+              Engineered high-performance C++ systems processing over 5.8 billion
+              market data messages daily with nanosecond latency
+            </Text>
+          </Card.Description>
+        </Card.Root>
         <Text fontSize="lg" mb={4} lineHeight="tall">
           I blend my experience in low-level performance optimization with modern web development.
         </Text>
@@ -121,7 +110,7 @@ function IntroPage() {
           </Button>
         </Flex>
       </Box>
-    </Flex>
+    </Flex >
   )
 }
 

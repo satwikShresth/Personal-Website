@@ -25,7 +25,7 @@ const Footer = () => {
           <Text fontSize="sm">
             © {new Date().getFullYear()} Satwik Shresth. All rights reserved.
           </Text>
-          <HStack mt={{ base: 4, md: 0 }} gap={5} >
+          <HStack mt={0} gap={5} >
             <Button
               as={Link}
               variant={"outline"}

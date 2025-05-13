@@ -14,8 +14,6 @@ export const nodes: Array<NodeConfig> = [
         padding: 12,
         border: '2px solid #3B5BDB',
         borderRadius: 8,
-        minWidth: 150,
-        zIndex: 10,
       },
       Card: {
         Header: (
@@ -42,7 +40,9 @@ export const nodes: Array<NodeConfig> = [
   },
   {
     id: 'group-docker',
-    type: 'group',
+    type: 'labeledGroup',
+    parentId: "react",
+    height: 410,
     data: {
       label: makeLabel(FaDocker, 'Docker Network'),
       Card: {
@@ -65,19 +65,19 @@ export const nodes: Array<NodeConfig> = [
             <em>Secure & replicable stack</em>
           </>
         )
-      }
+      },
     },
-    position: { x: 0, y: 0 },
     style: {
-      padding: 16,
       border: '1px dashed #555',
       borderRadius: 10,
-      zIndex: 0,
     },
+    position: { x: 0, y: 0 },
   },
   {
     id: 'caddy',
     type: 'info',
+    parentId: "group-docker",
+    extent: "parent",
     data: {
       label: makeLabel(FaServer, 'Caddy (Reverse Proxy)'),
       info: 'Handles TLS & routes to Hono',
@@ -109,7 +109,6 @@ export const nodes: Array<NodeConfig> = [
         )
       }
     },
-    parentNode: 'group-docker',
   },
   {
     id: 'ts',
@@ -145,7 +144,8 @@ export const nodes: Array<NodeConfig> = [
         )
       }
     },
-    parentNode: 'group-docker',
+    parentId: "group-docker",
+    extent: "parent",
   },
   {
     id: 'redis',
@@ -181,7 +181,8 @@ export const nodes: Array<NodeConfig> = [
         )
       }
     },
-    parentNode: 'group-docker',
+    parentId: "group-docker",
+    extent: "parent",
   },
   {
     id: 'postgres',
@@ -217,7 +218,8 @@ export const nodes: Array<NodeConfig> = [
         )
       }
     },
-    parentNode: 'group-docker',
+    parentId: "group-docker",
+    extent: "parent",
   },
   {
     id: 'celery',
@@ -253,7 +255,8 @@ export const nodes: Array<NodeConfig> = [
         )
       }
     },
-    parentNode: 'group-docker',
+    parentId: "group-docker",
+    extent: "parent",
   },
   {
     id: 's3',
@@ -289,7 +292,8 @@ export const nodes: Array<NodeConfig> = [
         )
       }
     },
-    parentNode: 'group-docker',
+    parentId: "group-docker",
+    extent: "parent",
   },
 ];
 
@@ -337,10 +341,10 @@ export const edges: Array<EdgeConfig> = [
     markerEnd: { type: MarkerType.ArrowClosed }
   },
   {
-    id: 'e-react-s3',
-    source: 'react',
+    id: 'e-caddy-s3',
+    source: 'caddy',
     target: 's3',
-    label: 'upload/download via signed URL',
+    label: 'upload/download via signed URL for Client',
     markerEnd: { type: MarkerType.ArrowClosed }
   },
   {

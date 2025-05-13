@@ -1,8 +1,8 @@
 export const NAV_ITEMS = [
   {
     label: 'Experience',
-    href: '/home',
-    section: '#experience-section',
+    href: '/experience',
+    section: '',
   },
   {
     label: 'Projects',

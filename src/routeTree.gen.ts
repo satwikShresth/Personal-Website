@@ -17,6 +17,7 @@ import { Route as LayerResumeImport } from './routes/_layer/resume'
 import { Route as LayerProjectsImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyImport } from './routes/_layer/photography'
 import { Route as LayerHomeImport } from './routes/_layer/home'
+import { Route as LayerExperienceImport } from './routes/_layer/experience'
 import { Route as LayerBlogImport } from './routes/_layer/blog'
 import { Route as LayerBlogIndexImport } from './routes/_layer/blog/index'
 import { Route as LayerBlogPostImport } from './routes/_layer/blog/$post'
@@ -58,6 +59,12 @@ const LayerHomeRoute = LayerHomeImport.update({
   getParentRoute: () => LayerRoute,
 } as any)
 
+const LayerExperienceRoute = LayerExperienceImport.update({
+  id: '/experience',
+  path: '/experience',
+  getParentRoute: () => LayerRoute,
+} as any)
+
 const LayerBlogRoute = LayerBlogImport.update({
   id: '/blog',
   path: '/blog',
@@ -92,6 +99,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog'
       preLoaderRoute: typeof LayerBlogImport
+      parentRoute: typeof LayerImport
+    }
+    '/_layer/experience': {
+      id: '/_layer/experience'
+      path: '/experience'
+      fullPath: '/experience'
+      preLoaderRoute: typeof LayerExperienceImport
       parentRoute: typeof LayerImport
     }
     '/_layer/home': {
@@ -164,6 +178,7 @@ const LayerBlogRouteWithChildren = LayerBlogRoute._addFileChildren(
 
 interface LayerRouteChildren {
   LayerBlogRoute: typeof LayerBlogRouteWithChildren
+  LayerExperienceRoute: typeof LayerExperienceRoute
   LayerHomeRoute: typeof LayerHomeRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
   LayerProjectsRoute: typeof LayerProjectsRoute
@@ -173,6 +188,7 @@ interface LayerRouteChildren {
 
 const LayerRouteChildren: LayerRouteChildren = {
   LayerBlogRoute: LayerBlogRouteWithChildren,
+  LayerExperienceRoute: LayerExperienceRoute,
   LayerHomeRoute: LayerHomeRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,
   LayerProjectsRoute: LayerProjectsRoute,
@@ -185,6 +201,7 @@ const LayerRouteWithChildren = LayerRoute._addFileChildren(LayerRouteChildren)
 export interface FileRoutesByFullPath {
   '': typeof LayerRouteWithChildren
   '/blog': typeof LayerBlogRouteWithChildren
+  '/experience': typeof LayerExperienceRoute
   '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
@@ -195,6 +212,7 @@ export interface FileRoutesByFullPath {
 }
 
 export interface FileRoutesByTo {
+  '/experience': typeof LayerExperienceRoute
   '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
@@ -208,6 +226,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/_layer': typeof LayerRouteWithChildren
   '/_layer/blog': typeof LayerBlogRouteWithChildren
+  '/_layer/experience': typeof LayerExperienceRoute
   '/_layer/home': typeof LayerHomeRoute
   '/_layer/photography': typeof LayerPhotographyRoute
   '/_layer/projects': typeof LayerProjectsRoute
@@ -222,6 +241,7 @@ export interface FileRouteTypes {
   fullPaths:
     | ''
     | '/blog'
+    | '/experience'
     | '/home'
     | '/photography'
     | '/projects'
@@ -231,6 +251,7 @@ export interface FileRouteTypes {
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/experience'
     | '/home'
     | '/photography'
     | '/projects'
@@ -242,6 +263,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_layer'
     | '/_layer/blog'
+    | '/_layer/experience'
     | '/_layer/home'
     | '/_layer/photography'
     | '/_layer/projects'
@@ -277,6 +299,7 @@ export const routeTree = rootRoute
       "filePath": "_layer.tsx",
       "children": [
         "/_layer/blog",
+        "/_layer/experience",
         "/_layer/home",
         "/_layer/photography",
         "/_layer/projects",
@@ -291,6 +314,10 @@ export const routeTree = rootRoute
         "/_layer/blog/$post",
         "/_layer/blog/"
       ]
+    },
+    "/_layer/experience": {
+      "filePath": "_layer/experience.tsx",
+      "parent": "/_layer"
     },
     "/_layer/home": {
       "filePath": "_layer/home.tsx",

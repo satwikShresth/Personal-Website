@@ -3,6 +3,7 @@ import { Link, linkOptions } from "@tanstack/react-router";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import { useColorModeValue } from "../ui/color-mode";
+import ArchitectureDiagram from "./Graph/index.tsx";
 import type { Projects } from "./data.tsx";
 
 interface ProjectItemProps {
@@ -34,20 +35,74 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
       <Grid templateColumns={{ base: "1fr", md: "auto 1fr" }} gap={8} >
         <GridItem>
           <Flex
-            width={{ base: "80px", md: "100px" }}
-            height={{ base: "80px", md: "100px" }}
+            width={"150px"}
+            height={"150px"}
             justify="center"
             align="center"
           >
             {project.icon && <Icon as={project.icon} boxSize={20} color={"accent"} />}
             {project.image && project.image}
           </Flex>
+          <HStack
+            mt={"5"}
+            justify="center"
+            align="center"
+          >
+            {project.liveUrl && (
+              <Button
+                variant={"outline"}
+                borderRadius={"lg"}
+                size="md"
+                _hover={{
+                  color: "accent"
+                }}
+                as={Link}
+                {...linkOptions({
+                  to: project.liveUrl,
+                  preload: "render"
+                })}
+              >
+                Live
+                <Icon as={FiExternalLink} w={4} h={4} mb={.4} />
+              </Button>
+            )}
+
+            {project.githubUrl && (
+              <IconButton
+                _hover={{
+                  color: "accent"
+                }}
+                borderRadius={"lg"}
+                size="md"
+                variant="outline"
+                as={Link}
+                {...linkOptions({
+                  to: project.githubUrl,
+                  preload: "intent"
+                })}
+              >
+                <FaGithub />
+              </IconButton>
+            )}
+          </HStack>
+
         </GridItem>
 
         {/* Content Section */}
         <GridItem>
           <VStack align="start" zIndex="1" position="relative">
-            {/* Header */}
+            {
+              project?.nodes && project?.edges && (
+                <ArchitectureDiagram
+                  nodes={project?.nodes}
+                  edges={project?.edges}
+                  direction="TB"
+                  height={500}
+                  padding={5}
+                />
+              )
+            }
+
             <Flex
               w="full"
               direction={{ base: "column", sm: "row" }}
@@ -62,44 +117,6 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
                 {project.name}
               </Heading>
 
-              <HStack>
-                {project.liveUrl && (
-                  <Button
-                    variant={"outline"}
-                    borderRadius={"lg"}
-                    size="md"
-                    _hover={{
-                      color: "accent"
-                    }}
-                    as={Link}
-                    {...linkOptions({
-                      to: project.liveUrl,
-                      preload: "render"
-                    })}
-                  >
-                    Live
-                    <Icon as={FiExternalLink} w={4} h={4} mb={.4} />
-                  </Button>
-                )}
-
-                {project.githubUrl && (
-                  <IconButton
-                    _hover={{
-                      color: "accent"
-                    }}
-                    borderRadius={"lg"}
-                    size="md"
-                    variant="outline"
-                    as={Link}
-                    {...linkOptions({
-                      to: project.githubUrl,
-                      preload: "intent"
-                    })}
-                  >
-                    <FaGithub />
-                  </IconButton>
-                )}
-              </HStack>
             </Flex>
 
             {/* Tech Stack */}

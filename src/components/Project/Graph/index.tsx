@@ -6,14 +6,16 @@ import {
   ReactFlow
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Box, Container, HStack } from '@chakra-ui/react';
+import { Badge, Box, Stack } from '@chakra-ui/react';
+import { FiInfo } from "react-icons/fi";
 import InfoNode from './InfoNode';
 import { addDefaultsToNodes, applyAutoLayout } from './utils';
+import InfoGroup from './InfoGroup';
 import type { ArchitectureDiagramProps } from './types';
 import { useColorMode } from "@/components/ui/color-mode";
 
 // Register custom node types
-const nodeTypes = { info: InfoNode };
+const nodeTypes = { info: InfoNode, labeledGroup: InfoGroup };
 
 const ArchitectureDiagram = ({
   nodes,
@@ -31,7 +33,7 @@ const ArchitectureDiagram = ({
   const { colorMode } = useColorMode();
 
   return (
-    <Box h={height} p={padding} width="100%">
+    <Box h={height} p={padding} width="100%" borderRadius={"lg"}>
       <ReactFlow
         colorMode={colorMode}
         nodeTypes={nodeTypes}
@@ -46,11 +48,14 @@ const ArchitectureDiagram = ({
         nodesDraggable={false}
         nodesConnectable={false}
         elementsSelectable={true}
+        style={{ borderRadius: "10px" }}
       >
+        <Stack align={"flex-end"}>
+          <Badge>  <FiInfo /> Hover for more information </Badge>
+        </Stack>
         <Controls showInteractive={false} />
         <Background color="#aaa" gap={20} />
       </ReactFlow>
-      <Container id={id}></Container>
     </Box>
   );
 };

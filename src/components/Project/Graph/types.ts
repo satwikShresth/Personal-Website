@@ -22,6 +22,7 @@ export type CardContent = {
 }
 
 export type NodeData = {
+  name?: string
   label: ReactNode
   info?: string
   style?: NodeStyle
@@ -30,10 +31,13 @@ export type NodeData = {
 
 export type NodeConfig = {
   id: string
-  type: 'info' | 'group'
+  type: string
   data: NodeData
   position?: { x: number; y: number }
-  parentNode?: string
+  height?: number
+  width?: number
+  parentId?: string
+  extent?: string
   style?: NodeStyle
 }
 

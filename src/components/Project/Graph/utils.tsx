@@ -24,7 +24,7 @@ export function applyAutoLayout(
   direction: 'TB' | 'LR' | 'BT' | 'RL' = 'TB'
 ): Array<NodeConfig> {
   const map = new Map(rawNodes.map(n => [n.id, { ...n }]));
-  const leafs = rawNodes.filter(n => n.type !== 'group');
+  const leafs = rawNodes.filter(n => n.type !== 'labeledGroup');
 
   const g = new dagre.graphlib.Graph();
   g.setDefaultEdgeLabel(() => ({}));
@@ -44,9 +44,9 @@ export function applyAutoLayout(
   });
 
   // wrap group nodes around their children
-  rawNodes.filter(n => n.type === 'group').forEach(group => {
+  rawNodes.filter(n => n.type === 'labeledGroup').forEach(group => {
     const pad = 16;
-    const children = rawNodes.filter(c => c.parentNode === group.id);
+    const children = rawNodes.filter(c => c.parentId === group.id);
     if (!children.length) return;
 
     const boxes = children.map(c => {

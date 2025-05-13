@@ -62,7 +62,7 @@ export default function Navbar({ id }: { id: string }) {
                   fontFamily="heading"
                   fontWeight="bold"
                   fontSize="xl"
-                  {...linkOptions({ to: `/home#intro-section` })}
+                  {...linkOptions({ to: `/home` })}
                   color={useColorModeValue('gray.800', 'white')}
                >
                   Satwik

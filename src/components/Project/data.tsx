@@ -1,23 +1,26 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, Link, Text } from "@chakra-ui/react";
 import SHELVED from "/shelved.png"
 import INSP from '/inspiraiton.png';
 import OM from "/openmario.png"
 import { FaBookOpen, FaCode } from "react-icons/fa";
+import * as openmario from "./data/openmario"
+import * as inspiration from "./data/inspiration"
 import type { ReactNode } from "@tanstack/react-router";
+import type { ReactElement } from "react";
+
 
 export interface Projects {
-  name: string;
+  name?: ReactElement;
   image?: ReactNode;
   icon?: ReactNode;
   liveUrl?: string;
   githubUrl: string;
   techStack: Array<string>;
-  description: Array<string>;
+  description: Array<ReactElement>;
 }
 
 export const projects: Array<Projects> = [
   {
-    name: 'OpenMario',
     image: <Image src={OM} />,
     liveUrl: 'https://www.openmario.com',
     githubUrl: 'https://github.com/satwikShresth/OpenMario',
@@ -31,14 +34,18 @@ export const projects: Array<Projects> = [
       'Python'
     ].sort(),
     description: [
-      'Open-source platform for Drexel students to search job listings, courses, and professor ratings in one place',
-      'Scraped and transformed 50K+ webpages of raw data into a structured schema optimized for cross-reference features',
-      'Implemented millisecond-latency search using Meilisearch with zero user data storage for privacy and performance',
-      'Achieved early product validation with 100+ weekly active users and 220+ wage submissions without marketing'
-    ]
+      <>Open-source platform for Drexel students to search job listings, courses, and professor ratings in one place</>,
+      <>
+        200+ weekly active users and 220+ wage submissions, without any marketing, just word of mouth and a <Link
+          color={"accent"}
+          href="https://www.reddit.com/r/Drexel/comments/1jsa5tj/i_made_the_drexel_term_master_we_deserve/" style={{ textDecoration: 'underline' }}
+        >Reddit post</Link>
+      </>,
+      <>Hosted on my personal VPS</>,
+    ],
+    ...openmario
   },
   {
-    name: 'Inspiration',
     image: (
       <Box
         bgColor={"white"}
@@ -63,16 +70,13 @@ export const projects: Array<Projects> = [
       'Rust'
     ].sort(),
     description: [
-      'Led 5-student team to build privacy-focused plagiarism detection system designed to replace MOSS at Drexel University',
-      'Implemented Celery work-queues to balance workload, delivering results 10x faster with improving user experience',
-      'Developed Rust extensions for Python, speeding up computation-heavy algorithms by 2x',
-      'Designed self-managed S3 infrastructure for granular permissions and optimized streaming reducing backend load',
-      'Designed graph-like relational database schema optimized for interactive visualizations',
-      'Completely rewrote Docker configuration and orchestrated Caddy server setup for improved performance and security',
-    ]
+      <>FERPA-compliant open-source plagiarism detection software developed for Drexel University, enabling self-hosted and privacy-focused implementation</>,
+      <>Incorporates multi-modal detection techniques based on Stanford research papers with enhanced visualization for software similarity analysis</>
+    ],
+    ...inspiration
   },
   {
-    name: 'Shelved',
+    name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Shelved</Text>,
     image: <Image src={SHELVED} />,
     liveUrl: 'https://shelved.satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/shelved',
@@ -85,14 +89,17 @@ export const projects: Array<Projects> = [
       'EJS'
     ].sort(),
     description: [
-      'Led a team of 4 to design, implement and self-host a full-scale books and media tracking website using just JavaScript',
-      'Built custom authentication with JsonWebToken, secure password hashing, and anti-bot measures to ensure platform security',
-      'Integrated multiple APIs, normalizing data to support social features like sharing, following, review and ratings',
-      'Developed LRU caching that reduced API-dependent page load times by 65% and improved overall site responsiveness'
+      <>A simple group project where the goal was to master JavaScript as a raw language and build applications and features from scratch</>,
+      <>The learning outcome was a deeper understanding of CSS, JavaScript, server‑side rendering, and DOM manipulation</>,
+      <>Built entirely on Deno without any bundling</>,
+      <>Used EJS to render web pages</>,
+      <>Employed a strategy pattern to integrate multiple content APIs and normalize their outputs into a unified format</>,
+      <>Implemented social features including friends, following, discovery, public collections, and private connections</>,
+      <>Utilized PostgreSQL for the database</>,
     ]
   },
   {
-    name: 'Personal Website',
+    name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Personal Website</Text>,
     icon: FaCode,
     liveUrl: 'https://satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/satwik.dev',
@@ -106,13 +113,14 @@ export const projects: Array<Projects> = [
       'GitHub Actions'
     ].sort(),
     description: [
-      'Personal portfolio website showcasing projects, skills, and experiences',
-      'Responsive design with accessibility features and dark/light mode support',
-      'Automated deployment using GitHub Actions CI/CD pipeline'
+      <>A 100% client‑side playground for digging through my half‑baked blogs via full‑text or tag searches</>,
+      <>Born as therapy for my runaway hot takes—so I can’t lose my own brilliant (and not‑so‑brilliant) ideas</>,
+      <>No courses, no paywalls—just unfiltered opinions and unsolicited wisdom</>,
+      <>Also doubles as a humble shrine to my ramblings and occasional flashes of genius</>,
     ]
   },
   {
-    name: 'Library',
+    name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Library</Text>,
     icon: FaBookOpen,
     liveUrl: 'https://cs478.satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/Library',
@@ -127,9 +135,10 @@ export const projects: Array<Projects> = [
       'Zod',
     ].sort(),
     description: [
-      'Fully typed book management system with complete CRUD operations',
-      'Security-focused with protection against XSS and CSRF attacks',
-      'Containerized deployment via Docker Compose',
+      <>A humble assignment I actually hosted—so now it’s your problem to check it out.</>,
+      <>Fully typed in TypeScript and neatly structured for posterity.</>,
+      <>My very first React app—a quaint benchmark against what I’m building today.</>,
+      <>No bells, no whistles: just raw, typed React goodness.</>,
     ],
   },
 ];
