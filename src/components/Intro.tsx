@@ -83,6 +83,10 @@ function IntroPage() {
         >
           <Button
             as={Link}
+            _hover={{
+              color: "accent"
+            }}
+
             variant={"outline"}
             href="/resume.pdf"
             borderRadius={"lg"}
@@ -93,6 +97,9 @@ function IntroPage() {
           <Button
             as={Link}
             variant={"outline"}
+            _hover={{
+              color: "accent"
+            }}
             href="https://github.com/satwikShresth"
             borderRadius={"lg"}
           >
@@ -100,6 +107,10 @@ function IntroPage() {
             Github
           </Button>
           <Button
+            _hover={{
+              color: "accent"
+            }}
+
             as={Link}
             variant={"outline"}
             href="https://linkedin.com/in/satwik-shresth/"

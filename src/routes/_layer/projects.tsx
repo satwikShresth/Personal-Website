@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Box, Center, Separator, VStack } from '@chakra-ui/react'
-import HeatMap from '@uiw/react-heat-map';
 import ProjectsPage from '@/components/Project'
 
 // Option 1: Gradient Separator
@@ -18,9 +17,9 @@ const GradientSeparator = ({ id }: { id: string }) => (
 export const Route = createFileRoute('/_layer/projects')({
   component: () => {
     return (
-      <Center id={"intro-section"}>
+      <Center>
         <VStack width="100%" mt={2} gap={"10"} >
-          <Box as={ProjectsPage} />
+          <Box id={"project-page-container"} as={ProjectsPage} />
         </VStack>
       </Center>
     )

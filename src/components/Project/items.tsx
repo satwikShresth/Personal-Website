@@ -68,6 +68,9 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
                     variant={"outline"}
                     borderRadius={"lg"}
                     size="md"
+                    _hover={{
+                      color: "accent"
+                    }}
                     as={Link}
                     {...linkOptions({
                       to: project.liveUrl,
@@ -81,6 +84,9 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
 
                 {project.githubUrl && (
                   <IconButton
+                    _hover={{
+                      color: "accent"
+                    }}
                     borderRadius={"lg"}
                     size="md"
                     variant="outline"

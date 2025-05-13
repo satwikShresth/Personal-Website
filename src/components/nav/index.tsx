@@ -19,14 +19,13 @@ import DesktopNav from './Desktop';
 import MobileNav from './Mobile';
 import { useColorMode, useColorModeValue } from '@/components/ui/color-mode';
 
-export default function Navbar() {
+export default function Navbar({ id }: { id: string }) {
    const { open, onToggle } = useDisclosure();
    const { colorMode, toggleColorMode } = useColorMode();
 
    return (
-      <Box borderRadius={"lg"}>
+      <Box position="sticky" top="0" zIndex="sticky" borderBottomRadius={"lg"} id={id} bgColor={"bg"}>
          <Flex
-            bg="transparent"
             minH="60px"
             py={{ base: 2 }}
             px={{ base: 4 }}

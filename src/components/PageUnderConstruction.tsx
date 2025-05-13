@@ -43,6 +43,9 @@ export default function PageUnderConstruction() {
                 size="lg"
                 borderRadius="lg"
                 onClick={() => window.history.back()}
+                _hover={{
+                  color: "accent"
+                }}
               >
                 {<FaArrowLeft />}
                 Go Back

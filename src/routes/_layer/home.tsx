@@ -18,7 +18,7 @@ const GradientSeparator = ({ id }: { id: string }) => (
 export const Route = createFileRoute('/_layer/home')({
   component: () => {
     return (
-      <Center id={"intro-section"}>
+      <Center>
         <VStack width="100%" mt={2} gap={"10"} >
           <Box as={IntroPage} />
           <GradientSeparator id={"experience-section"} />

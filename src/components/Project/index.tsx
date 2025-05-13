@@ -5,8 +5,8 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { projects } from './data';
-import ProjectItem from './items';
+import ArchitectureDiagram from './Graph';
+import { edges, nodes } from './data/inspiration';
 import { useColorModeValue } from '@/components/ui/color-mode';
 
 
@@ -39,10 +39,15 @@ function ProjectsPage() {
           </Text>
         </Box>
 
-        <VStack align="stretch">
-          {projects.map((project, idx) => (
-            <ProjectItem key={idx} project={project} />
-          ))}
+        <VStack align="stretch" >
+          <ArchitectureDiagram
+            id={"project-page-container"}
+            nodes={nodes}
+            edges={edges}
+            direction="TB"
+            height={750}
+            padding={40}
+          />
         </VStack>
       </VStack>
     </Container>

@@ -3,7 +3,7 @@
 import {
   ChakraProvider, createSystem,
   defaultConfig,
-  defineConfig
+  defineConfig,
 } from "@chakra-ui/react"
 import {
   ColorModeProvider
@@ -13,7 +13,6 @@ import type { ColorModeProviderProps } from "./color-mode";
 
 
 const config = defineConfig({
-  // Global CSS - applies basic styling rules
   globalCss: {
     "html, body": {
       margin: 0,
@@ -21,9 +20,7 @@ const config = defineConfig({
       minHeight: "100vh",
     }
   },
-  // Theme configuration
   theme: {
-    // Breakpoints for responsive design
     breakpoints: {
       sm: "30em", // 480px
       md: "48em", // 768px
@@ -31,10 +28,8 @@ const config = defineConfig({
       xl: "80em", // 1280px
       "2xl": "96em", // 1536px
     },
-    // Design tokens
     tokens: {
       colors: {
-        // Primary brand color - teal variations
         brand: {
           50: { value: "#E6FFFA" },
           100: { value: "#B2F5EA" },
@@ -47,7 +42,6 @@ const config = defineConfig({
           800: { value: "#234E52" },
           900: { value: "#1D4044" },
         },
-        // Dark mode specific colors
         darkBg: { value: "#121212" },
         darkCard: { value: "#1E1E1E" },
         darkElevated: { value: "#2D3748" },
