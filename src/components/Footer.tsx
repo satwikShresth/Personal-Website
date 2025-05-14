@@ -9,7 +9,6 @@ import {
   Separator,
   Text
 } from '@chakra-ui/react';
-import { linkOptions } from '@tanstack/react-router';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
@@ -33,11 +32,7 @@ const Footer = () => {
               _hover={{
                 color: "accent"
               }}
-              {...linkOptions({
-                // @ts-ignore: somthing
-                to: "https://github.com/satwikShresth",
-                preload: "intent"
-              })}
+              href="https://github.com/satwikShresth"
             >
               <FaGithub width={10} height={10} />
               Github
@@ -49,11 +44,7 @@ const Footer = () => {
               _hover={{
                 color: "accent"
               }}
-              {...linkOptions({
-                // @ts-ignore: somthing
-                to: "https://linkedin.com/in/satwik-shresth/",
-                preload: "intent"
-              })}
+              href="https://linkedin.com/in/satwik-shresth/"
             >
               <Icon
                 as={FaLinkedin}
