@@ -1,8 +1,9 @@
 import { Box, Image, Link, Text } from "@chakra-ui/react";
 import SHELVED from "/shelved.png"
 import INSP from '/inspiraiton.png';
+import PW from '/favicon.png';
 import OM from "/openmario.png"
-import { FaBookOpen, FaCode } from "react-icons/fa";
+import { FaBookOpen } from "react-icons/fa";
 import * as openmario from "./data/openmario"
 import * as inspiration from "./data/inspiration"
 import type { ReactNode } from "@tanstack/react-router";
@@ -100,7 +101,7 @@ export const projects: Array<Projects> = [
   },
   {
     name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Personal Website</Text>,
-    icon: FaCode,
+    image: <Image src={PW} />,
     liveUrl: 'https://satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/satwik.dev',
     techStack: [
