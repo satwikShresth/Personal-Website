@@ -1,6 +1,6 @@
 import { Badge, Box, Button, Flex, Grid, GridItem, HStack, Heading, Icon, IconButton, Text, VStack } from "@chakra-ui/react";
 import { Link, linkOptions } from "@tanstack/react-router";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaGitlab } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
 import ArchitectureDiagram from "./Graph/index.tsx";
 import type { Projects } from "./data.tsx";
@@ -81,6 +81,24 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
                 })}
               >
                 <FaGithub />
+              </IconButton>
+            )}
+
+            {project.gitlabUrl && (
+              <IconButton
+                _hover={{
+                  color: "accent"
+                }}
+                borderRadius={"lg"}
+                size="md"
+                variant="outline"
+                as={Link}
+                {...linkOptions({
+                  to: project.githubUrl,
+                  preload: "intent"
+                })}
+              >
+                <FaGitlab />
               </IconButton>
             )}
           </HStack>

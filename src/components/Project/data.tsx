@@ -14,7 +14,8 @@ export interface Projects {
   image?: ReactNode;
   icon?: ReactNode;
   liveUrl?: string;
-  githubUrl: string;
+  githubUrl?: string;
+  gitlabUrl?: string;
   techStack: Array<string>;
   description: Array<ReactElement>;
 }
@@ -55,8 +56,7 @@ export const projects: Array<Projects> = [
         <Image src={INSP} position="relative" />
       </Box>
     ),
-    liveUrl: 'https://inspiration.cci.drexel.edu',
-    githubUrl: 'https://gitlab.cci.drexel.edu/inspiration',
+    gitlabUrl: 'https://gitlab.cci.drexel.edu/inspiration',
     techStack: [
       'Docker',
       'React',
