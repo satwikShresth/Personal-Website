@@ -27,7 +27,7 @@ const Footer = () => {
           <HStack mt={0} gap={5} >
             <Button
               as={Link}
-              variant={"outline"}
+              variant={"ghost"}
               borderRadius={"lg"}
               _hover={{
                 color: "accent"
@@ -39,7 +39,7 @@ const Footer = () => {
             </Button>
             <Button
               as={Link}
-              variant={"outline"}
+              variant={"ghost"}
               borderRadius={"lg"}
               _hover={{
                 color: "accent"

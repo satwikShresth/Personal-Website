@@ -14,9 +14,10 @@ export const NAV_ITEMS = [
     href: '/blog',
     section: '',
   },
-  {
-    label: 'Photography',
-    href: '/photography',
-    section: '',
-  },
+  // ,
+  // {
+  //   label: 'Photography',
+  //   href: '/photography',
+  //   section: '',
+  // },
 ]

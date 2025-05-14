@@ -195,7 +195,6 @@ export function BlogCard({
     <Card.Root
       borderRadius="xl"
       overflow="hidden"
-      m={10}
       bgBlendMode={"lighten"}
       cursor={"pointer"}
       _hover={{

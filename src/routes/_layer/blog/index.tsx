@@ -131,7 +131,7 @@ function BlogPage() {
         </HStack>
 
         {filteredPosts.length > 0 ? (
-          <SimpleGrid columns={{ base: 1, md: 2 }} >
+          <SimpleGrid columns={{ base: 1, md: 2 }} gap={"5"}>
             {filteredPosts.map((post) => (
               <Blog.Card
                 key={post.slug}

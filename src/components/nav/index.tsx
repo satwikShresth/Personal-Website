@@ -91,7 +91,7 @@ export default function Navbar({ id }: { id: string }) {
                   variant="ghost"
                   _hover={{ color: "accent" }}
                   borderRadius={"lg"}
-                  href={"https:"}
+                  href={"https://github.com/satwikShresth/Personal-Website"}
                >
                   <Icon as={FiGithub} />
                </IconButton>
