@@ -1,13 +1,16 @@
 import {
    Box,
+   Link as CLink,
    Collapsible,
    Flex,
+   Icon,
    IconButton,
    Text,
    useDisclosure,
 } from '@chakra-ui/react';
 
 import {
+   FiGithub,
    FiMenu,
    FiMoon,
    FiSun,
@@ -84,8 +87,19 @@ export default function Navbar({ id }: { id: string }) {
                direction="row"
             >
                <IconButton
+                  as={CLink}
+                  variant="ghost"
+                  _hover={{ color: "accent" }}
+                  borderRadius={"lg"}
+                  href={"https:"}
+               >
+                  <Icon as={FiGithub} />
+               </IconButton>
+
+               <IconButton
                   aria-label={`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`}
                   variant="ghost"
+                  _hover={{ color: "accent" }}
                   onClick={toggleColorMode}
                   borderRadius={"lg"}
                >
