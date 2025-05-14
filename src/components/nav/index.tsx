@@ -55,7 +55,8 @@ export default function Navbar({ id }: { id: string }) {
                flex={{ base: 1 }}
                justify="center"
                align="center"
-               position="relative">
+               position="relative"
+            >
                <Text
                   as={Link}
                   position={{ base: "relative", md: "absolute" }}
@@ -75,7 +76,10 @@ export default function Navbar({ id }: { id: string }) {
                <Flex
                   display={{ base: 'none', md: 'flex' }}
                   justify="center"
-                  width="100%">
+                  width="100%"
+                  ml={20}
+
+               >
                   <DesktopNav />
                </Flex>
             </Flex>
@@ -85,6 +89,7 @@ export default function Navbar({ id }: { id: string }) {
                flex={{ base: 1, md: 0 }}
                justify="flex-end"
                direction="row"
+               gap={1}
             >
                <IconButton
                   as={CLink}
