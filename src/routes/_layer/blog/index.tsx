@@ -3,7 +3,6 @@ import {
   Badge,
   Box,
   Button,
-  Container,
   Flex,
   HStack,
   Heading,
@@ -13,7 +12,6 @@ import {
   Select,
   SimpleGrid,
   Text,
-  VStack,
   createListCollection,
 } from '@chakra-ui/react';
 import { FaFilter } from 'react-icons/fa';
@@ -65,7 +63,7 @@ function BlogPage() {
           opacity={0.9}
           letterSpacing="wide"
         >
-          My Journey as a professional in the industry
+          Random brain dumps: occasional flair  and inevitable tangents.
         </Text>
       </Box>
 

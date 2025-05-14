@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import { Panel } from "@xyflow/react";
 import type { HTMLAttributes, ReactNode } from "react";
 import type { NodeProps, PanelPosition } from "@xyflow/react";

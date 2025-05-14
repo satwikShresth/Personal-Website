@@ -2,7 +2,6 @@ import { Badge, Box, Button, Flex, Grid, GridItem, HStack, Heading, Icon, IconBu
 import { Link, linkOptions } from "@tanstack/react-router";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import { useColorModeValue } from "../ui/color-mode";
 import ArchitectureDiagram from "./Graph/index.tsx";
 import type { Projects } from "./data.tsx";
 
@@ -91,17 +90,8 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
         {/* Content Section */}
         <GridItem>
           <VStack align="start" zIndex="1" position="relative">
-            {
-              project?.nodes && project?.edges && (
-                <ArchitectureDiagram
-                  nodes={project?.nodes}
-                  edges={project?.edges}
-                  direction="TB"
-                  height={500}
-                  padding={5}
-                />
-              )
-            }
+            {/* @ts-igrore: something */}
+            {project?.nodes && project?.edges && (<ArchitectureDiagram nodes={project?.nodes} edges={project?.edges} direction="TB" height={500} padding={5} />)}
 
             <Flex
               w="full"

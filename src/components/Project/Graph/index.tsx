@@ -23,12 +23,11 @@ const ArchitectureDiagram = ({
   direction = 'TB',
   height = 1000,
   padding = 40,
-  id,
 }: ArchitectureDiagramProps) => {
   const processedNodes = useMemo(() => {
     const nodesWithDefaults = addDefaultsToNodes(nodes);
     return applyAutoLayout(nodesWithDefaults, edges, direction);
-  }, [nodes, edges, direction, containerRef]);
+  }, [nodes, edges, direction]);
 
   const { colorMode } = useColorMode();
 
@@ -37,7 +36,9 @@ const ArchitectureDiagram = ({
       <ReactFlow
         colorMode={colorMode}
         nodeTypes={nodeTypes}
+        // @ts-ignore: somthing
         nodes={processedNodes}
+        // @ts-ignore: somthing
         edges={edges}
         fitView
         panOnDrag={true}

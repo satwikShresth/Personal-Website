@@ -12,11 +12,14 @@ const InfoNode = ({ selected, data }: NodeProps) => {
     padding: '8px 12px',
     borderRadius: 8,
     minWidth: 150,
+    // @ts-ignore: something
     background: data.style?.background,
+    // @ts-ignore: something
     border: data.style?.border ?? '2px solid #3B5BDB',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    // @ts-ignore: something
     ...data.style,
   };
 

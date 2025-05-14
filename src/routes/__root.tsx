@@ -6,9 +6,11 @@ export const Route = createRootRoute({
   component: () => {
     return (
       <>
-        <Center position="relative">
-          <Outlet />
-          <TanStackRouterDevtools />
+        <Center>
+          <Box width="80%" position="relative">
+            <Outlet />
+            <TanStackRouterDevtools />
+          </Box>
         </Center>
       </>
     )

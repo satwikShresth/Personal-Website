@@ -1,4 +1,4 @@
-import { Link as RouterLink, useNavigate } from '@tanstack/react-router';
+import { Link as RouterLink, linkOptions, useNavigate } from '@tanstack/react-router';
 import {
   Badge,
   Box,
@@ -167,22 +167,23 @@ export function BlogCard({
           </CardBody>
 
           <CardFooter p={0} mt={4}>
-            {showReadMore && (
-              <Button
-                borderRadius={"lg"}
-                colorScheme="teal"
-                as={RouterLink}
-                to='/blog/$post'
-                params={{ post: slug }}
-                variant="solid"
-                size="md"
-                rightIcon={<FaArrowRight />}
-                width="auto"
-                px={6}
-              >
-                Read Article
-              </Button>
-            )}
+            <Button
+              borderRadius={"lg"}
+              colorScheme="teal"
+              as={RouterLink}
+              {...linkOptions({
+                to: '/blog/$post',
+                params: { post: slug }
+
+              })}
+              variant="solid"
+              size="md"
+              width="auto"
+              px={6}
+            >
+              <FaArrowRight />
+              Read Article
+            </Button>
           </CardFooter>
         </Flex>
       </Card.Root >

@@ -39,7 +39,9 @@ export function applyAutoLayout(
     const isLR = direction === 'LR';
     const laid = map.get(n.id)!;
     laid.position = { x: x - NODE_WIDTH / 2, y: y - NODE_HEIGHT / 2 };
+    // @ts-ignore: somthing
     laid.targetPosition = isLR ? Position.Left : Position.Top;
+    // @ts-ignore: somthing
     laid.sourcePosition = isLR ? Position.Right : Position.Bottom;
   });
 

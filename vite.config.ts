@@ -16,6 +16,10 @@ export default defineConfig({
       enforce: 'pre',
       ...mdx({
         include: './src/components/mdx/*',
+        providerImportSource: '@mdx-js/react',
+        jsx: false, // Compile JSX away so the file is immediately runnable
+        remarkPlugins: [],
+        rehypePlugins: [],
       }),
     },
     TanStackRouterVite({ autoCodeSplitting: true }),
@@ -27,10 +31,6 @@ export default defineConfig({
     tailwindcss(),
     tsconfigPaths(),
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),

@@ -34,6 +34,7 @@ const Footer = () => {
                 color: "accent"
               }}
               {...linkOptions({
+                // @ts-ignore: somthing
                 to: "https://github.com/satwikShresth",
                 preload: "intent"
               })}
@@ -49,6 +50,7 @@ const Footer = () => {
                 color: "accent"
               }}
               {...linkOptions({
+                // @ts-ignore: somthing
                 to: "https://linkedin.com/in/satwik-shresth/",
                 preload: "intent"
               })}

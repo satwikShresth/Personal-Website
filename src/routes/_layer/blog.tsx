@@ -145,7 +145,7 @@ export const Route = createFileRoute('/_layer/blog')({
       tbody: (props: any) => <Table.Body {...props} />,
       tr: (props: any) => <Table.Row {...props} />,
       th: (props: any) => (
-        <Table.HeaderCell
+        <Table.Header
           bg={useColorModeValue('gray.50', 'gray.700')}
           fontWeight="semibold"
           p={2}
@@ -154,7 +154,7 @@ export const Route = createFileRoute('/_layer/blog')({
         />
       ),
       td: (props: any) => (
-        <Table.Cell
+        <Table.ColumnHeader
           p={2}
           borderTopWidth="1px"
           borderColor={useColorModeValue('gray.200', 'gray.700')}

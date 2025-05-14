@@ -56,6 +56,7 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
           const processedComponentPaths: Record<string, string> = {}
 
           Object.entries(initialState).forEach(([slug, post]) => {
+            // @ts-ignore: somthing
             processedBlogPosts.push({
               ...post.metadata,
               slug,

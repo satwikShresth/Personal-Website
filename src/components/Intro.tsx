@@ -1,117 +1,140 @@
+// IntroPage Component
 import { Box, Button, Card, Flex, Heading, Icon, Image, Link, Text } from "@chakra-ui/react";
-import { Link as RLink, linkOptions } from "@tanstack/react-router";
+import { Link as RLink } from "@tanstack/react-router";
 import PHOTO from "/my_photo.png"
 import { FaArrowRight, FaGithub, FaLinkedin } from "react-icons/fa";
 import { GrDocumentPdf } from "react-icons/gr";
 
 function IntroPage() {
   return (
-    <Flex flexWrap={"wrap"} >
-      <Box
-        alignSelf="center"
-        justifySelf="center"
-        width={"310px"}
-        height={"350px"}
-        borderRadius="lg"
-        overflow="hidden"
-        aspectRatio={.8}
-        boxShadow="xl"
-        as={Image}
-        src={PHOTO}
-        ml={10}
-        mb={10}
-      />
 
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      align="center"
+      justify="center"
+      width="100%"
+      gap={{ base: 6, md: 10 }}
+      py={{ base: 4, md: 8 }}
+    >
+      {/* Image Container */}
+      <Box
+        width={{ base: "100%", md: "auto" }}
+        display="flex"
+        justifyContent="center"
+        px={{ base: 4, md: 0 }}
+      >
+        <Image
+          boxShadow="lg"
+          borderRadius="lg"
+          width={{ base: "240px", sm: "280px", md: "350px" }}
+          height={{ base: "240px", sm: "280px", md: "350px" }}
+          objectFit="cover"
+          src={PHOTO}
+          alt="Satwik Shresth"
+        />
+      </Box>
+
+      {/* Content Container */}
       <Box
         flex="1"
-        alignSelf="center"
-        ml={10}
+        mt={"5"}
+        width={{ base: "100%", md: "auto" }}
+        maxW={{ base: "100%", md: "950px" }}
+        px={{ base: 4, md: 0 }}
       >
         <Heading
           as="h1"
-          fontSize={"5xl"}
+          fontSize={{ base: "2xl", sm: "3xl", md: "4xl" }}
           lineHeight="1.1"
-          mb={2}
+          mb={4}
+          textAlign={{ base: "center", md: "left" }}
         >
           Satwik <Box as="span" color="accent">Shresth</Box>
         </Heading>
+
         <Card.Root
-          mb={4}
-          p={5}
+          mb={6}
+          p={4}
           borderRadius="xl"
         >
           <RLink to="/blog/$post" params={{ post: "sig" }}>
             <Card.Title
               as={Link}
-              fontSize={"md"}
+              fontSize="md"
+              display="flex"
+              alignItems="center"
+              gap={1}
             >
               Recently at
               <Text fontWeight="bold">Susquehanna International Group</Text>
-              <Icon as={FaArrowRight} h={"12px"} />
+              <Icon as={FaArrowRight} h="12px" />
             </Card.Title>
           </RLink>
           <Card.Description>
-            <Text >
+            <Text>
               Engineered high-performance C++ systems processing over 5.8 billion
               market data messages daily with nanosecond latency
             </Text>
           </Card.Description>
         </Card.Root>
-        <Text fontSize="lg" mb={4} lineHeight="tall">
+
+        <Text fontSize="lg" mb={3} lineHeight="tall">
           I blend my experience in low-level performance optimization with modern web development.
         </Text>
-        <Text fontSize="lg" mb={8} lineHeight="tall">
+        <Text fontSize="lg" mb={6} lineHeight="tall">
           Recently, I have been focusing on creating full stack web applications that deliver end-to-end solutions
           while maintaining high performance, scalability, and clean architecture.
         </Text>
+
         <Flex
           wrap="wrap"
           gap={3}
-          mb={12}
-          justify={{ base: "center", lg: "flex-start" }}
+          mb={6}
+          justify={{ base: "center", md: "flex-start" }}
         >
           <Button
             as={Link}
             _hover={{
               color: "accent"
             }}
-
-            variant={"outline"}
+            variant="outline"
             href="/resume.pdf"
-            borderRadius={"lg"}
+            borderRadius="lg"
           >
-            <Icon as={GrDocumentPdf} w={6} h={6} />
+            {window.stonks?.event && window.stonks.event("checked resume")}
+            <Icon as={GrDocumentPdf} w={6} h={6} mr={2} />
             Resume
           </Button>
           <Button
             as={Link}
-            variant={"outline"}
+            variant="outline"
             _hover={{
               color: "accent"
             }}
             href="https://github.com/satwikShresth"
-            borderRadius={"lg"}
+            borderRadius="lg"
           >
-            <Icon as={FaGithub} w={6} h={6} />
+            {window.stonks?.event && window.stonks.event("visited github")}
+            <Icon as={FaGithub} w={6} h={6} mr={2} />
             Github
           </Button>
           <Button
             _hover={{
               color: "accent"
             }}
-
             as={Link}
-            variant={"outline"}
+            variant="outline"
             href="https://linkedin.com/in/satwik-shresth/"
-            borderRadius={"lg"}
+            borderRadius="lg"
           >
-            <Icon as={FaLinkedin} w={6} h={6} />
-            linkedIn
+            {window.stonks?.event && window.stonks.event("checked linkedIn")}
+            <Icon as={FaLinkedin} w={6} h={6} mr={2} />
+            LinkedIn
           </Button>
         </Flex>
       </Box>
-    </Flex >
-  )
+    </Flex>
+  );
 }
 
 export default IntroPage;

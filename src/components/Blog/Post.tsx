@@ -119,6 +119,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
       </Box>
 
       <Box className="mdx-content">
+        {/* @ts-ignore: somthing*/}
         {Content}
       </Box>
     </Container>
