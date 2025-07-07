@@ -4,8 +4,11 @@ import {
   Separator,
   Text,
 } from "@chakra-ui/react";
+
 import {AlertsProxy, MetricsPublisher, MetricsTranscoder, Kafka} from "./sig"
+
 import ArchitectureDiagram from "../Project/Graph"
+
 export const metadata = {
   title: "My Time at SIG",
   date: "2025-05-06",
@@ -18,15 +21,19 @@ export const metadata = {
     "co-op",
   ]
 };
+
 <Heading as="h1" size="2xl" mb={6}>
   Here is a brief overview of the projects I have worked on:
 </Heading>
+
 <Heading as="h2" size="xl" mt={4} mb={2}>
   C++ Metrics Publisher
 </Heading>
+
 <Text mb={4}>
   Developed a C++ protocol metrics publisher to tail multiple log files, parsing key-value pairs with custom decoders and generating data frames for 5.8 billion+ messages per day. The system provided real-time performance monitoring for trading gateways.
 </Text>
+
 <ArchitectureDiagram
   nodes={MetricsPublisher.nodes}
   edges={MetricsPublisher.edges}
@@ -34,13 +41,17 @@ export const metadata = {
   height={500}
   padding={5}
 />
+
 <Separator my={6} />
+
 <Heading as="h2" size="xl" mt={6} mb={2}>
   Python Orchestration Layer
 </Heading>
 <Text mb={4}>
+
   Built a Python orchestration layer with C++ bindings to aggregate data frames, transform them to JSON, and stream real-time metrics to Elasticsearch and Grafana dashboards. This enabled sub-second latency monitoring for trading operations.
 </Text>
+
 <ArchitectureDiagram
   nodes={MetricsTranscoder.nodes}
   edges={MetricsTranscoder.edges}
@@ -49,12 +60,15 @@ export const metadata = {
   padding={5}
 />
 <Separator my={6} />
+
 <Heading as="h2" size="xl" mt={6} mb={2}>
   Concurrent Python Kafka Consumer
 </Heading>
+
 <Text mb={4}>
   Developed a concurrent Python Kafka consumer leveraging asyncio and multiprocessing to process 500+ million messages in 5 minutes, achieving a 9x speed improvement. Implemented intelligent partitioning and robust error handling for continuous market operation.
 </Text>
+
 <ArchitectureDiagram
   nodes={Kafka.nodes}
   edges={Kafka.edges}
@@ -62,13 +76,17 @@ export const metadata = {
   height={500}
   padding={5}
 />
+
 <Separator my={6} />
+
 <Heading as="h2" size="xl" mt={6} mb={2}>
   FastAPI Alert Proxy
 </Heading>
+
 <Text mb={4}>
   Created a Python FastAPI proxy server integrating OpenTelemetry alerts with an internal messaging platform via RESTful API. Reduced alert-to-notification latency by 60% through asynchronous processing and contextual enrichment.
 </Text>
+
 <ArchitectureDiagram
   nodes={AlertsProxy.nodes}
   edges={AlertsProxy.edges}

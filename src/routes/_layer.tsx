@@ -1,32 +1,29 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router'
-import { Box, Flex } from '@chakra-ui/react'
+import { Container, Flex } from '@chakra-ui/react'
 import NavBar from '@/components/nav'
-import Footer from '@/components/Footer'
 
 export const Route = createFileRoute('/_layer')({
   component: () => (
     <Flex
       direction="column"
       minH="100vh"
-      width="100%"
+      w="90%"
+      mx="auto"
     >
       <NavBar id={"intro-section"} />
       <Flex
         flex="1"
-        width="100%"
-        overflowX="hidden"
+        scrollbar={"hidden"}
+        overflowY="auto"
       >
-        <Box
-          width="100%"
-          maxWidth="1600px"
-          mx="auto"
-          px={{ base: 4, md: 6, lg: 8 }}
-          pt={6}
+        <Container
+          mt={"6"}
+          maxWidth={"1600px"}
+          flex="1"
         >
           <Outlet />
-        </Box>
+        </Container>
       </Flex>
-      <Box as={Footer} />
     </Flex>
   )
 })
