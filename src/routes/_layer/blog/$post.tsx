@@ -7,12 +7,11 @@ export const Route = createFileRoute('/_layer/blog/$post')({
     return mdx[post]
   },
   component: () => {
-    const { metadata, component } = Route.useLoaderData();
+    const { metadata, component } = Route.useLoaderData()
     return (
       <>
         <Blog.Post MdxCompoenent={component} metadata={metadata} />
       </>
     )
-  }
+  },
 })
-

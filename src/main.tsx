@@ -5,7 +5,7 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
-import { Provider as ChakraProvider } from "@/components/ui/provider"
+import { Provider as ChakraProvider } from '@/components/ui/provider'
 
 // Create a new router instance
 const router = createRouter({

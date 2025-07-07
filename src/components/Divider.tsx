@@ -1,4 +1,4 @@
-import { Box, Separator } from "@chakra-ui/react";
+import { Box, Separator } from '@chakra-ui/react'
 
 export default function Divider() {
   return (
@@ -7,8 +7,8 @@ export default function Divider() {
         borderWidth="2px"
         borderRadius="full"
         height="4px"
-        borderColor={"colorPalette.300"}
+        borderColor={'colorPalette.300'}
       />
     </Box>
-  );
+  )
 }

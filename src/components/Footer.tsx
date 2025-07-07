@@ -7,9 +7,9 @@ import {
   Icon,
   Link,
   Separator,
-  Text
-} from '@chakra-ui/react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+  Text,
+} from '@chakra-ui/react'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
 const Footer = () => {
   return (
@@ -17,20 +17,20 @@ const Footer = () => {
       <Separator />
       <Container maxW="container.xl" py={2}>
         <Flex
-          direction={{ base: "column", md: "row" }}
+          direction={{ base: 'column', md: 'row' }}
           justify="space-between"
           align="center"
         >
           <Text fontSize="sm">
             © {new Date().getFullYear()} Satwik Shresth. All rights reserved.
           </Text>
-          <HStack mt={0} gap={5} >
+          <HStack mt={0} gap={5}>
             <Button
               as={Link}
-              variant={"ghost"}
-              borderRadius={"lg"}
+              variant={'ghost'}
+              borderRadius={'lg'}
               _hover={{
-                color: "accent"
+                color: 'accent',
               }}
               href="https://github.com/satwikShresth"
             >
@@ -39,25 +39,21 @@ const Footer = () => {
             </Button>
             <Button
               as={Link}
-              variant={"ghost"}
-              borderRadius={"lg"}
+              variant={'ghost'}
+              borderRadius={'lg'}
               _hover={{
-                color: "accent"
+                color: 'accent',
               }}
               href="https://linkedin.com/in/satwik-shresth/"
             >
-              <Icon
-                as={FaLinkedin}
-                w={5}
-                h={5}
-              />
+              <Icon as={FaLinkedin} w={5} h={5} />
               LinkedIn
             </Button>
           </HStack>
         </Flex>
       </Container>
     </Box>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

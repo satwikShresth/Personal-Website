@@ -1,14 +1,20 @@
-import { FaDatabase, FaDocker, FaReact, FaSearch, FaServer } from "react-icons/fa";
-import { MarkerType } from "@xyflow/react";
-import { makeLabel } from "../Graph/utils";
-import type { EdgeConfig, NodeConfig } from "../Graph/types";
+import {
+  FaDatabase,
+  FaDocker,
+  FaReact,
+  FaSearch,
+  FaServer,
+} from 'react-icons/fa'
+import { MarkerType } from '@xyflow/react'
+import { makeLabel } from '../Graph/utils'
+import type { EdgeConfig, NodeConfig } from '../Graph/types'
 
 export const nodes: Array<NodeConfig> = [
   {
     id: 'react',
     type: 'info',
     data: {
-      name: "react",
+      name: 'react',
       label: makeLabel(FaReact, 'React Frontend'),
       info: 'Material UI · React Hook Form · Tesseract.js · Zustand',
       style: {
@@ -27,8 +33,9 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Component‑driven UI with Material UI, form state via React Hook Form,
-              OCR powered by Tesseract.js and app state in Zustand.
+              Component‑driven UI with Material UI, form state via
+              React Hook Form, OCR powered by Tesseract.js and app state
+              in Zustand.
             </p>
           </>
         ),
@@ -36,8 +43,8 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Fast & interactive</em>
           </>
-        )
-      }
+        ),
+      },
     },
     position: { x: 0, y: 0 },
   },
@@ -60,8 +67,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Everything runs in a single Docker network for consistency
-              across dev, staging, and production.
+              Everything runs in a single Docker network for consistency across
+              dev, staging, and production.
             </p>
           </>
         ),
@@ -69,15 +76,15 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Reproducible infra</em>
           </>
-        )
-      }
+        ),
+      },
     },
   },
   {
     id: 'caddy',
     type: 'info',
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
     data: {
       label: makeLabel(FaServer, 'Caddy (Reverse Proxy)'),
       info: 'TLS termination & routing',
@@ -97,8 +104,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Auto‑provisions TLS certs and forwards requests
-              to your Hono backend.
+              Auto‑provisions TLS certs and forwards requests to your Hono
+              backend.
             </p>
           </>
         ),
@@ -106,16 +113,16 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Secure by default</em>
           </>
-        )
-      }
+        ),
+      },
     },
     position: { x: 200, y: 100 },
   },
   {
     id: 'backend',
     type: 'info',
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
     data: {
       label: makeLabel(FaServer, 'Hono + Drizzle'),
       info: 'Stateless API · SendGrid',
@@ -135,8 +142,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Hono REST API with Drizzle ORM (no user data stored) and
-              SendGrid for transactional emails.
+              Hono REST API with Drizzle ORM (no user data stored) and SendGrid
+              for transactional emails.
             </p>
           </>
         ),
@@ -144,16 +151,16 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Lightweight & reliable</em>
           </>
-        )
-      }
+        ),
+      },
     },
     position: { x: 200, y: 0 },
   },
   {
     id: 'postgres',
     type: 'info',
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
     data: {
       label: makeLabel(FaDatabase, 'PostgreSQL'),
       info: 'Relational DB',
@@ -172,25 +179,23 @@ export const nodes: Array<NodeConfig> = [
         ),
         Body: (
           <>
-            <p>
-              Holds only system metadata; user data is not persisted here.
-            </p>
+            <p>Holds only system metadata; user data is not persisted here.</p>
           </>
         ),
         Footer: (
           <>
             <em>Transactional safety</em>
           </>
-        )
-      }
+        ),
+      },
     },
     position: { x: 400, y: 0 },
   },
   {
     id: 'meilisearch',
     type: 'info',
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
     data: {
       label: makeLabel(FaSearch, 'MeiliSearch'),
       info: 'Real‑time text indexing',
@@ -210,8 +215,7 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Indexes all content for real‑time full‑text search
-              with filters.
+              Indexes all content for real‑time full‑text search with filters.
             </p>
           </>
         ),
@@ -219,12 +223,12 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Fast & typo‑tolerant</em>
           </>
-        )
-      }
+        ),
+      },
     },
     position: { x: 400, y: 100 },
   },
-];
+]
 
 export const edges: Array<EdgeConfig> = [
   {
@@ -232,35 +236,34 @@ export const edges: Array<EdgeConfig> = [
     source: 'react',
     target: 'caddy',
     label: 'HTTPS & search',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-caddy-backend',
     source: 'caddy',
     target: 'backend',
     label: 'forwards API',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-backend-postgres',
     source: 'backend',
     target: 'postgres',
     label: 'reads/writes',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-backend-meilisearch',
     source: 'backend',
     target: 'meilisearch',
     label: 'push indexing',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-caddy-meilisearch',
     source: 'caddy',
     target: 'meilisearch',
     label: 'forwards search',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
-];
-
+]

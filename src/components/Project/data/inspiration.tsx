@@ -1,7 +1,14 @@
-import { FaCloud, FaDatabase, FaDocker, FaPython, FaReact, FaServer } from "react-icons/fa";
-import { MarkerType } from "@xyflow/react";
-import { makeLabel } from "../Graph/utils";
-import type { EdgeConfig, NodeConfig } from "../Graph/types";
+import {
+  FaCloud,
+  FaDatabase,
+  FaDocker,
+  FaPython,
+  FaReact,
+  FaServer,
+} from 'react-icons/fa'
+import { MarkerType } from '@xyflow/react'
+import { makeLabel } from '../Graph/utils'
+import type { EdgeConfig, NodeConfig } from '../Graph/types'
 
 export const nodes: Array<NodeConfig> = [
   {
@@ -24,8 +31,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              All UI routes handled client‑side. Every request hits its own path,
-              served through Caddy for seamless navigation.
+              All UI routes handled client‑side. Every request hits its own
+              path, served through Caddy for seamless navigation.
             </p>
           </>
         ),
@@ -33,15 +40,15 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Path‑based routing via Caddy</em>
           </>
-        )
-      }
+        ),
+      },
     },
     position: { x: 0, y: 0 },
   },
   {
     id: 'group-docker',
     type: 'labeledGroup',
-    parentId: "react",
+    parentId: 'react',
     height: 410,
     data: {
       label: makeLabel(FaDocker, 'Docker Network'),
@@ -54,9 +61,9 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Encapsulates every service in an isolated network.
-              Provides environment orchestration, security boundaries, and
-              a reproducible dev/staging workflow.
+              Encapsulates every service in an isolated network. Provides
+              environment orchestration, security boundaries, and a reproducible
+              dev/staging workflow.
             </p>
           </>
         ),
@@ -64,7 +71,7 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Secure & replicable stack</em>
           </>
-        )
+        ),
       },
     },
     style: {
@@ -76,8 +83,8 @@ export const nodes: Array<NodeConfig> = [
   {
     id: 'caddy',
     type: 'info',
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
     data: {
       label: makeLabel(FaServer, 'Caddy (Reverse Proxy)'),
       info: 'Handles TLS & routes to Hono',
@@ -97,8 +104,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Auto‑provisions TLS certificates and renews them.
-              Routes incoming traffic to the appropriate backend.
+              Auto‑provisions TLS certificates and renews them. Routes incoming
+              traffic to the appropriate backend.
             </p>
           </>
         ),
@@ -106,8 +113,8 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Secure by default</em>
           </>
-        )
-      }
+        ),
+      },
     },
   },
   {
@@ -132,8 +139,9 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Manages complex DB interactions, authorization flows, and work‑order queuing.
-              Fully documented routes make it easy for the frontend to consume.
+              Manages complex DB interactions, authorization flows, and
+              work‑order queuing. Fully documented routes make it easy for the
+              frontend to consume.
             </p>
           </>
         ),
@@ -141,11 +149,11 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Client‑friendly endpoints</em>
           </>
-        )
-      }
+        ),
+      },
     },
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
   },
   {
     id: 'redis',
@@ -178,11 +186,11 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Low‑latency data store</em>
           </>
-        )
-      }
+        ),
+      },
     },
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
   },
   {
     id: 'postgres',
@@ -206,8 +214,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Handles high‑concurrency workloads with robust transaction support.
-              Scales horizontally with replicas and partitioning.
+              Handles high‑concurrency workloads with robust transaction
+              support. Scales horizontally with replicas and partitioning.
             </p>
           </>
         ),
@@ -215,11 +223,11 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Reliable relational DB</em>
           </>
-        )
-      }
+        ),
+      },
     },
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
   },
   {
     id: 'celery',
@@ -244,7 +252,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Self‑manages Python workloads—including numpy and Rust‑accelerated tasks—for complex processing like plagiarism detection.
+              Self‑manages Python workloads—including numpy and Rust‑accelerated
+              tasks—for complex processing like plagiarism detection.
             </p>
           </>
         ),
@@ -252,11 +261,11 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Cross‑language interoperability</em>
           </>
-        )
-      }
+        ),
+      },
     },
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
   },
   {
     id: 's3',
@@ -280,8 +289,8 @@ export const nodes: Array<NodeConfig> = [
         Body: (
           <>
             <p>
-              Offloads file uploads/downloads from the backend.
-              Generates signed URLs for secure, direct client access.
+              Offloads file uploads/downloads from the backend. Generates signed
+              URLs for secure, direct client access.
             </p>
           </>
         ),
@@ -289,13 +298,13 @@ export const nodes: Array<NodeConfig> = [
           <>
             <em>Scalable & durable</em>
           </>
-        )
-      }
+        ),
+      },
     },
-    parentId: "group-docker",
-    extent: "parent",
+    parentId: 'group-docker',
+    extent: 'parent',
   },
-];
+]
 
 export const edges: Array<EdgeConfig> = [
   {
@@ -303,55 +312,55 @@ export const edges: Array<EdgeConfig> = [
     source: 'react',
     target: 'caddy',
     label: 'HTTPS',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-caddy-ts',
     source: 'caddy',
     target: 'ts',
     label: 'forwards API',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-ts-postgres',
     source: 'ts',
     target: 'postgres',
     label: 'reads/writes',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-ts-redis',
     source: 'ts',
     target: 'redis',
     label: 'push jobs',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-celery-redis',
     source: 'celery',
     target: 'redis',
     label: 'pull jobs',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-celery-postgres',
     source: 'celery',
     target: 'postgres',
     label: 'reads/writes',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-caddy-s3',
     source: 'caddy',
     target: 's3',
     label: 'upload/download via signed URL for Client',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
   {
     id: 'e-ts-s3',
     source: 'ts',
     target: 's3',
     label: 'issues signed URL',
-    markerEnd: { type: MarkerType.ArrowClosed }
+    markerEnd: { type: MarkerType.ArrowClosed },
   },
-];
+]

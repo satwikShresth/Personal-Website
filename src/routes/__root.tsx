@@ -7,12 +7,12 @@ export const Route = createRootRoute({
     return (
       <>
         <Center>
-          <Box width="100%" maxWidth={"1800px"} position="relative">
+          <Box width="100%" maxWidth={'1800px'} position="relative">
             <Outlet />
             <TanStackRouterDevtools />
           </Box>
         </Center>
       </>
     )
-  }
+  },
 })

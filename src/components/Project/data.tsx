@@ -1,24 +1,23 @@
-import { Box, Image, Link, Text } from "@chakra-ui/react";
-import SHELVED from "/shelved.png"
-import INSP from '/inspiraiton.png';
-import PW from '/favicon.png';
-import OM from "/openmario.png"
-import { FaBookOpen } from "react-icons/fa";
-import * as openmario from "./data/openmario"
-import * as inspiration from "./data/inspiration"
-import type { ReactNode } from "@tanstack/react-router";
-import type { ReactElement } from "react";
-
+import { Box, Image, Link, Text } from '@chakra-ui/react'
+import SHELVED from '/shelved.png'
+import INSP from '/inspiraiton.png'
+import PW from '/favicon.png'
+import OM from '/openmario.png'
+import { FaBookOpen } from 'react-icons/fa'
+import * as openmario from './data/openmario'
+import * as inspiration from './data/inspiration'
+import type { ReactNode } from '@tanstack/react-router'
+import type { ReactElement } from 'react'
 
 export interface Projects {
-  name?: ReactElement;
-  image?: ReactNode;
-  icon?: ReactNode;
-  liveUrl?: string;
-  githubUrl?: string;
-  gitlabUrl?: string;
-  techStack: Array<string>;
-  description: Array<ReactElement>;
+  name?: ReactElement
+  image?: ReactNode
+  icon?: ReactNode
+  liveUrl?: string
+  githubUrl?: string
+  gitlabUrl?: string
+  techStack: Array<string>
+  description: Array<ReactElement>
 }
 
 export const projects: Array<Projects> = [
@@ -33,27 +32,31 @@ export const projects: Array<Projects> = [
       'TanStack Query',
       'Meilisearch',
       'Postgres',
-      'Python'
+      'Python',
     ].sort(),
     description: [
-      <>Open-source platform for Drexel students to search job listings, courses, and professor ratings in one place</>,
       <>
-        200+ weekly active users and 220+ wage submissions, without any marketing, just word of mouth and a <Link
-          color={"accent"}
-          href="https://www.reddit.com/r/Drexel/comments/1jsa5tj/i_made_the_drexel_term_master_we_deserve/" style={{ textDecoration: 'underline' }}
-        >Reddit post</Link>
+        Open-source platform for Drexel students to search job listings,
+        courses, and professor ratings in one place
+      </>,
+      <>
+        200+ weekly active users and 220+ wage submissions, without any
+        marketing, just word of mouth and a{' '}
+        <Link
+          color={'accent'}
+          href="https://www.reddit.com/r/Drexel/comments/1jsa5tj/i_made_the_drexel_term_master_we_deserve/"
+          style={{ textDecoration: 'underline' }}
+        >
+          Reddit post
+        </Link>
       </>,
       <>Hosted on my personal VPS</>,
     ],
-    ...openmario
+    ...openmario,
   },
   {
     image: (
-      <Box
-        bgColor={"white"}
-        position="relative"
-        borderRadius={"lg"}
-      >
+      <Box bgColor={'white'} position="relative" borderRadius={'lg'}>
         <Image src={INSP} position="relative" />
       </Box>
     ),
@@ -68,16 +71,27 @@ export const projects: Array<Projects> = [
       'Postgres',
       'Python',
       'Playwright',
-      'Rust'
+      'Rust',
     ].sort(),
     description: [
-      <>FERPA-compliant open-source plagiarism detection software developed for Drexel University, enabling self-hosted and privacy-focused implementation</>,
-      <>Incorporates multi-modal detection techniques based on Stanford research papers with enhanced visualization for software similarity analysis</>
+      <>
+        FERPA-compliant open-source plagiarism detection software developed for
+        Drexel University, enabling self-hosted and privacy-focused
+        implementation
+      </>,
+      <>
+        Incorporates multi-modal detection techniques based on Stanford research
+        papers with enhanced visualization for software similarity analysis
+      </>,
     ],
-    ...inspiration
+    ...inspiration,
   },
   {
-    name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Shelved</Text>,
+    name: (
+      <Text color={'accent'} fontSize={'2xl'} mb={2}>
+        Shelved
+      </Text>
+    ),
     image: <Image src={SHELVED} />,
     liveUrl: 'https://shelved.satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/shelved',
@@ -87,20 +101,36 @@ export const projects: Array<Projects> = [
       'Knex.js',
       'Postgres',
       'JavaScript',
-      'EJS'
+      'EJS',
     ].sort(),
     description: [
-      <>A simple group project where the goal was to master JavaScript as a raw language and build applications and features from scratch</>,
-      <>The learning outcome was a deeper understanding of CSS, JavaScript, server‑side rendering, and DOM manipulation</>,
+      <>
+        A simple group project where the goal was to master JavaScript as a raw
+        language and build applications and features from scratch
+      </>,
+      <>
+        The learning outcome was a deeper understanding of CSS, JavaScript,
+        server‑side rendering, and DOM manipulation
+      </>,
       <>Built entirely on Deno without any bundling</>,
       <>Used EJS to render web pages</>,
-      <>Employed a strategy pattern to integrate multiple content APIs and normalize their outputs into a unified format</>,
-      <>Implemented social features including friends, following, discovery, public collections, and private connections</>,
+      <>
+        Employed a strategy pattern to integrate multiple content APIs and
+        normalize their outputs into a unified format
+      </>,
+      <>
+        Implemented social features including friends, following, discovery,
+        public collections, and private connections
+      </>,
       <>Utilized PostgreSQL for the database</>,
-    ]
+    ],
   },
   {
-    name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Personal Website</Text>,
+    name: (
+      <Text color={'accent'} fontSize={'2xl'} mb={2}>
+        Personal Website
+      </Text>
+    ),
     image: <Image src={PW} />,
     liveUrl: 'https://satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/satwik.dev',
@@ -111,17 +141,32 @@ export const projects: Array<Projects> = [
       'TanStack Query',
       'Chakra UI',
       'CI/CD',
-      'GitHub Actions'
+      'GitHub Actions',
     ].sort(),
     description: [
-      <>A 100% client‑side playground for digging through my half‑baked blogs via full‑text or tag searches</>,
-      <>Born as therapy for my runaway hot takes—so I can’t lose my own brilliant (and not‑so‑brilliant) ideas</>,
-      <>No courses, no paywalls—just unfiltered opinions and unsolicited wisdom</>,
-      <>Also doubles as a humble shrine to my ramblings and occasional flashes of genius</>,
-    ]
+      <>
+        A 100% client‑side playground for digging through my half‑baked blogs
+        via full‑text or tag searches
+      </>,
+      <>
+        Born as therapy for my runaway hot takes—so I can’t lose my own
+        brilliant (and not‑so‑brilliant) ideas
+      </>,
+      <>
+        No courses, no paywalls—just unfiltered opinions and unsolicited wisdom
+      </>,
+      <>
+        Also doubles as a humble shrine to my ramblings and occasional flashes
+        of genius
+      </>,
+    ],
   },
   {
-    name: <Text color={"accent"} fontSize={"2xl"} mb={2}>Library</Text>,
+    name: (
+      <Text color={'accent'} fontSize={'2xl'} mb={2}>
+        Library
+      </Text>
+    ),
     icon: FaBookOpen,
     liveUrl: 'https://cs478.satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/Library',
@@ -136,10 +181,16 @@ export const projects: Array<Projects> = [
       'Zod',
     ].sort(),
     description: [
-      <>A humble assignment I actually hosted—so now it’s your problem to check it out.</>,
+      <>
+        A humble assignment I actually hosted—so now it’s your problem to check
+        it out.
+      </>,
       <>Fully typed in TypeScript and neatly structured for posterity.</>,
-      <>My very first React app—a quaint benchmark against what I’m building today.</>,
+      <>
+        My very first React app—a quaint benchmark against what I’m building
+        today.
+      </>,
       <>No bells, no whistles: just raw, typed React goodness.</>,
     ],
   },
-];
+]

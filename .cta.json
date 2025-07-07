@@ -9,8 +9,5 @@
   "variableValues": {},
   "git": true,
   "version": 1,
-  "existingAddOns": [
-    "tanstack-query",
-    "form"
-  ]
+  "existingAddOns": ["tanstack-query", "form"]
 }

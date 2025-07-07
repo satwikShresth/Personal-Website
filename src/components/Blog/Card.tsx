@@ -1,4 +1,8 @@
-import { Link as RouterLink, linkOptions, useNavigate } from '@tanstack/react-router';
+import {
+  Link as RouterLink,
+  linkOptions,
+  useNavigate,
+} from '@tanstack/react-router'
 import {
   Badge,
   Box,
@@ -13,23 +17,23 @@ import {
   Image,
   Tag,
   Text,
-} from '@chakra-ui/react';
-import { FaArrowRight, FaCalendarAlt, FaClock } from 'react-icons/fa';
-import { Tooltip } from '../ui/tooltip';
-import { useBlogMetadataStore } from './store';
-import { useColorModeValue } from '@/components/ui/color-mode';
+} from '@chakra-ui/react'
+import { FaArrowRight, FaCalendarAlt, FaClock } from 'react-icons/fa'
+import { Tooltip } from '../ui/tooltip'
+import { useBlogMetadataStore } from './store'
+import { useColorModeValue } from '@/components/ui/color-mode'
 
 export type BlogCardProps = {
-  slug: string;
-  title: string;
-  date: string;
-  description: string;
-  tags: Array<string>;
-  image?: string;
-  variant?: 'normal' | 'suggested';
-  showReadMore?: boolean;
-  estimatedReadTime?: number;
-};
+  slug: string
+  title: string
+  date: string
+  description: string
+  tags: Array<string>
+  image?: string
+  variant?: 'normal' | 'suggested'
+  showReadMore?: boolean
+  estimatedReadTime?: number
+}
 
 export function BlogCard({
   slug,
@@ -41,27 +45,27 @@ export function BlogCard({
   variant = 'normal',
   estimatedReadTime,
 }: BlogCardProps) {
-  const { markPostAsRead, readPosts } = useBlogMetadataStore();
-  const navigate = useNavigate();
+  const { markPostAsRead, readPosts } = useBlogMetadataStore()
+  const navigate = useNavigate()
 
-  const isRead = readPosts.includes(slug);
+  const isRead = readPosts.includes(slug)
 
-  const mutedColor = useColorModeValue('gray.500', 'gray.400');
+  const mutedColor = useColorModeValue('gray.500', 'gray.400')
 
   // Format date
   const formattedDate = new Date(date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
-    day: 'numeric'
-  });
+    day: 'numeric',
+  })
 
   const handleClick = () => {
-    markPostAsRead(slug);
-    navigate({ to: "/blog/$post", params: { post: slug } })
-  };
+    markPostAsRead(slug)
+    navigate({ to: '/blog/$post', params: { post: slug } })
+  }
 
   // Calculate estimated read time if not provided
-  const readTime = estimatedReadTime || Math.ceil(description.length / 1000) + 2;
+  const readTime = estimatedReadTime || Math.ceil(description.length / 1000) + 2
 
   if (variant === 'suggested') {
     return (
@@ -70,7 +74,7 @@ export function BlogCard({
         overflow="hidden"
         p={4}
         m={4}
-        cursor={"pointer"}
+        cursor={'pointer'}
         height="100%"
         _hover={{
           transform: 'translateY(-4px)',
@@ -81,47 +85,43 @@ export function BlogCard({
         onClick={handleClick}
         position="relative"
       >
-        {
-          isRead && (
-            <Tooltip content="You've read this article">
-              <Tag.Root borderRadius={"xl"}>
-                <Tag.Label>
-                  Read
-                </Tag.Label>
-              </Tag.Root>
-            </Tooltip>
-          )
-        }
+        {isRead && (
+          <Tooltip content="You've read this article">
+            <Tag.Root borderRadius={'xl'}>
+              <Tag.Label>Read</Tag.Label>
+            </Tag.Root>
+          </Tooltip>
+        )}
 
-        {
-          image && (
-            <Box
-              overflow="hidden"
+        {image && (
+          <Box
+            overflow="hidden"
+            borderRadius="lg"
+            minW={{ base: '100%', md: '220px' }}
+            maxW={{ base: '100%', md: '220px' }}
+            mr={{ base: 0, md: 4 }}
+            mb={{ base: 4, md: 0 }}
+          >
+            <Image
+              objectFit="cover"
+              w="100%"
+              h="100%"
+              src={image}
+              alt={title}
               borderRadius="lg"
-              minW={{ base: '100%', md: '220px' }}
-              maxW={{ base: '100%', md: '220px' }}
-              mr={{ base: 0, md: 4 }}
-              mb={{ base: 4, md: 0 }}
-            >
-              <Image
-                objectFit="cover"
-                w="100%"
-                h="100%"
-                src={image}
-                alt={title}
-                borderRadius="lg"
-                transition="transform 0.5s"
-                _hover={{ transform: 'scale(1.05)' }}
-              />
-            </Box>
-          )
-        }
+              transition="transform 0.5s"
+              _hover={{ transform: 'scale(1.05)' }}
+            />
+          </Box>
+        )}
 
         <Flex flex="1" flexDirection="column" justifyContent="space-between">
           <CardBody p={0}>
             <Box mb={3}>
-              <Badge colorScheme="teal" mb={2} px={2} py={1} borderRadius="md">Suggested</Badge>
-              <HStack color={mutedColor} fontSize="sm" mt={1} >
+              <Badge colorScheme="teal" mb={2} px={2} py={1} borderRadius="md">
+                Suggested
+              </Badge>
+              <HStack color={mutedColor} fontSize="sm" mt={1}>
                 <Icon as={FaCalendarAlt} fontSize="xs" />
                 <Text>{formattedDate}</Text>
                 {estimatedReadTime && (
@@ -137,7 +137,7 @@ export function BlogCard({
             <Heading
               as="h2"
               size="lg"
-              color={"accent"}
+              color={'accent'}
               fontWeight="700"
               mb={3}
               lineHeight="1.2"
@@ -168,13 +168,12 @@ export function BlogCard({
 
           <CardFooter p={0} mt={4}>
             <Button
-              borderRadius={"lg"}
+              borderRadius={'lg'}
               colorScheme="teal"
               as={RouterLink}
               {...linkOptions({
                 to: '/blog/$post',
-                params: { post: slug }
-
+                params: { post: slug },
               })}
               variant="solid"
               size="md"
@@ -186,8 +185,8 @@ export function BlogCard({
             </Button>
           </CardFooter>
         </Flex>
-      </Card.Root >
-    );
+      </Card.Root>
+    )
   }
 
   // Normal variant (default)
@@ -195,8 +194,8 @@ export function BlogCard({
     <Card.Root
       borderRadius="xl"
       overflow="hidden"
-      bgBlendMode={"lighten"}
-      cursor={"pointer"}
+      bgBlendMode={'lighten'}
+      cursor={'pointer'}
       _hover={{
         transform: 'translateY(-4px)',
         boxShadow: 'xl',
@@ -206,7 +205,6 @@ export function BlogCard({
       position="relative"
       onClick={handleClick}
     >
-
       {image && (
         <Box position="relative" overflow="hidden">
           <Image
@@ -229,7 +227,12 @@ export function BlogCard({
       )}
 
       <CardBody p={5}>
-        <HStack color={mutedColor} fontSize="sm" mb={3} justifyContent={"space-between"}>
+        <HStack
+          color={mutedColor}
+          fontSize="sm"
+          mb={3}
+          justifyContent={'space-between'}
+        >
           <HStack>
             <Icon as={FaCalendarAlt} fontSize="xs" />
             <Text>{formattedDate}</Text>
@@ -247,21 +250,18 @@ export function BlogCard({
               <Box>
                 <Tooltip content="You've read this article">
                   <Tag.Root>
-                    <Tag.Label>
-                      Read
-                    </Tag.Label>
+                    <Tag.Label>Read</Tag.Label>
                   </Tag.Root>
                 </Tooltip>
               </Box>
             )}
           </HStack>
-
         </HStack>
 
         <Heading
           as="h2"
           fontSize="xl"
-          color={"accent"}
+          color={'accent'}
           fontWeight="700"
           mb={3}
           lineHeight="1.3"
@@ -289,9 +289,8 @@ export function BlogCard({
           ))}
         </Flex>
       </CardBody>
-
     </Card.Root>
-  );
+  )
 }
 
-export default BlogCard;
+export default BlogCard

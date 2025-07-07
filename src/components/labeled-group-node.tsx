@@ -1,13 +1,13 @@
-import { forwardRef } from "react";
-import { Panel } from "@xyflow/react";
-import type { HTMLAttributes, ReactNode } from "react";
-import type { NodeProps, PanelPosition } from "@xyflow/react";
-import { BaseNode } from "@/components/base-node";
-import { cn } from "@/lib/utils";
+import { forwardRef } from 'react'
+import { Panel } from '@xyflow/react'
+import type { HTMLAttributes, ReactNode } from 'react'
+import type { NodeProps, PanelPosition } from '@xyflow/react'
+import { BaseNode } from '@/components/base-node'
+import { cn } from '@/lib/utils'
 
 /* GROUP NODE Label ------------------------------------------------------- */
 
-export type GroupNodeLabelProps = HTMLAttributes<HTMLDivElement>;
+export type GroupNodeLabelProps = HTMLAttributes<HTMLDivElement>
 
 export const GroupNodeLabel = forwardRef<HTMLDivElement, GroupNodeLabelProps>(
   ({ children, className, ...props }, ref) => {
@@ -15,23 +15,23 @@ export const GroupNodeLabel = forwardRef<HTMLDivElement, GroupNodeLabelProps>(
       <div ref={ref} className="h-full w-full" {...props}>
         <div
           className={cn(
-            "w-fit bg-gray-200 bg-secondary p-2 text-xs text-card-foreground",
+            'w-fit bg-gray-200 bg-secondary p-2 text-xs text-card-foreground',
             className,
           )}
         >
           {children}
         </div>
       </div>
-    );
+    )
   },
-);
+)
 
-GroupNodeLabel.displayName = "GroupNodeLabel";
+GroupNodeLabel.displayName = 'GroupNodeLabel'
 
 export type GroupNodeProps = Partial<NodeProps> & {
-  label?: ReactNode;
-  position?: PanelPosition;
-};
+  label?: ReactNode
+  position?: PanelPosition
+}
 
 /* GROUP NODE -------------------------------------------------------------- */
 
@@ -39,22 +39,22 @@ export const GroupNode = forwardRef<HTMLDivElement, GroupNodeProps>(
   ({ selected, label, position, ...props }, ref) => {
     const getLabelClassName = (position?: PanelPosition) => {
       switch (position) {
-        case "top-left":
-          return "rounded-br-sm";
-        case "top-center":
-          return "rounded-b-sm";
-        case "top-right":
-          return "rounded-bl-sm";
-        case "bottom-left":
-          return "rounded-tr-sm";
-        case "bottom-right":
-          return "rounded-tl-sm";
-        case "bottom-center":
-          return "rounded-t-sm";
+        case 'top-left':
+          return 'rounded-br-sm'
+        case 'top-center':
+          return 'rounded-b-sm'
+        case 'top-right':
+          return 'rounded-bl-sm'
+        case 'bottom-left':
+          return 'rounded-tr-sm'
+        case 'bottom-right':
+          return 'rounded-tl-sm'
+        case 'bottom-center':
+          return 'rounded-t-sm'
         default:
-          return "rounded-br-sm";
+          return 'rounded-br-sm'
       }
-    };
+    }
 
     return (
       <BaseNode
@@ -63,7 +63,7 @@ export const GroupNode = forwardRef<HTMLDivElement, GroupNodeProps>(
         className="h-full overflow-hidden rounded-sm bg-white bg-opacity-50 p-0"
         {...props}
       >
-        <Panel className={cn("m-0 p-0")} position={position}>
+        <Panel className={cn('m-0 p-0')} position={position}>
           {label && (
             <GroupNodeLabel className={getLabelClassName(position)}>
               {label}
@@ -71,8 +71,8 @@ export const GroupNode = forwardRef<HTMLDivElement, GroupNodeProps>(
           )}
         </Panel>
       </BaseNode>
-    );
+    )
   },
-);
+)
 
-GroupNode.displayName = "GroupNode";
+GroupNode.displayName = 'GroupNode'

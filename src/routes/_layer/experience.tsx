@@ -6,12 +6,10 @@ export const Route = createFileRoute('/_layer/experience')({
   component: () => {
     return (
       <Center>
-        <VStack width="100%" mt={2} gap={"10"} >
+        <VStack width="100%" mt={2} gap={'10'}>
           <Box as={ExperiencePage} />
         </VStack>
       </Center>
     )
-  }
+  },
 })
-
-

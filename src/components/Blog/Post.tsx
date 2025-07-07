@@ -1,20 +1,31 @@
-import { useMDXComponents } from "@mdx-js/react";
-import { Badge, Box, Container, Flex, HStack, Heading, Image, Separator, Text, VStack } from "@chakra-ui/react";
-import { FaCalendarAlt } from "react-icons/fa";
-import { useColorModeValue } from "../ui/color-mode";
-import authorImage from "/my_photo.jpeg"
-import type { BlogMetadata } from "./store";
+import { useMDXComponents } from '@mdx-js/react'
+import {
+  Badge,
+  Box,
+  Container,
+  Flex,
+  HStack,
+  Heading,
+  Image,
+  Separator,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
+import { FaCalendarAlt } from 'react-icons/fa'
+import { useColorModeValue } from '../ui/color-mode'
+import authorImage from '/my_photo.jpeg'
+import type { BlogMetadata } from './store'
 
 interface PostProps {
-  MdxCompoenent: any;
-  metadata: BlogMetadata;
+  MdxCompoenent: any
+  metadata: BlogMetadata
 }
 function Post({ MdxCompoenent, metadata }: PostProps) {
-  const headingColor = useColorModeValue('gray.800', 'white');
-  const publishDate = metadata.date;
-  const tags = metadata.tags;
-  const author = "Satwik Shresth";
-  const Content = useMDXComponents(MdxCompoenent);
+  const headingColor = useColorModeValue('gray.800', 'white')
+  const publishDate = metadata.date
+  const tags = metadata.tags
+  const author = 'Satwik Shresth'
+  const Content = useMDXComponents(MdxCompoenent)
 
   return (
     <Container maxW="container.xl" py={12}>
@@ -22,33 +33,39 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
       <Box textAlign="left">
         <Heading
           as="h1"
-          fontSize={{ base: "4xl", md: "6xl" }}
+          fontSize={{ base: '4xl', md: '6xl' }}
           fontWeight="extrabold"
           color={headingColor}
           mb={6}
         >
           {(() => {
-            const title = metadata.title || "";
-            const words = title.trim().split(/\s+/);
+            const title = metadata.title || ''
+            const words = title.trim().split(/\s+/)
 
             if (words.length <= 1) {
-              return <Box as="span" color={"accent"}>{title}</Box>;
+              return (
+                <Box as="span" color={'accent'}>
+                  {title}
+                </Box>
+              )
             }
 
-            const lastWord = words.pop();
-            const normalText = words.join(' ');
+            const lastWord = words.pop()
+            const normalText = words.join(' ')
 
             return (
               <>
                 {normalText}{' '}
-                <Box as="span" color={"accent"}>{lastWord}</Box>
+                <Box as="span" color={'accent'}>
+                  {lastWord}
+                </Box>
               </>
-            );
+            )
           })()}
         </Heading>
 
         <Text
-          fontSize={{ base: "xl", md: "2xl" }}
+          fontSize={{ base: 'xl', md: '2xl' }}
           maxW="container.lg"
           mx="auto"
           opacity={0.9}
@@ -81,13 +98,13 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
                   borderRadius="md"
                   mb={2}
                 >
-                  <Text color={"white"}>{tag}</Text>
+                  <Text color={'white'}>{tag}</Text>
                 </Badge>
               ))}
             </Flex>
 
             {/* Author and Date */}
-            <HStack >
+            <HStack>
               {/* Author */}
               <Flex alignItems="center">
                 <Box
@@ -96,17 +113,23 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
                   borderRadius="full"
                   overflow="hidden"
                   borderWidth="2px"
-                  borderColor={"accent"}
+                  borderColor={'accent'}
                   mr={2}
                 >
-                  <Image src={authorImage} alt={author} width="100%" height="100%" objectFit="cover" />
+                  <Image
+                    src={authorImage}
+                    alt={author}
+                    width="100%"
+                    height="100%"
+                    objectFit="cover"
+                  />
                 </Box>
                 <Text fontSize="md">{author}</Text>
               </Flex>
 
               {/* Date */}
               <Flex alignItems="center">
-                <Box color={"accent"} mr={2}>
+                <Box color={'accent'} mr={2}>
                   <FaCalendarAlt />
                 </Box>
                 <Text fontSize="md">{publishDate}</Text>
@@ -115,7 +138,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
           </VStack>
         </Flex>
 
-        <Separator mb={8} width={"70%"} borderColor={"accent"} />
+        <Separator mb={8} width={'70%'} borderColor={'accent'} />
       </Box>
 
       <Box className="mdx-content">
@@ -123,7 +146,7 @@ function Post({ MdxCompoenent, metadata }: PostProps) {
         {Content}
       </Box>
     </Container>
-  );
+  )
 }
 
-export default Post;
+export default Post

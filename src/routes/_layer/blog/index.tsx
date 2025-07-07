@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router'
 import {
   Badge,
   Box,
@@ -13,15 +13,15 @@ import {
   SimpleGrid,
   Text,
   createListCollection,
-} from '@chakra-ui/react';
-import { FaFilter } from 'react-icons/fa';
-import { useBlogMetadataStore } from '@/components/Blog/store';
-import { Blog } from '@/components/Blog';
-import { useColorModeValue } from '@/components/ui/color-mode';
+} from '@chakra-ui/react'
+import { FaFilter } from 'react-icons/fa'
+import { useBlogMetadataStore } from '@/components/Blog/store'
+import { Blog } from '@/components/Blog'
+import { useColorModeValue } from '@/components/ui/color-mode'
 
 export const Route = createFileRoute('/_layer/blog/')({
-  component: BlogPage
-});
+  component: BlogPage,
+})
 
 function BlogPage() {
   const {
@@ -30,40 +30,43 @@ function BlogPage() {
     getAllTags,
     getFilteredPosts,
     setSelectedTags,
-    setSearchQuery
-  } = useBlogMetadataStore();
-  const headingColor = useColorModeValue('gray.800', 'white');
+    setSearchQuery,
+  } = useBlogMetadataStore()
+  const headingColor = useColorModeValue('gray.800', 'white')
 
   const tags = createListCollection({
-    items: getAllTags().map(value => ({ label: value, value }))
+    items: getAllTags().map((value) => ({ label: value, value })),
   })
-  const filteredPosts = getFilteredPosts();
+  const filteredPosts = getFilteredPosts()
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
+    setSearchQuery(e.target.value)
+  }
 
   return (
     <>
       <Box textAlign="left" mb={10}>
         <Heading
           as="h1"
-          fontSize={{ base: "4xl", md: "6xl" }}
+          fontSize={{ base: '4xl', md: '6xl' }}
           fontWeight="extrabold"
           color={headingColor}
           mb={6}
         >
-          Explore <Box as="span" color={"accent"}>Blogs</Box>
+          Explore{' '}
+          <Box as="span" color={'accent'}>
+            Blogs
+          </Box>
         </Heading>
 
         <Text
-          fontSize={{ base: "xl", md: "2xl" }}
+          fontSize={{ base: 'xl', md: '2xl' }}
           maxW="container.lg"
           mx="auto"
           opacity={0.9}
           letterSpacing="wide"
         >
-          Random brain dumps: occasional flair  and inevitable tangents.
+          Random brain dumps: occasional flair and inevitable tangents.
         </Text>
       </Box>
 
@@ -81,12 +84,11 @@ function BlogPage() {
             value={searchQuery}
             onChange={handleSearchChange}
             borderRadius="lg"
-          >
-          </Input>
+          ></Input>
         </Box>
 
         {/* Filter Controls */}
-        <HStack >
+        <HStack>
           <Select.Root
             collection={tags}
             multiple
@@ -131,7 +133,7 @@ function BlogPage() {
         </HStack>
 
         {filteredPosts.length > 0 ? (
-          <SimpleGrid columns={{ base: 1, md: 2 }} gap={"5"}>
+          <SimpleGrid columns={{ base: 1, md: 2 }} gap={'5'}>
             {filteredPosts.map((post) => (
               <Blog.Card
                 key={post.slug}
@@ -149,11 +151,13 @@ function BlogPage() {
           <Box textAlign="center" py={10} borderRadius="lg">
             <Icon as={FaFilter} fontSize="3xl" mb={3} />
             <Text fontSize="lg">No posts match your filters.</Text>
-            <Text color="gray.500">Try adjusting your search or tag selections.</Text>
+            <Text color="gray.500">
+              Try adjusting your search or tag selections.
+            </Text>
 
             {selectedTags.length > 0 && (
               <Button
-                borderRadius={"lg"}
+                borderRadius={'lg'}
                 mt={4}
                 color="accent"
                 variant="outline"
@@ -165,7 +169,7 @@ function BlogPage() {
 
             {searchQuery && (
               <Button
-                borderRadius={"lg"}
+                borderRadius={'lg'}
                 mt={4}
                 ml={selectedTags.length > 0 ? 2 : 0}
                 color="accent"
@@ -179,5 +183,5 @@ function BlogPage() {
         )}
       </Box>
     </>
-  );
+  )
 }

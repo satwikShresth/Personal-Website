@@ -10,25 +10,25 @@ import {
   Separator,
   Table,
   Text,
-} from '@chakra-ui/react';
-import { Outlet, createFileRoute } from '@tanstack/react-router';
-import { MDXProvider } from '@mdx-js/react';
-import { useColorModeValue } from '@/components/ui/color-mode';
-import { Blog } from '@/components/Blog';
-import mdx from '@/components/mdx';
+} from '@chakra-ui/react'
+import { Outlet, createFileRoute } from '@tanstack/react-router'
+import { MDXProvider } from '@mdx-js/react'
+import { useColorModeValue } from '@/components/ui/color-mode'
+import { Blog } from '@/components/Blog'
+import mdx from '@/components/mdx'
 
 export const Route = createFileRoute('/_layer/blog')({
   component: () => {
-    const textColor = useColorModeValue('gray.700', 'gray.200');
-    const headingColor = useColorModeValue('gray.800', 'white');
-    const blockquoteBg = useColorModeValue('gray.50', 'gray.700');
-    const codeBg = useColorModeValue('gray.50', 'gray.700');
+    const textColor = useColorModeValue('gray.700', 'gray.200')
+    const headingColor = useColorModeValue('gray.800', 'white')
+    const blockquoteBg = useColorModeValue('gray.50', 'gray.700')
+    const codeBg = useColorModeValue('gray.50', 'gray.700')
 
     const components = {
       h1: (props: any) => (
         <Heading
           as="h1"
-          fontSize={{ base: "4xl", md: "5xl" }}
+          fontSize={{ base: '4xl', md: '5xl' }}
           fontWeight="extrabold"
           color={headingColor}
           mt={10}
@@ -39,7 +39,7 @@ export const Route = createFileRoute('/_layer/blog')({
       h2: (props: any) => (
         <Heading
           as="h2"
-          fontSize={{ base: "3xl", md: "4xl" }}
+          fontSize={{ base: '3xl', md: '4xl' }}
           fontWeight="bold"
           color={headingColor}
           mt={8}
@@ -50,7 +50,7 @@ export const Route = createFileRoute('/_layer/blog')({
       h3: (props: any) => (
         <Heading
           as="h3"
-          fontSize={{ base: "2xl", md: "3xl" }}
+          fontSize={{ base: '2xl', md: '3xl' }}
           fontWeight="bold"
           color={headingColor}
           mt={6}
@@ -61,7 +61,7 @@ export const Route = createFileRoute('/_layer/blog')({
       h4: (props: any) => (
         <Heading
           as="h4"
-          fontSize={{ base: "xl", md: "2xl" }}
+          fontSize={{ base: 'xl', md: '2xl' }}
           fontWeight="bold"
           color={headingColor}
           mt={5}
@@ -71,7 +71,7 @@ export const Route = createFileRoute('/_layer/blog')({
       ),
       p: (props: any) => (
         <Text
-          fontSize={{ base: "md", md: "lg" }}
+          fontSize={{ base: 'md', md: 'lg' }}
           lineHeight="tall"
           color={textColor}
           mb={4}
@@ -83,7 +83,7 @@ export const Route = createFileRoute('/_layer/blog')({
         <Link
           fontWeight="medium"
           textDecoration="underline"
-          _hover={{ textDecoration: "none" }}
+          _hover={{ textDecoration: 'none' }}
           {...props}
         />
       ),
@@ -91,13 +91,13 @@ export const Route = createFileRoute('/_layer/blog')({
         <Box
           as="blockquote"
           borderLeftWidth="4px"
-          borderLeftColor={"accent"}
+          borderLeftColor={'accent'}
           bg={blockquoteBg}
           px={6}
           py={4}
           my={6}
           borderRadius="md"
-          fontSize={{ base: "md", md: "lg" }}
+          fontSize={{ base: 'md', md: 'lg' }}
           fontStyle="italic"
           {...props}
         />
@@ -108,7 +108,7 @@ export const Route = createFileRoute('/_layer/blog')({
           px={2}
           py={1}
           borderRadius="md"
-          fontSize={{ base: "sm", md: "md" }}
+          fontSize={{ base: 'sm', md: 'md' }}
           {...props}
         />
       ),
@@ -120,7 +120,7 @@ export const Route = createFileRoute('/_layer/blog')({
           borderRadius="md"
           overflowX="auto"
           my={6}
-          fontSize={{ base: "sm", md: "md" }}
+          fontSize={{ base: 'sm', md: 'md' }}
           {...props}
         />
       ),
@@ -164,11 +164,11 @@ export const Route = createFileRoute('/_layer/blog')({
       // Custom component for blog post metadata like date, tags, etc.
       BlogMeta: ({ date, tags, readTime }: any) => (
         <Flex
-          direction={{ base: "column", md: "row" }}
+          direction={{ base: 'column', md: 'row' }}
           gap={{ base: 2, md: 4 }}
           mb={8}
           mt={2}
-          align={{ base: "flex-start", md: "center" }}
+          align={{ base: 'flex-start', md: 'center' }}
         >
           {date && (
             <Text fontSize="md" color="gray.500">
@@ -203,7 +203,7 @@ export const Route = createFileRoute('/_layer/blog')({
         <Box my={8}>
           <Image
             src={src}
-            alt={alt || "Featured image"}
+            alt={alt || 'Featured image'}
             borderRadius="lg"
             w="full"
             maxH="500px"
@@ -216,7 +216,7 @@ export const Route = createFileRoute('/_layer/blog')({
           )}
         </Box>
       ),
-    };
+    }
     return (
       <Container>
         <MDXProvider components={{ ...components }}>
@@ -225,6 +225,6 @@ export const Route = createFileRoute('/_layer/blog')({
           </Blog.Root>
         </MDXProvider>
       </Container>
-    );
+    )
   },
-});
+})

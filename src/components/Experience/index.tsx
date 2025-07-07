@@ -1,27 +1,39 @@
-import { FaCheckCircle } from 'react-icons/fa';
-import { Badge, Box, Container, Flex, Heading, Text, Timeline, VStack } from '@chakra-ui/react';
-import { experiences } from './data';
-import { useColorModeValue } from '@/components/ui/color-mode';
+import { FaCheckCircle } from 'react-icons/fa'
+import {
+  Badge,
+  Box,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  Timeline,
+  VStack,
+} from '@chakra-ui/react'
+import { experiences } from './data'
+import { useColorModeValue } from '@/components/ui/color-mode'
 
 function ExperiencePage() {
-  const headingColor = useColorModeValue('gray.800', 'white');
+  const headingColor = useColorModeValue('gray.800', 'white')
 
   return (
-    <Container >
+    <Container>
       <VStack align="stretch">
         <Box textAlign="left">
           <Heading
             as="h1"
-            fontSize={"5xl"}
+            fontSize={'5xl'}
             fontWeight="extrabold"
             color={headingColor}
             mb={2}
           >
-            Professional <Box as="span" color={"accent"}>Experience</Box>
+            Professional{' '}
+            <Box as="span" color={'accent'}>
+              Experience
+            </Box>
           </Heading>
 
           <Text
-            fontSize={"2xl"}
+            fontSize={'2xl'}
             maxW="container.lg"
             mx="auto"
             opacity={0.9}
@@ -35,8 +47,14 @@ function ExperiencePage() {
           {experiences.map((exp, index) => (
             <Timeline.Item key={index}>
               <Timeline.Connector>
-                <Timeline.Separator borderColor={"accent"} />
-                <Timeline.Indicator boxSize={"20"} overflow={"clip"} borderRadius={"lg"} borderColor={"accent"} borderWidth={"2px"}>
+                <Timeline.Separator borderColor={'accent'} />
+                <Timeline.Indicator
+                  boxSize={'20'}
+                  overflow={'clip'}
+                  borderRadius={'lg'}
+                  borderColor={'accent'}
+                  borderWidth={'2px'}
+                >
                   {exp.image}
                 </Timeline.Indicator>
               </Timeline.Connector>
@@ -44,13 +62,28 @@ function ExperiencePage() {
               <Timeline.Content gap={4} mt={-1}>
                 <Timeline.Title>
                   <VStack align="start">
-                    <Heading as="h2" size="lg" fontWeight="bold">{exp.position}</Heading>
-                    <Flex gap={2} alignItems="center" mt={"-1"}>
-                      <Text fontWeight="bold" fontSize="xl">{exp.company}</Text>
-                      <Text fontSize="md" mt={1.4}>• {exp.location}</Text>
+                    <Heading as="h2" size="lg" fontWeight="bold">
+                      {exp.position}
+                    </Heading>
+                    <Flex gap={2} alignItems="center" mt={'-1'}>
+                      <Text fontWeight="bold" fontSize="xl">
+                        {exp.company}
+                      </Text>
+                      <Text fontSize="md" mt={1.4}>
+                        • {exp.location}
+                      </Text>
                     </Flex>
-                    <Text fontSize="md" fontWeight="medium" mt={-1}>{exp.team}</Text>
-                    <Text fontSize="lg" fontWeight="semibold" color="accent" mt={1}>{exp.period}</Text>
+                    <Text fontSize="md" fontWeight="medium" mt={-1}>
+                      {exp.team}
+                    </Text>
+                    <Text
+                      fontSize="lg"
+                      fontWeight="semibold"
+                      color="accent"
+                      mt={1}
+                    >
+                      {exp.period}
+                    </Text>
                   </VStack>
                 </Timeline.Title>
 
@@ -61,7 +94,9 @@ function ExperiencePage() {
                         <Box mt={1} color="accent">
                           <FaCheckCircle size={20} />
                         </Box>
-                        <Text mt={1.5} color={"text"} fontSize="lg">{resp}</Text>
+                        <Text mt={1.5} color={'text'} fontSize="lg">
+                          {resp}
+                        </Text>
                       </Flex>
                     ))}
                   </VStack>
@@ -82,14 +117,13 @@ function ExperiencePage() {
                   ))}
                 </Flex>
                 <Box mt={5}></Box>
-
               </Timeline.Content>
             </Timeline.Item>
           ))}
         </Timeline.Root>
       </VStack>
     </Container>
-  );
+  )
 }
 
-export default ExperiencePage;
+export default ExperiencePage

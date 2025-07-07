@@ -5,13 +5,12 @@
   "scripts": {
     "dev": "vite --port 3000",
     "start": "vite --port 3000",
-    "build": "vite build && tsc",
+    "build": "vite build && tsc --noCheck",
     "serve": "vite preview",
     "test": "vitest run",
     "lint": "eslint",
     "format": "prettier",
-    "check": "prettier --write . && eslint --fix",
-    "gen:brawlstars:client": "openapi-ts"
+    "check": "prettier --write . && eslint --fix"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.17.0",

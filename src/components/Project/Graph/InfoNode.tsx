@@ -1,11 +1,11 @@
-import { Handle, Position } from '@xyflow/react';
-import { HoverCard, Portal } from '@chakra-ui/react';
-import type { NodeProps } from '@xyflow/react';
+import { Handle, Position } from '@xyflow/react'
+import { HoverCard, Portal } from '@chakra-ui/react'
+import type { NodeProps } from '@xyflow/react'
 import {
   TooltipContent,
   TooltipNode,
   TooltipTrigger,
-} from '@/components/tooltip-node';
+} from '@/components/tooltip-node'
 
 const InfoNode = ({ selected, data }: NodeProps) => {
   const triggerStyle = {
@@ -21,10 +21,10 @@ const InfoNode = ({ selected, data }: NodeProps) => {
     justifyContent: 'center',
     // @ts-ignore: something
     ...data.style,
-  };
+  }
 
   return (
-    <HoverCard.Root size="lg" positioning={{ placement: "top" }} openDelay={0}>
+    <HoverCard.Root size="lg" positioning={{ placement: 'top' }} openDelay={0}>
       <TooltipNode selected={selected}>
         {/* Incoming connections land here */}
 
@@ -35,9 +35,7 @@ const InfoNode = ({ selected, data }: NodeProps) => {
         />
 
         <HoverCard.Trigger asChild>
-          <TooltipTrigger style={triggerStyle}>
-            {data?.label}
-          </TooltipTrigger>
+          <TooltipTrigger style={triggerStyle}>{data?.label}</TooltipTrigger>
         </HoverCard.Trigger>
 
         <Handle
@@ -60,9 +58,9 @@ const InfoNode = ({ selected, data }: NodeProps) => {
             </HoverCard.Positioner>
           </Portal>
         </TooltipContent>
-      </TooltipNode >
+      </TooltipNode>
     </HoverCard.Root>
-  );
-};
+  )
+}
 
-export default InfoNode;
+export default InfoNode

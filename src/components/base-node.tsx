@@ -1,7 +1,7 @@
-import { forwardRef } from "react";
-import type { HTMLAttributes } from "react";
+import { forwardRef } from 'react'
+import type { HTMLAttributes } from 'react'
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils'
 
 export const BaseNode = forwardRef<
   HTMLDivElement,
@@ -10,14 +10,14 @@ export const BaseNode = forwardRef<
   <div
     ref={ref}
     className={cn(
-      "relative rounded-md border bg-card p-5 text-card-foreground",
+      'relative rounded-md border bg-card p-5 text-card-foreground',
       className,
-      selected ? "border-muted-foreground shadow-lg" : "",
-      "hover:ring-1",
+      selected ? 'border-muted-foreground shadow-lg' : '',
+      'hover:ring-1',
     )}
     tabIndex={0}
     {...props}
   />
-));
+))
 
-BaseNode.displayName = "BaseNode";
+BaseNode.displayName = 'BaseNode'

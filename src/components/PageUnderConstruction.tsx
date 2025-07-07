@@ -1,5 +1,14 @@
-import { Box, Button, Center, Container, Flex, Heading, Icon, VStack } from "@chakra-ui/react";
-import { FaArrowLeft, FaHardHat } from "react-icons/fa";
+import {
+  Box,
+  Button,
+  Center,
+  Container,
+  Flex,
+  Heading,
+  Icon,
+  VStack,
+} from '@chakra-ui/react'
+import { FaArrowLeft, FaHardHat } from 'react-icons/fa'
 
 export default function PageUnderConstruction() {
   return (
@@ -7,14 +16,9 @@ export default function PageUnderConstruction() {
       <Box mb={20} width="100%">
         <Container maxW="container.xl">
           {/* Main Content */}
-          <Flex
-            direction="column"
-            justify="center"
-            align="center"
-            gap={8}
-          >
+          <Flex direction="column" justify="center" align="center" gap={8}>
             <Box
-              w={{ base: "60%", sm: "50%", md: "30%" }}
+              w={{ base: '60%', sm: '50%', md: '30%' }}
               borderRadius="full"
               overflow="hidden"
               aspectRatio={1}
@@ -30,11 +34,14 @@ export default function PageUnderConstruction() {
             <VStack textAlign="center">
               <Heading
                 as="h1"
-                fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
+                fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
                 color="accent"
                 lineHeight="1.1"
               >
-                Page Under Construction<Box as="span" color="text">.</Box>
+                Page Under Construction
+                <Box as="span" color="text">
+                  .
+                </Box>
               </Heading>
 
               {/* Call to Action */}
@@ -44,7 +51,7 @@ export default function PageUnderConstruction() {
                 borderRadius="lg"
                 onClick={() => window.history.back()}
                 _hover={{
-                  color: "accent"
+                  color: 'accent',
                 }}
               >
                 {<FaArrowLeft />}

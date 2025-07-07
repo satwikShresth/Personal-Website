@@ -1,21 +1,17 @@
 // ArchitectureDiagram.tsx
-import { useMemo } from 'react';
-import {
-  Background,
-  Controls,
-  ReactFlow
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-import { Badge, Box, Stack } from '@chakra-ui/react';
-import { FiInfo } from "react-icons/fi";
-import InfoNode from './InfoNode';
-import { addDefaultsToNodes, applyAutoLayout } from './utils';
-import InfoGroup from './InfoGroup';
-import type { ArchitectureDiagramProps } from './types';
-import { useColorMode } from "@/components/ui/color-mode";
+import { useMemo } from 'react'
+import { Background, Controls, ReactFlow } from '@xyflow/react'
+import '@xyflow/react/dist/style.css'
+import { Badge, Box, Stack } from '@chakra-ui/react'
+import { FiInfo } from 'react-icons/fi'
+import InfoNode from './InfoNode'
+import { addDefaultsToNodes, applyAutoLayout } from './utils'
+import InfoGroup from './InfoGroup'
+import type { ArchitectureDiagramProps } from './types'
+import { useColorMode } from '@/components/ui/color-mode'
 
 // Register custom node types
-const nodeTypes = { info: InfoNode, labeledGroup: InfoGroup };
+const nodeTypes = { info: InfoNode, labeledGroup: InfoGroup }
 
 const ArchitectureDiagram = ({
   nodes,
@@ -25,14 +21,14 @@ const ArchitectureDiagram = ({
   padding = 40,
 }: ArchitectureDiagramProps) => {
   const processedNodes = useMemo(() => {
-    const nodesWithDefaults = addDefaultsToNodes(nodes);
-    return applyAutoLayout(nodesWithDefaults, edges, direction);
-  }, [nodes, edges, direction]);
+    const nodesWithDefaults = addDefaultsToNodes(nodes)
+    return applyAutoLayout(nodesWithDefaults, edges, direction)
+  }, [nodes, edges, direction])
 
-  const { colorMode } = useColorMode();
+  const { colorMode } = useColorMode()
 
   return (
-    <Box h={height} p={padding} width="100%" borderRadius={"lg"}>
+    <Box h={height} p={padding} width="100%" borderRadius={'lg'}>
       <ReactFlow
         colorMode={colorMode}
         nodeTypes={nodeTypes}
@@ -49,16 +45,19 @@ const ArchitectureDiagram = ({
         nodesDraggable={false}
         nodesConnectable={false}
         elementsSelectable={true}
-        style={{ borderRadius: "10px" }}
+        style={{ borderRadius: '10px' }}
       >
-        <Stack align={"flex-end"}>
-          <Badge>  <FiInfo /> Hover for more information </Badge>
+        <Stack align={'flex-end'}>
+          <Badge>
+            {' '}
+            <FiInfo /> Hover for more information{' '}
+          </Badge>
         </Stack>
         <Controls showInteractive={false} />
         <Background color="#aaa" gap={20} />
       </ReactFlow>
     </Box>
-  );
-};
+  )
+}
 
-export default ArchitectureDiagram;
+export default ArchitectureDiagram
