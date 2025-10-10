@@ -176,6 +176,13 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
                 </HStack>
               ))}
             </VStack>
+
+            {/* Video Demo */}
+            {project.videoDemo && (
+              <Box pt={6} width="100%">
+                {project.videoDemo}
+              </Box>
+            )}
           </VStack>
         </GridItem>
       </Grid>

@@ -1,40 +1,36 @@
-# Use the Node alpine official image
-# https://hub.docker.com/_/node
-FROM node:lts-alpine AS build
+# use the official Bun image
+# see all versions at https://hub.docker.com/r/oven/bun/tags
+FROM oven/bun:1 AS base
+WORKDIR /usr/src/app
 
-# Set config
-ENV NPM_CONFIG_UPDATE_NOTIFIER=false
-ENV NPM_CONFIG_FUND=false
+# install dependencies into temp directory
+# this will cache them and speed up future builds
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lock /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-# Create and change to the app directory.
-WORKDIR /app
+# install with --production (exclude devDependencies)
+RUN mkdir -p /temp/prod
+COPY package.json bun.lock /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
-# Copy the files to the container image
-COPY package*.json ./
+# copy node_modules from temp directory
+# then copy all (non-ignored) project files into the image
+FROM base AS prerelease
+COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
 
-# Install packages
-RUN npm ci
+# [optional] tests & build
+ENV NODE_ENV=production
+RUN bun run build
 
-# Copy local code to the container image.
-COPY . ./
+# copy production dependencies and source code into final image
+FROM base AS release
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=prerelease /usr/src/app/.output .
 
-# Build the app.
-RUN npm run build
-
-# Use the Caddy image
-FROM caddy
-
-# Create and change to the app directory.
-WORKDIR /app
-
-# Copy Caddyfile to the container image.
-COPY Caddyfile ./
-
-# Copy local code to the container image.
-RUN caddy fmt Caddyfile --overwrite
-
-# Copy files to the container image.
-COPY --from=build /app/dist ./dist
-
-# Use Caddy to run/serve the app
-CMD ["caddy", "run", "--config", "Caddyfile", "--adapter", "caddyfile"]
+# run the app
+USER bun
+EXPOSE 3000/tcp
+ENTRYPOINT [ "bun", "run", "server/index.mjs" ]

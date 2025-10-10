@@ -6,6 +6,7 @@ import OM from '/openmario.png'
 import { FaBookOpen } from 'react-icons/fa'
 import * as openmario from './data/openmario'
 import * as inspiration from './data/inspiration'
+import { VideoDemo } from './data/inspiration'
 import type { ReactNode } from '@tanstack/react-router'
 import type { ReactElement } from 'react'
 
@@ -18,6 +19,7 @@ export interface Projects {
   gitlabUrl?: string
   techStack: Array<string>
   description: Array<ReactElement>
+  videoDemo?: ReactElement
 }
 
 export const projects: Array<Projects> = [
@@ -85,6 +87,7 @@ export const projects: Array<Projects> = [
       </>,
     ],
     ...inspiration,
+    videoDemo: <VideoDemo />,
   },
   {
     name: (

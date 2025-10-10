@@ -9,6 +9,10 @@ import {
 import { MarkerType } from '@xyflow/react'
 import { makeLabel } from '../Graph/utils'
 import type { EdgeConfig, NodeConfig } from '../Graph/types'
+import { Box, Text, VStack } from '@chakra-ui/react'
+import { useQuery } from '@tanstack/react-query'
+import * as serverFns from '@/routes/-serverFn'
+import { useServerFn } from '@tanstack/react-start'
 
 export const nodes: Array<NodeConfig> = [
   {
@@ -364,3 +368,56 @@ export const edges: Array<EdgeConfig> = [
     markerEnd: { type: MarkerType.ArrowClosed },
   },
 ]
+
+// Video component for live demo
+const VideoDemo = () => {
+  const getVideoLink = useServerFn(serverFns.getVideoLink)
+  const { data: preSignedUrl, isLoading, error } = useQuery({
+    queryKey: ['video-link'],
+    queryFn: () => getVideoLink(),
+    select: (s) => s.preSignedUrl
+  })
+
+  if (isLoading) {
+    return (
+      <Box p={4} textAlign="center">
+        <Text>Loading video...</Text>
+      </Box>
+    )
+  }
+
+  if (error || !preSignedUrl) {
+    return (
+      <Box p={4} textAlign="center">
+        <Text color="red.500">Failed to load video</Text>
+      </Box>
+    )
+  }
+
+  return (
+    <VStack gap={4} align="stretch">
+      <Text fontSize="lg" fontWeight="bold" textAlign="center">
+      </Text>
+      <Box
+        width="100%"
+        maxWidth="600px"
+        mx="auto"
+        borderRadius="lg"
+        boxShadow="lg"
+        overflow="hidden"
+      >
+        <video
+          controls
+          width="100%"
+          style={{ borderRadius: '8px' }}
+          src={preSignedUrl}
+          preload="metadata"
+        >
+          Your browser does not support the video tag.
+        </video>
+      </Box>
+    </VStack>
+  )
+}
+
+export { VideoDemo }

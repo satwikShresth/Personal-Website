@@ -42,8 +42,8 @@ function IntroPage() {
             <Image
               boxShadow="lg"
               borderRadius="lg"
-              width={{ base: '180px', xs: '220px', sm: '280px', md: '350px' }}
-              height={{ base: '180px', xs: '220px', sm: '280px', md: '350px' }}
+              width={{ base: '180px', sm: '280px', md: '350px' }}
+              height={{ base: '180px', sm: '280px', md: '350px' }}
               objectFit="cover"
               src={PHOTO}
               alt="Satwik Shresth"
@@ -60,7 +60,7 @@ function IntroPage() {
           >
             <Heading
               as="h1"
-              fontSize={{ base: 'xl', xs: '2xl', sm: '3xl', md: '4xl' }}
+              fontSize={{ base: 'xl', sm: '3xl', md: '4xl' }}
               lineHeight="1.1"
               mb={4}
               textAlign={{ base: 'center', md: 'left' }}
@@ -106,64 +106,60 @@ function IntroPage() {
               mb={4}
               justify={{ base: 'center', md: 'flex-start' }}
             >
-              <Button
-                as={Link}
-                _hover={{
-                  color: 'accent',
-                }}
-                variant="outline"
-                href="/resume.pdf"
-                borderRadius="lg"
-                size={{ base: 'sm', md: 'md' }}
-              >
-                {window.stonks?.event && window.stonks.event('checked resume')}
-                <Icon
-                  as={GrDocumentPdf}
-                  w={{ base: 4, md: 6 }}
-                  h={{ base: 4, md: 6 }}
-                  mr={2}
-                />
-                Resume
-              </Button>
-              <Button
-                as={Link}
-                variant="outline"
-                _hover={{
-                  color: 'accent',
-                }}
-                href="https://github.com/satwikShresth"
-                borderRadius="lg"
-                size={{ base: 'sm', md: 'md' }}
-              >
-                {window.stonks?.event && window.stonks.event('visited github')}
-                <Icon
-                  as={FaGithub}
-                  w={{ base: 4, md: 6 }}
-                  h={{ base: 4, md: 6 }}
-                  mr={2}
-                />
-                Github
-              </Button>
-              <Button
-                _hover={{
-                  color: 'accent',
-                }}
-                as={Link}
-                variant="outline"
-                href="https://linkedin.com/in/satwik-shresth/"
-                borderRadius="lg"
-                size={{ base: 'sm', md: 'md' }}
-              >
-                {window.stonks?.event &&
-                  window.stonks.event('checked linkedIn')}
-                <Icon
-                  as={FaLinkedin}
-                  w={{ base: 4, md: 6 }}
-                  h={{ base: 4, md: 6 }}
-                  mr={2}
-                />
-                LinkedIn
-              </Button>
+              <Link href="/resume.pdf" >
+                <Button
+                  _hover={{
+                    color: 'accent',
+                  }}
+                  variant="outline"
+                  borderRadius="lg"
+                  size={{ base: 'sm', md: 'md' }}
+                >
+                  <Icon
+                    as={GrDocumentPdf}
+                    w={{ base: 4, md: 6 }}
+                    h={{ base: 4, md: 6 }}
+                    mr={2}
+                  />
+                  Resume
+                </Button>
+              </Link>
+              <Link href="https://github.com/satwikShresth" >
+                <Button
+                  variant="outline"
+                  _hover={{
+                    color: 'accent',
+                  }}
+                  borderRadius="lg"
+                  size={{ base: 'sm', md: 'md' }}
+                >
+                  <Icon
+                    as={FaGithub}
+                    w={{ base: 4, md: 6 }}
+                    h={{ base: 4, md: 6 }}
+                    mr={2}
+                  />
+                  Github
+                </Button>
+              </Link>
+              <Link href="https://linkedin.com/in/satwik-shresth/" >
+                <Button
+                  _hover={{
+                    color: 'accent',
+                  }}
+                  variant="outline"
+                  borderRadius="lg"
+                  size={{ base: 'sm', md: 'md' }}
+                >
+                  <Icon
+                    as={FaLinkedin}
+                    w={{ base: 4, md: 6 }}
+                    h={{ base: 4, md: 6 }}
+                    mr={2}
+                  />
+                  LinkedIn
+                </Button>
+              </Link>
             </Flex>
           </Box>
         </Flex>
