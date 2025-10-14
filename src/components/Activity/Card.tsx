@@ -1,6 +1,5 @@
 import {
   Link as RouterLink,
-  linkOptions,
   useNavigate,
 } from '@tanstack/react-router'
 import {
@@ -20,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { FaArrowRight, FaCalendarAlt, FaClock } from 'react-icons/fa'
 import { Tooltip } from '../ui/tooltip'
-import { useBlogMetadataStore } from './store'
+import { useActivityMetadataStore } from './store'
 import { useColorModeValue } from '@/components/ui/color-mode'
 
 export type BlogCardProps = {
@@ -45,7 +44,8 @@ export function BlogCard({
   variant = 'normal',
   estimatedReadTime,
 }: BlogCardProps) {
-  const { markPostAsRead, readPosts } = useBlogMetadataStore()
+  const markPostAsRead = useActivityMetadataStore((s) => s.markPostAsRead)
+  const readPosts = useActivityMetadataStore((s) => s.readPosts)
   const navigate = useNavigate()
 
   const isRead = readPosts.includes(slug)
@@ -61,7 +61,7 @@ export function BlogCard({
 
   const handleClick = () => {
     markPostAsRead(slug)
-    navigate({ to: '/blog/$post', params: { post: slug } })
+    navigate({ to: '/activity/$post', params: { post: slug } })
   }
 
   // Calculate estimated read time if not provided
@@ -167,25 +167,25 @@ export function BlogCard({
           </CardBody>
 
           <CardFooter p={0} mt={4}>
-            <Button
-              borderRadius={'lg'}
-              colorScheme="teal"
-              as={RouterLink}
-              {...linkOptions({
-                to: '/blog/$post',
-                params: { post: slug },
-              })}
-              variant="solid"
-              size="md"
-              width="auto"
-              px={6}
+            <RouterLink
+              to='/activity/$post'
+              params={{ post: slug }}
             >
-              <FaArrowRight />
-              Read Article
-            </Button>
+              <Button
+                borderRadius={'lg'}
+                colorScheme="teal"
+                variant="solid"
+                size="md"
+                width="auto"
+                px={6}
+              >
+                <FaArrowRight />
+                Read Article
+              </Button>
+            </RouterLink>
           </CardFooter>
         </Flex>
-      </Card.Root>
+      </Card.Root >
     )
   }
 

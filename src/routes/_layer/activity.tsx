@@ -14,10 +14,10 @@ import {
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 import { MDXProvider } from '@mdx-js/react'
 import { useColorModeValue } from '@/components/ui/color-mode'
-import { Blog } from '@/components/Blog'
-import mdx from '@/components/mdx'
+import { Activities } from '@/components/Activity'
+import posts from '@/posts'
 
-export const Route = createFileRoute('/_layer/blog')({
+export const Route = createFileRoute('/_layer/activity')({
   component: () => {
     const textColor = useColorModeValue('gray.700', 'gray.200')
     const headingColor = useColorModeValue('gray.800', 'white')
@@ -220,9 +220,9 @@ export const Route = createFileRoute('/_layer/blog')({
     return (
       <Container>
         <MDXProvider components={{ ...components }}>
-          <Blog.Root blogPosts={mdx}>
+          <Activities.Root posts={posts}>
             <Outlet />
-          </Blog.Root>
+          </Activities.Root>
         </MDXProvider>
       </Container>
     )

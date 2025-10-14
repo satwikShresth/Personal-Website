@@ -16,9 +16,9 @@ import { Route as LayerProjectsRouteImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyRouteImport } from './routes/_layer/photography'
 import { Route as LayerHomeRouteImport } from './routes/_layer/home'
 import { Route as LayerExperienceRouteImport } from './routes/_layer/experience'
-import { Route as LayerBlogRouteImport } from './routes/_layer/blog'
-import { Route as LayerBlogIndexRouteImport } from './routes/_layer/blog/index'
-import { Route as LayerBlogPostRouteImport } from './routes/_layer/blog/$post'
+import { Route as LayerActivityRouteImport } from './routes/_layer/activity'
+import { Route as LayerActivityIndexRouteImport } from './routes/_layer/activity/index'
+import { Route as LayerActivityPostRouteImport } from './routes/_layer/activity/$post'
 
 const LayerRoute = LayerRouteImport.update({
   id: '/_layer',
@@ -54,32 +54,32 @@ const LayerExperienceRoute = LayerExperienceRouteImport.update({
   path: '/experience',
   getParentRoute: () => LayerRoute,
 } as any)
-const LayerBlogRoute = LayerBlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
+const LayerActivityRoute = LayerActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
   getParentRoute: () => LayerRoute,
 } as any)
-const LayerBlogIndexRoute = LayerBlogIndexRouteImport.update({
+const LayerActivityIndexRoute = LayerActivityIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LayerBlogRoute,
+  getParentRoute: () => LayerActivityRoute,
 } as any)
-const LayerBlogPostRoute = LayerBlogPostRouteImport.update({
+const LayerActivityPostRoute = LayerActivityPostRouteImport.update({
   id: '/$post',
   path: '/$post',
-  getParentRoute: () => LayerBlogRoute,
+  getParentRoute: () => LayerActivityRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/blog': typeof LayerBlogRouteWithChildren
+  '/activity': typeof LayerActivityRouteWithChildren
   '/experience': typeof LayerExperienceRoute
   '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
   '/': typeof LayerIndexRoute
-  '/blog/$post': typeof LayerBlogPostRoute
-  '/blog/': typeof LayerBlogIndexRoute
+  '/activity/$post': typeof LayerActivityPostRoute
+  '/activity/': typeof LayerActivityIndexRoute
 }
 export interface FileRoutesByTo {
   '/experience': typeof LayerExperienceRoute
@@ -88,34 +88,34 @@ export interface FileRoutesByTo {
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
   '/': typeof LayerIndexRoute
-  '/blog/$post': typeof LayerBlogPostRoute
-  '/blog': typeof LayerBlogIndexRoute
+  '/activity/$post': typeof LayerActivityPostRoute
+  '/activity': typeof LayerActivityIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layer': typeof LayerRouteWithChildren
-  '/_layer/blog': typeof LayerBlogRouteWithChildren
+  '/_layer/activity': typeof LayerActivityRouteWithChildren
   '/_layer/experience': typeof LayerExperienceRoute
   '/_layer/home': typeof LayerHomeRoute
   '/_layer/photography': typeof LayerPhotographyRoute
   '/_layer/projects': typeof LayerProjectsRoute
   '/_layer/resume': typeof LayerResumeRoute
   '/_layer/': typeof LayerIndexRoute
-  '/_layer/blog/$post': typeof LayerBlogPostRoute
-  '/_layer/blog/': typeof LayerBlogIndexRoute
+  '/_layer/activity/$post': typeof LayerActivityPostRoute
+  '/_layer/activity/': typeof LayerActivityIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/blog'
+    | '/activity'
     | '/experience'
     | '/home'
     | '/photography'
     | '/projects'
     | '/resume'
     | '/'
-    | '/blog/$post'
-    | '/blog/'
+    | '/activity/$post'
+    | '/activity/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/experience'
@@ -124,20 +124,20 @@ export interface FileRouteTypes {
     | '/projects'
     | '/resume'
     | '/'
-    | '/blog/$post'
-    | '/blog'
+    | '/activity/$post'
+    | '/activity'
   id:
     | '__root__'
     | '/_layer'
-    | '/_layer/blog'
+    | '/_layer/activity'
     | '/_layer/experience'
     | '/_layer/home'
     | '/_layer/photography'
     | '/_layer/projects'
     | '/_layer/resume'
     | '/_layer/'
-    | '/_layer/blog/$post'
-    | '/_layer/blog/'
+    | '/_layer/activity/$post'
+    | '/_layer/activity/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -195,46 +195,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayerExperienceRouteImport
       parentRoute: typeof LayerRoute
     }
-    '/_layer/blog': {
-      id: '/_layer/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof LayerBlogRouteImport
+    '/_layer/activity': {
+      id: '/_layer/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof LayerActivityRouteImport
       parentRoute: typeof LayerRoute
     }
-    '/_layer/blog/': {
-      id: '/_layer/blog/'
+    '/_layer/activity/': {
+      id: '/_layer/activity/'
       path: '/'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof LayerBlogIndexRouteImport
-      parentRoute: typeof LayerBlogRoute
+      fullPath: '/activity/'
+      preLoaderRoute: typeof LayerActivityIndexRouteImport
+      parentRoute: typeof LayerActivityRoute
     }
-    '/_layer/blog/$post': {
-      id: '/_layer/blog/$post'
+    '/_layer/activity/$post': {
+      id: '/_layer/activity/$post'
       path: '/$post'
-      fullPath: '/blog/$post'
-      preLoaderRoute: typeof LayerBlogPostRouteImport
-      parentRoute: typeof LayerBlogRoute
+      fullPath: '/activity/$post'
+      preLoaderRoute: typeof LayerActivityPostRouteImport
+      parentRoute: typeof LayerActivityRoute
     }
   }
 }
 
-interface LayerBlogRouteChildren {
-  LayerBlogPostRoute: typeof LayerBlogPostRoute
-  LayerBlogIndexRoute: typeof LayerBlogIndexRoute
+interface LayerActivityRouteChildren {
+  LayerActivityPostRoute: typeof LayerActivityPostRoute
+  LayerActivityIndexRoute: typeof LayerActivityIndexRoute
 }
 
-const LayerBlogRouteChildren: LayerBlogRouteChildren = {
-  LayerBlogPostRoute: LayerBlogPostRoute,
-  LayerBlogIndexRoute: LayerBlogIndexRoute,
+const LayerActivityRouteChildren: LayerActivityRouteChildren = {
+  LayerActivityPostRoute: LayerActivityPostRoute,
+  LayerActivityIndexRoute: LayerActivityIndexRoute,
 }
 
-const LayerBlogRouteWithChildren = LayerBlogRoute._addFileChildren(
-  LayerBlogRouteChildren,
+const LayerActivityRouteWithChildren = LayerActivityRoute._addFileChildren(
+  LayerActivityRouteChildren,
 )
 
 interface LayerRouteChildren {
-  LayerBlogRoute: typeof LayerBlogRouteWithChildren
+  LayerActivityRoute: typeof LayerActivityRouteWithChildren
   LayerExperienceRoute: typeof LayerExperienceRoute
   LayerHomeRoute: typeof LayerHomeRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
@@ -244,7 +244,7 @@ interface LayerRouteChildren {
 }
 
 const LayerRouteChildren: LayerRouteChildren = {
-  LayerBlogRoute: LayerBlogRouteWithChildren,
+  LayerActivityRoute: LayerActivityRouteWithChildren,
   LayerExperienceRoute: LayerExperienceRoute,
   LayerHomeRoute: LayerHomeRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,

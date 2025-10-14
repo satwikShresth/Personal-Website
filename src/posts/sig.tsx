@@ -12,8 +12,8 @@ import {
 import { MarkerType } from '@xyflow/react'
 import { MdOutlineStorage } from 'react-icons/md'
 import { Badge, Box, Flex, Icon, List, Stack, Text } from '@chakra-ui/react'
-import { makeLabel } from '../Project/Graph/utils'
-import type { EdgeConfig, NodeConfig } from '../Project/Graph/types'
+import { makeLabel } from '@/components/Project/Graph/utils'
+import type { EdgeConfig, NodeConfig } from '@/components/Project/Graph/types'
 
 interface Diagrams {
   [key: string]: {

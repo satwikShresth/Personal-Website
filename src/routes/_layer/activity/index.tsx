@@ -15,23 +15,24 @@ import {
   createListCollection,
 } from '@chakra-ui/react'
 import { FaFilter } from 'react-icons/fa'
-import { useBlogMetadataStore } from '@/components/Blog/store'
-import { Blog } from '@/components/Blog'
+import { useActivityMetadataStore } from '@/components/Activity/store'
+import { Activities } from '@/components/Activity'
 import { useColorModeValue } from '@/components/ui/color-mode'
 
-export const Route = createFileRoute('/_layer/blog/')({
+export const Route = createFileRoute('/_layer/activity/')({
   component: BlogPage,
 })
 
 function BlogPage() {
+  const selectedTags = useActivityMetadataStore((s) => s.selectedTags)
+  const searchQuery = useActivityMetadataStore((s) => s.searchQuery)
+
   const {
-    selectedTags,
-    searchQuery,
     getAllTags,
     getFilteredPosts,
     setSelectedTags,
     setSearchQuery,
-  } = useBlogMetadataStore()
+  } = useActivityMetadataStore()
   const headingColor = useColorModeValue('gray.800', 'white')
 
   const tags = createListCollection({
@@ -48,17 +49,16 @@ function BlogPage() {
       <Box textAlign="left" mb={10}>
         <Heading
           as="h1"
-          fontSize={{ base: '4xl', md: '6xl' }}
+          fontSize={{ base: '2xl', md: '4xl' }}
           fontWeight="extrabold"
           color={headingColor}
-          mb={6}
+          mb={3}
         >
-          Explore{' '}
+          My {" "}
           <Box as="span" color={'accent'}>
-            Blogs
+            Activities
           </Box>
         </Heading>
-
         <Text
           fontSize={{ base: 'xl', md: '2xl' }}
           maxW="container.lg"
@@ -66,7 +66,7 @@ function BlogPage() {
           opacity={0.9}
           letterSpacing="wide"
         >
-          Random brain dumps: occasional flair and inevitable tangents.
+          Random brain dumps, tweets, stats...
         </Text>
       </Box>
 
@@ -80,7 +80,7 @@ function BlogPage() {
         {/* Search */}
         <Box width={{ base: '100%', md: '40%' }}>
           <Input
-            placeholder="Search articles..."
+            placeholder="Search"
             value={searchQuery}
             onChange={handleSearchChange}
             borderRadius="lg"
@@ -125,7 +125,7 @@ function BlogPage() {
       <Box>
         <HStack mb={4}>
           <Heading as="h2" size="lg">
-            All Posts
+            Posts
           </Heading>
           <Badge fontSize="md" borderRadius="full">
             {filteredPosts.length}
@@ -135,7 +135,7 @@ function BlogPage() {
         {filteredPosts.length > 0 ? (
           <SimpleGrid columns={{ base: 1, md: 2 }} gap={'5'}>
             {filteredPosts.map((post) => (
-              <Blog.Card
+              <Activities.Card
                 key={post.slug}
                 slug={post.slug || 'default-slug'}
                 title={post.title}

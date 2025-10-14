@@ -37,7 +37,7 @@ export default defineConfig({
     {
       enforce: 'pre',
       ...mdx({
-        include: './src/components/mdx/*',
+        include: './src/posts/*',
         providerImportSource: '@mdx-js/react',
         jsx: false, // Compile JSX away so the file is immediately runnable
         remarkPlugins: [],

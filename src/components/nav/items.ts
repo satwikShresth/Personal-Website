@@ -10,8 +10,8 @@ export const NAV_ITEMS = [
     section: '',
   },
   {
-    label: 'Blog',
-    href: '/blog',
+    label: 'Activity',
+    href: '/activity',
     section: '',
   },
   // ,

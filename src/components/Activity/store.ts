@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createZustandContext } from 'zustand-context'
 import { persist } from 'zustand/middleware'
 
-export type BlogMetadata = {
+export type ActivityMetadata = {
   title: string
   date: string
   description: string
@@ -11,18 +11,18 @@ export type BlogMetadata = {
   estimatedReadTime?: number
 }
 
-export type BlogPost = {
+export type ActivityPost = {
   component: any
-  metadata: BlogMetadata
+  metadata: ActivityMetadata
 }
 
-export type BlogPosts = {
-  [slug: string]: BlogPost
+export type ActivityPosts = {
+  [slug: string]: ActivityPost
 }
 
-export type BlogMetadataStore = {
+export type ActivityMetadataStore = {
   // State
-  blogPosts: Array<BlogMetadata>
+  activityPosts: Array<ActivityMetadata>
   componentPaths: Record<string, string> // Maps slug to component path/name
   selectedTags: Array<string>
   searchQuery: string
@@ -30,14 +30,14 @@ export type BlogMetadataStore = {
   currentPost: string | null // Current post slug
 
   // Selectors
-  getFilteredPosts: () => Array<BlogMetadata>
+  getFilteredPosts: () => Array<ActivityMetadata>
   getAllTags: () => Array<string>
-  getRandomPosts: (count: number) => Array<BlogMetadata>
-  getReadPosts: () => Array<BlogMetadata>
-  getUnreadPosts: () => Array<BlogMetadata>
-  searchByTitle: (query: string) => Array<BlogMetadata>
-  searchByTags: (tags: Array<string>) => Array<BlogMetadata>
-  getBlogPostBySlug: (slug: string) => BlogMetadata | undefined
+  getRandomPosts: (count: number) => Array<ActivityMetadata>
+  getReadPosts: () => Array<ActivityMetadata>
+  getUnreadPosts: () => Array<ActivityMetadata>
+  searchByTitle: (query: string) => Array<ActivityMetadata>
+  searchByTags: (tags: Array<string>) => Array<ActivityMetadata>
+  getActivityPostBySlug: (slug: string) => ActivityMetadata | undefined
   getComponentPathBySlug: (slug: string) => string | undefined
 
   // Actions
@@ -47,17 +47,17 @@ export type BlogMetadataStore = {
   setCurrentPost: (slug: string | null) => void
 }
 
-export const [BlogMetadataProvider, useBlogMetadataStore] =
-  createZustandContext((initialState: { blogPosts?: BlogPosts }) =>
-    create<BlogMetadataStore>()(
+export const [ActivityMetadataProvider, useActivityMetadataStore] =
+  createZustandContext((initialState: { activityPosts?: ActivityPosts }) =>
+    create<ActivityMetadataStore>()(
       persist(
         (set, get) => {
-          const processedBlogPosts: Array<BlogMetadata> = []
+          const processedActivityPosts: Array<ActivityMetadata> = []
           const processedComponentPaths: Record<string, string> = {}
 
           Object.entries(initialState).forEach(([slug, post]) => {
             // @ts-ignore: somthing
-            processedBlogPosts.push({
+            processedActivityPosts.push({
               ...post.metadata,
               slug,
             })
@@ -65,7 +65,7 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
           })
 
           return {
-            blogPosts: processedBlogPosts,
+            activityPosts: processedActivityPosts,
             componentPaths: processedComponentPaths,
             selectedTags: [],
             searchQuery: '',
@@ -95,9 +95,9 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
 
             // Selectors
             getFilteredPosts: () => {
-              const { blogPosts, selectedTags, searchQuery } = get()
+              const { activityPosts, selectedTags, searchQuery } = get()
 
-              return blogPosts.filter((post) => {
+              return activityPosts.filter((post) => {
                 // Filter by search query
                 const matchesSearch = searchQuery
                   ? post.title
@@ -118,10 +118,10 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
             },
 
             getAllTags: () => {
-              const { blogPosts } = get()
+              const { activityPosts } = get()
               const allTags = new Set<string>()
 
-              blogPosts.forEach((post) => {
+              activityPosts.forEach((post) => {
                 post.tags.forEach((tag) => allTags.add(tag))
               })
 
@@ -129,19 +129,19 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
             },
 
             getRandomPosts: (count) => {
-              const { blogPosts, currentPost } = get()
+              const { activityPosts, currentPost } = get()
 
               // Filter out the current post
               const availablePosts = currentPost
-                ? blogPosts.filter((post) => post.slug !== currentPost)
-                : blogPosts
+                ? activityPosts.filter((post) => post.slug !== currentPost)
+                : activityPosts
 
               if (availablePosts.length <= count) {
                 return availablePosts
               }
 
               // Get random posts
-              const randomPosts: Array<BlogMetadata> = []
+              const randomPosts: Array<ActivityMetadata> = []
               const tempPosts = [...availablePosts]
 
               for (let i = 0; i < count && tempPosts.length > 0; i++) {
@@ -154,41 +154,41 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
             },
 
             getReadPosts: () => {
-              const { blogPosts, readPosts } = get()
-              return blogPosts.filter(
+              const { activityPosts, readPosts } = get()
+              return activityPosts.filter(
                 (post) => post.slug && readPosts.includes(post.slug),
               )
             },
 
             getUnreadPosts: () => {
-              const { blogPosts, readPosts } = get()
-              return blogPosts.filter(
+              const { activityPosts, readPosts } = get()
+              return activityPosts.filter(
                 (post) => !post.slug || !readPosts.includes(post.slug),
               )
             },
 
             searchByTitle: (query) => {
-              const { blogPosts } = get()
+              const { activityPosts } = get()
               if (!query) return []
 
               const lowercaseQuery = query.toLowerCase()
-              return blogPosts.filter((post) =>
+              return activityPosts.filter((post) =>
                 post.title.toLowerCase().includes(lowercaseQuery),
               )
             },
 
             searchByTags: (tags) => {
-              const { blogPosts } = get()
-              if (!tags.length) return blogPosts
+              const { activityPosts } = get()
+              if (!tags.length) return activityPosts
 
-              return blogPosts.filter((post) =>
+              return activityPosts.filter((post) =>
                 tags.some((tag) => post.tags.includes(tag)),
               )
             },
 
-            getBlogPostBySlug: (slug) => {
-              const { blogPosts } = get()
-              return blogPosts.find((post) => post.slug === slug)
+            getActivityPostBySlug: (slug) => {
+              const { activityPosts } = get()
+              return activityPosts.find((post) => post.slug === slug)
             },
 
             getComponentPathBySlug: (slug) => {
@@ -198,7 +198,7 @@ export const [BlogMetadataProvider, useBlogMetadataStore] =
           }
         },
         {
-          name: 'blog-metadata-storage',
+          name: 'activity-metadata-storage',
           partialize: (state) => ({ readPosts: state.readPosts }), // Only persist readPosts
         },
       ),

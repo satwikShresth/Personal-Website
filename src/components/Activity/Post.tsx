@@ -14,11 +14,11 @@ import {
 import { FaCalendarAlt } from 'react-icons/fa'
 import { useColorModeValue } from '../ui/color-mode'
 import authorImage from '/my_photo.jpeg'
-import type { BlogMetadata } from './store'
+import type { ActivityMetadata } from './store'
 
 interface PostProps {
   MdxCompoenent: any
-  metadata: BlogMetadata
+  metadata: ActivityMetadata
 }
 function Post({ MdxCompoenent, metadata }: PostProps) {
   const headingColor = useColorModeValue('gray.800', 'white')

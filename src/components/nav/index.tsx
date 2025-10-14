@@ -92,15 +92,15 @@ export default function Navbar({ id }: { id: string }) {
           direction="row"
           gap={1}
         >
-          <IconButton
-            as={CLink}
-            variant="ghost"
-            _hover={{ color: 'accent' }}
-            borderRadius={'lg'}
-            href={'https://github.com/satwikShresth/Personal-Website'}
-          >
-            <Icon as={FiGithub} />
-          </IconButton>
+          <CLink href={'https://github.com/satwikShresth/Personal-Website'} >
+            <IconButton
+              variant="ghost"
+              _hover={{ color: 'accent' }}
+              borderRadius={'lg'}
+            >
+              <Icon as={FiGithub} />
+            </IconButton>
+          </CLink>
 
           <IconButton
             aria-label={`Switch to ${colorMode === 'light' ? 'dark' : 'light'} mode`}
