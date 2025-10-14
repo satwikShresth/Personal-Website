@@ -14,7 +14,6 @@ import { Route as LayerIndexRouteImport } from './routes/_layer/index'
 import { Route as LayerResumeRouteImport } from './routes/_layer/resume'
 import { Route as LayerProjectsRouteImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyRouteImport } from './routes/_layer/photography'
-import { Route as LayerHomeRouteImport } from './routes/_layer/home'
 import { Route as LayerExperienceRouteImport } from './routes/_layer/experience'
 import { Route as LayerActivityRouteImport } from './routes/_layer/activity'
 import { Route as LayerActivityIndexRouteImport } from './routes/_layer/activity/index'
@@ -44,11 +43,6 @@ const LayerPhotographyRoute = LayerPhotographyRouteImport.update({
   path: '/photography',
   getParentRoute: () => LayerRoute,
 } as any)
-const LayerHomeRoute = LayerHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => LayerRoute,
-} as any)
 const LayerExperienceRoute = LayerExperienceRouteImport.update({
   id: '/experience',
   path: '/experience',
@@ -73,7 +67,6 @@ const LayerActivityPostRoute = LayerActivityPostRouteImport.update({
 export interface FileRoutesByFullPath {
   '/activity': typeof LayerActivityRouteWithChildren
   '/experience': typeof LayerExperienceRoute
-  '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
@@ -83,7 +76,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/experience': typeof LayerExperienceRoute
-  '/home': typeof LayerHomeRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
@@ -96,7 +88,6 @@ export interface FileRoutesById {
   '/_layer': typeof LayerRouteWithChildren
   '/_layer/activity': typeof LayerActivityRouteWithChildren
   '/_layer/experience': typeof LayerExperienceRoute
-  '/_layer/home': typeof LayerHomeRoute
   '/_layer/photography': typeof LayerPhotographyRoute
   '/_layer/projects': typeof LayerProjectsRoute
   '/_layer/resume': typeof LayerResumeRoute
@@ -109,7 +100,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/activity'
     | '/experience'
-    | '/home'
     | '/photography'
     | '/projects'
     | '/resume'
@@ -119,7 +109,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/experience'
-    | '/home'
     | '/photography'
     | '/projects'
     | '/resume'
@@ -131,7 +120,6 @@ export interface FileRouteTypes {
     | '/_layer'
     | '/_layer/activity'
     | '/_layer/experience'
-    | '/_layer/home'
     | '/_layer/photography'
     | '/_layer/projects'
     | '/_layer/resume'
@@ -179,13 +167,6 @@ declare module '@tanstack/react-router' {
       path: '/photography'
       fullPath: '/photography'
       preLoaderRoute: typeof LayerPhotographyRouteImport
-      parentRoute: typeof LayerRoute
-    }
-    '/_layer/home': {
-      id: '/_layer/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof LayerHomeRouteImport
       parentRoute: typeof LayerRoute
     }
     '/_layer/experience': {
@@ -236,7 +217,6 @@ const LayerActivityRouteWithChildren = LayerActivityRoute._addFileChildren(
 interface LayerRouteChildren {
   LayerActivityRoute: typeof LayerActivityRouteWithChildren
   LayerExperienceRoute: typeof LayerExperienceRoute
-  LayerHomeRoute: typeof LayerHomeRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
   LayerProjectsRoute: typeof LayerProjectsRoute
   LayerResumeRoute: typeof LayerResumeRoute
@@ -246,7 +226,6 @@ interface LayerRouteChildren {
 const LayerRouteChildren: LayerRouteChildren = {
   LayerActivityRoute: LayerActivityRouteWithChildren,
   LayerExperienceRoute: LayerExperienceRoute,
-  LayerHomeRoute: LayerHomeRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,
   LayerProjectsRoute: LayerProjectsRoute,
   LayerResumeRoute: LayerResumeRoute,

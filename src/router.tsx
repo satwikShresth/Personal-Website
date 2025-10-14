@@ -1,6 +1,7 @@
 import { createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 import { Provider as ChakraProvider } from '@/components/ui/provider'
+import { NotFound, Error } from '@/components/common'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { QueryClient } from '@tanstack/react-query';
 
@@ -13,6 +14,8 @@ export function getRouter() {
     scrollRestoration: true,
     defaultStructuralSharing: true,
     defaultViewTransition: true,
+    defaultNotFoundComponent: () => <NotFound />,
+    defaultErrorComponent: ({ error, reset }) => <Error error={error} reset={reset} />,
     Wrap: ({ children }) => {
       return (
         <ChakraProvider>
