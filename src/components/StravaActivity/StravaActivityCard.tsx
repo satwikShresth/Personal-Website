@@ -36,6 +36,7 @@ export function StravaActivityCard({ activity }: StravaActivityCardProps) {
         type={activity.type}
         sportType={activity.sport_type}
         startDate={activity.start_date_local}
+        athleteId={activity.athlete?.id}
       />
 
       <StravaActivityMapView polyline={activity.map?.summary_polyline} />
