@@ -18,7 +18,6 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
       px={5}
       py={4}
       gap={4}
-      borderTop="1px solid"
       borderColor="gray.100"
       _dark={{ borderColor: 'gray.800' }}
       borderBottomRadius="2xl"
