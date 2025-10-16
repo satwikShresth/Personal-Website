@@ -4,7 +4,6 @@ import { StravaOAuth, type OAuthTokenResponse } from '@/strava-client/oauth'
 import { sendDiscordNotification } from './discord'
 
 const redirectUri = `${env.STRAVA_REDIRECT_URI}/${env.STRAVA_CALLBACK_KEY}`;
-console.log(redirectUri)
 export const stravaOAuth = new StravaOAuth({
   clientId: env.STRAVA_CLIENT_ID,
   clientSecret: env.STRAVA_CLIENT_SECRET,

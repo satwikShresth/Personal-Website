@@ -9,7 +9,6 @@ interface StravaActivityCardProps {
 }
 
 export function StravaActivityCard({ activity }: StravaActivityCardProps) {
-  console.log(activity)
   return (
     <VStack
       borderRadius="2xl"

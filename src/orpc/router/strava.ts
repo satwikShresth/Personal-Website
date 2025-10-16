@@ -41,7 +41,6 @@ export const handleCallback = os
     return await stravaOAuth
       .exchangeCode(code)
       .then(async (tokenResponse) => {
-      console.log(tokenResponse.athlete)
         await storeOAuthToken(tokenResponse)
         
         return {
