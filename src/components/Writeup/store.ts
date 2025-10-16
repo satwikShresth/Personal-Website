@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { createZustandContext } from 'zustand-context'
 import { persist } from 'zustand/middleware'
 
-export type ActivityMetadata = {
+export type WriteupMetadata = {
   title: string
   date: string
   description: string
@@ -11,18 +11,18 @@ export type ActivityMetadata = {
   estimatedReadTime?: number
 }
 
-export type ActivityPost = {
+export type WriteupPost = {
   component: any
-  metadata: ActivityMetadata
+  metadata: WriteupMetadata
 }
 
-export type ActivityPosts = {
-  [slug: string]: ActivityPost
+export type WriteupPosts = {
+  [slug: string]: WriteupPost
 }
 
-export type ActivityMetadataStore = {
+export type WriteupMetadataStore = {
   // State
-  activityPosts: Array<ActivityMetadata>
+  activityPosts: Array<WriteupMetadata>
   componentPaths: Record<string, string> // Maps slug to component path/name
   selectedTags: Array<string>
   searchQuery: string
@@ -30,14 +30,14 @@ export type ActivityMetadataStore = {
   currentPost: string | null // Current post slug
 
   // Selectors
-  getFilteredPosts: () => Array<ActivityMetadata>
+  getFilteredPosts: () => Array<WriteupMetadata>
   getAllTags: () => Array<string>
-  getRandomPosts: (count: number) => Array<ActivityMetadata>
-  getReadPosts: () => Array<ActivityMetadata>
-  getUnreadPosts: () => Array<ActivityMetadata>
-  searchByTitle: (query: string) => Array<ActivityMetadata>
-  searchByTags: (tags: Array<string>) => Array<ActivityMetadata>
-  getActivityPostBySlug: (slug: string) => ActivityMetadata | undefined
+  getRandomPosts: (count: number) => Array<WriteupMetadata>
+  getReadPosts: () => Array<WriteupMetadata>
+  getUnreadPosts: () => Array<WriteupMetadata>
+  searchByTitle: (query: string) => Array<WriteupMetadata>
+  searchByTags: (tags: Array<string>) => Array<WriteupMetadata>
+  getWriteupPostBySlug: (slug: string) => WriteupMetadata | undefined
   getComponentPathBySlug: (slug: string) => string | undefined
 
   // Actions
@@ -47,17 +47,17 @@ export type ActivityMetadataStore = {
   setCurrentPost: (slug: string | null) => void
 }
 
-export const [ActivityMetadataProvider, useActivityMetadataStore] =
-  createZustandContext((initialState: { activityPosts?: ActivityPosts }) =>
-    create<ActivityMetadataStore>()(
+export const [WriteupMetadataProvider, useWriteupMetadataStore] =
+  createZustandContext((initialState: { activityPosts?: WriteupPosts }) =>
+    create<WriteupMetadataStore>()(
       persist(
         (set, get) => {
-          const processedActivityPosts: Array<ActivityMetadata> = []
+          const processedWriteupPosts: Array<WriteupMetadata> = []
           const processedComponentPaths: Record<string, string> = {}
 
           Object.entries(initialState).forEach(([slug, post]) => {
             // @ts-ignore: somthing
-            processedActivityPosts.push({
+            processedWriteupPosts.push({
               ...post.metadata,
               slug,
             })
@@ -65,7 +65,7 @@ export const [ActivityMetadataProvider, useActivityMetadataStore] =
           })
 
           return {
-            activityPosts: processedActivityPosts,
+            activityPosts: processedWriteupPosts,
             componentPaths: processedComponentPaths,
             selectedTags: [],
             searchQuery: '',
@@ -141,7 +141,7 @@ export const [ActivityMetadataProvider, useActivityMetadataStore] =
               }
 
               // Get random posts
-              const randomPosts: Array<ActivityMetadata> = []
+              const randomPosts: Array<WriteupMetadata> = []
               const tempPosts = [...availablePosts]
 
               for (let i = 0; i < count && tempPosts.length > 0; i++) {
@@ -186,7 +186,7 @@ export const [ActivityMetadataProvider, useActivityMetadataStore] =
               )
             },
 
-            getActivityPostBySlug: (slug) => {
+            getWriteupPostBySlug: (slug) => {
               const { activityPosts } = get()
               return activityPosts.find((post) => post.slug === slug)
             },

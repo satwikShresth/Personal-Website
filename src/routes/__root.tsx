@@ -2,16 +2,23 @@ import type { ReactNode } from 'react'
 import { Box, Center } from '@chakra-ui/react'
 import {
   Outlet,
-  createRootRoute,
   HeadContent,
   Scripts,
+  createRootRouteWithContext,
+  ErrorComponent,
 } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import TanStackRouterDevtools from '@/integrations/tanstack-router';
 import TanStackQueryDevtools from '@/integrations/tanstack-query';
 import appCss from '../styles.css?url';
+import type { QueryClient } from '@tanstack/react-query';
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+  queryClient: QueryClient
+}
+
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
   head: () => ({
     meta: [
       { title: 'Satwik' },
@@ -32,6 +39,7 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootShellComponent,
+  errorComponent: () => ErrorComponent(),
   component: RootComponent,
 })
 

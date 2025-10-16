@@ -11,13 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayerRouteImport } from './routes/_layer'
 import { Route as LayerIndexRouteImport } from './routes/_layer/index'
+import { Route as ApiSplatRouteImport } from './routes/api/$'
+import { Route as LayerWriteupsRouteImport } from './routes/_layer/writeups'
 import { Route as LayerResumeRouteImport } from './routes/_layer/resume'
 import { Route as LayerProjectsRouteImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyRouteImport } from './routes/_layer/photography'
 import { Route as LayerExperienceRouteImport } from './routes/_layer/experience'
 import { Route as LayerActivityRouteImport } from './routes/_layer/activity'
-import { Route as LayerActivityIndexRouteImport } from './routes/_layer/activity/index'
-import { Route as LayerActivityPostRouteImport } from './routes/_layer/activity/$post'
+import { Route as LayerWriteupsIndexRouteImport } from './routes/_layer/writeups/index'
+import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
+import { Route as LayerWriteupsPostRouteImport } from './routes/_layer/writeups/$post'
 
 const LayerRoute = LayerRouteImport.update({
   id: '/_layer',
@@ -26,6 +29,16 @@ const LayerRoute = LayerRouteImport.update({
 const LayerIndexRoute = LayerIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LayerRoute,
+} as any)
+const ApiSplatRoute = ApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LayerWriteupsRoute = LayerWriteupsRouteImport.update({
+  id: '/writeups',
+  path: '/writeups',
   getParentRoute: () => LayerRoute,
 } as any)
 const LayerResumeRoute = LayerResumeRouteImport.update({
@@ -53,47 +66,61 @@ const LayerActivityRoute = LayerActivityRouteImport.update({
   path: '/activity',
   getParentRoute: () => LayerRoute,
 } as any)
-const LayerActivityIndexRoute = LayerActivityIndexRouteImport.update({
+const LayerWriteupsIndexRoute = LayerWriteupsIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LayerActivityRoute,
+  getParentRoute: () => LayerWriteupsRoute,
 } as any)
-const LayerActivityPostRoute = LayerActivityPostRouteImport.update({
+const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
+  id: '/api/rpc/$',
+  path: '/api/rpc/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LayerWriteupsPostRoute = LayerWriteupsPostRouteImport.update({
   id: '/$post',
   path: '/$post',
-  getParentRoute: () => LayerActivityRoute,
+  getParentRoute: () => LayerWriteupsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/activity': typeof LayerActivityRouteWithChildren
+  '/activity': typeof LayerActivityRoute
   '/experience': typeof LayerExperienceRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
+  '/writeups': typeof LayerWriteupsRouteWithChildren
+  '/api/$': typeof ApiSplatRoute
   '/': typeof LayerIndexRoute
-  '/activity/$post': typeof LayerActivityPostRoute
-  '/activity/': typeof LayerActivityIndexRoute
+  '/writeups/$post': typeof LayerWriteupsPostRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
+  '/writeups/': typeof LayerWriteupsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/activity': typeof LayerActivityRoute
   '/experience': typeof LayerExperienceRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
   '/resume': typeof LayerResumeRoute
+  '/api/$': typeof ApiSplatRoute
   '/': typeof LayerIndexRoute
-  '/activity/$post': typeof LayerActivityPostRoute
-  '/activity': typeof LayerActivityIndexRoute
+  '/writeups/$post': typeof LayerWriteupsPostRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
+  '/writeups': typeof LayerWriteupsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layer': typeof LayerRouteWithChildren
-  '/_layer/activity': typeof LayerActivityRouteWithChildren
+  '/_layer/activity': typeof LayerActivityRoute
   '/_layer/experience': typeof LayerExperienceRoute
   '/_layer/photography': typeof LayerPhotographyRoute
   '/_layer/projects': typeof LayerProjectsRoute
   '/_layer/resume': typeof LayerResumeRoute
+  '/_layer/writeups': typeof LayerWriteupsRouteWithChildren
+  '/api/$': typeof ApiSplatRoute
   '/_layer/': typeof LayerIndexRoute
-  '/_layer/activity/$post': typeof LayerActivityPostRoute
-  '/_layer/activity/': typeof LayerActivityIndexRoute
+  '/_layer/writeups/$post': typeof LayerWriteupsPostRoute
+  '/api/rpc/$': typeof ApiRpcSplatRoute
+  '/_layer/writeups/': typeof LayerWriteupsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -103,18 +130,24 @@ export interface FileRouteTypes {
     | '/photography'
     | '/projects'
     | '/resume'
+    | '/writeups'
+    | '/api/$'
     | '/'
-    | '/activity/$post'
-    | '/activity/'
+    | '/writeups/$post'
+    | '/api/rpc/$'
+    | '/writeups/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/activity'
     | '/experience'
     | '/photography'
     | '/projects'
     | '/resume'
+    | '/api/$'
     | '/'
-    | '/activity/$post'
-    | '/activity'
+    | '/writeups/$post'
+    | '/api/rpc/$'
+    | '/writeups'
   id:
     | '__root__'
     | '/_layer'
@@ -123,13 +156,18 @@ export interface FileRouteTypes {
     | '/_layer/photography'
     | '/_layer/projects'
     | '/_layer/resume'
+    | '/_layer/writeups'
+    | '/api/$'
     | '/_layer/'
-    | '/_layer/activity/$post'
-    | '/_layer/activity/'
+    | '/_layer/writeups/$post'
+    | '/api/rpc/$'
+    | '/_layer/writeups/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   LayerRoute: typeof LayerRouteWithChildren
+  ApiSplatRoute: typeof ApiSplatRoute
+  ApiRpcSplatRoute: typeof ApiRpcSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -146,6 +184,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayerIndexRouteImport
+      parentRoute: typeof LayerRoute
+    }
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layer/writeups': {
+      id: '/_layer/writeups'
+      path: '/writeups'
+      fullPath: '/writeups'
+      preLoaderRoute: typeof LayerWriteupsRouteImport
       parentRoute: typeof LayerRoute
     }
     '/_layer/resume': {
@@ -183,52 +235,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayerActivityRouteImport
       parentRoute: typeof LayerRoute
     }
-    '/_layer/activity/': {
-      id: '/_layer/activity/'
+    '/_layer/writeups/': {
+      id: '/_layer/writeups/'
       path: '/'
-      fullPath: '/activity/'
-      preLoaderRoute: typeof LayerActivityIndexRouteImport
-      parentRoute: typeof LayerActivityRoute
+      fullPath: '/writeups/'
+      preLoaderRoute: typeof LayerWriteupsIndexRouteImport
+      parentRoute: typeof LayerWriteupsRoute
     }
-    '/_layer/activity/$post': {
-      id: '/_layer/activity/$post'
+    '/api/rpc/$': {
+      id: '/api/rpc/$'
+      path: '/api/rpc/$'
+      fullPath: '/api/rpc/$'
+      preLoaderRoute: typeof ApiRpcSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layer/writeups/$post': {
+      id: '/_layer/writeups/$post'
       path: '/$post'
-      fullPath: '/activity/$post'
-      preLoaderRoute: typeof LayerActivityPostRouteImport
-      parentRoute: typeof LayerActivityRoute
+      fullPath: '/writeups/$post'
+      preLoaderRoute: typeof LayerWriteupsPostRouteImport
+      parentRoute: typeof LayerWriteupsRoute
     }
   }
 }
 
-interface LayerActivityRouteChildren {
-  LayerActivityPostRoute: typeof LayerActivityPostRoute
-  LayerActivityIndexRoute: typeof LayerActivityIndexRoute
+interface LayerWriteupsRouteChildren {
+  LayerWriteupsPostRoute: typeof LayerWriteupsPostRoute
+  LayerWriteupsIndexRoute: typeof LayerWriteupsIndexRoute
 }
 
-const LayerActivityRouteChildren: LayerActivityRouteChildren = {
-  LayerActivityPostRoute: LayerActivityPostRoute,
-  LayerActivityIndexRoute: LayerActivityIndexRoute,
+const LayerWriteupsRouteChildren: LayerWriteupsRouteChildren = {
+  LayerWriteupsPostRoute: LayerWriteupsPostRoute,
+  LayerWriteupsIndexRoute: LayerWriteupsIndexRoute,
 }
 
-const LayerActivityRouteWithChildren = LayerActivityRoute._addFileChildren(
-  LayerActivityRouteChildren,
+const LayerWriteupsRouteWithChildren = LayerWriteupsRoute._addFileChildren(
+  LayerWriteupsRouteChildren,
 )
 
 interface LayerRouteChildren {
-  LayerActivityRoute: typeof LayerActivityRouteWithChildren
+  LayerActivityRoute: typeof LayerActivityRoute
   LayerExperienceRoute: typeof LayerExperienceRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
   LayerProjectsRoute: typeof LayerProjectsRoute
   LayerResumeRoute: typeof LayerResumeRoute
+  LayerWriteupsRoute: typeof LayerWriteupsRouteWithChildren
   LayerIndexRoute: typeof LayerIndexRoute
 }
 
 const LayerRouteChildren: LayerRouteChildren = {
-  LayerActivityRoute: LayerActivityRouteWithChildren,
+  LayerActivityRoute: LayerActivityRoute,
   LayerExperienceRoute: LayerExperienceRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,
   LayerProjectsRoute: LayerProjectsRoute,
   LayerResumeRoute: LayerResumeRoute,
+  LayerWriteupsRoute: LayerWriteupsRouteWithChildren,
   LayerIndexRoute: LayerIndexRoute,
 }
 
@@ -236,6 +297,8 @@ const LayerRouteWithChildren = LayerRoute._addFileChildren(LayerRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   LayerRoute: LayerRouteWithChildren,
+  ApiSplatRoute: ApiSplatRoute,
+  ApiRpcSplatRoute: ApiRpcSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

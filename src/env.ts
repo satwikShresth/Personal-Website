@@ -6,7 +6,15 @@ export const env = createEnv({
     S3_ENDPOINT: z.url(),
     S3_BUCKET: z.string(),
     S3_ACCESSKEYID: z.string(),
-    S3_SECRETKEY: z.string()
+    S3_SECRETKEY: z.string(),
+    REDIS_URL:z.url({ protocol:/redis/}),
+    DEFAULT_TTL:z.coerce.number().catch(900000),
+    STRAVA_CLIENT_ID: z.string(),
+    STRAVA_CLIENT_SECRET: z.string(),
+    STRAVA_REDIRECT_URI: z.url(),
+    STRAVA_CALLBACK_KEY: z.string(),
+    DISCORD_WEBHOOK_URL: z.url(),
+    REDIS_STRAVA_OAUTH_TOKEN_KEY: z.string()
   },
   clientPrefix: 'VITE_',
   client: {},

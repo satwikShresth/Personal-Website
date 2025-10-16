@@ -11,8 +11,7 @@ import { makeLabel } from '../Graph/utils'
 import type { EdgeConfig, NodeConfig } from '../Graph/types'
 import { Box, Text, VStack } from '@chakra-ui/react'
 import { useQuery } from '@tanstack/react-query'
-import * as serverFns from '@/routes/-serverFn'
-import { useServerFn } from '@tanstack/react-start'
+import { orpc } from '@/orpc/client'
 
 export const nodes: Array<NodeConfig> = [
   {
@@ -371,10 +370,8 @@ export const edges: Array<EdgeConfig> = [
 
 // Video component for live demo
 const VideoDemo = () => {
-  const getVideoLink = useServerFn(serverFns.getVideoLink)
   const { data: preSignedUrl, isLoading, error } = useQuery({
-    queryKey: ['video-link'],
-    queryFn: () => getVideoLink(),
+    ...orpc.s3.getInspirationVideoLink.queryOptions(),
     select: (s) => s.preSignedUrl
   })
 

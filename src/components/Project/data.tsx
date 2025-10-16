@@ -7,10 +7,11 @@ import { FaBookOpen } from 'react-icons/fa'
 import * as openmario from './data/openmario'
 import * as inspiration from './data/inspiration'
 import { VideoDemo } from './data/inspiration'
-import type { ReactNode } from '@tanstack/react-router'
-import type { ReactElement } from 'react'
+import type { ReactNode, ReactElement } from 'react'
 
 export interface Projects {
+  nodes?: any
+  edges?: any
   name?: ReactElement
   image?: ReactNode
   icon?: ReactNode
@@ -170,7 +171,7 @@ export const projects: Array<Projects> = [
         Library
       </Text>
     ),
-    icon: FaBookOpen,
+    icon: FaBookOpen as any,
     liveUrl: 'https://cs478.satwik.dev',
     githubUrl: 'https://github.com/satwikShresth/Library',
     techStack: [

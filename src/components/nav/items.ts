@@ -10,6 +10,12 @@ export const NAV_ITEMS = [
     section: '',
   },
   {
+    label: 'Writeups',
+    href: '/writeups',
+    section: '',
+  },
+
+  {
     label: 'Activity',
     href: '/activity',
     section: '',
