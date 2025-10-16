@@ -14,6 +14,7 @@ export function getRouter() {
     scrollRestoration: true,
     defaultStructuralSharing: true,
     defaultViewTransition: true,
+    context: { queryClient },
     defaultNotFoundComponent: () => <NotFound />,
     defaultErrorComponent: ({ error, reset }) => <Error error={error} reset={reset} />,
     Wrap: ({ children }) => {

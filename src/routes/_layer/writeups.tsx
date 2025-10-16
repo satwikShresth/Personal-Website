@@ -14,10 +14,10 @@ import {
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 import { MDXProvider } from '@mdx-js/react'
 import { useColorModeValue } from '@/components/ui/color-mode'
-import { Activities } from '@/components/Activity'
+import { Activities } from '@/components/Writeup'
 import posts from '@/posts'
 
-export const Route = createFileRoute('/_layer/activity')({
+export const Route = createFileRoute('/_layer/writeups')({
   component: () => {
     const textColor = useColorModeValue('gray.700', 'gray.200')
     const headingColor = useColorModeValue('gray.800', 'white')

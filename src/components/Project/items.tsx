@@ -23,7 +23,7 @@ interface ProjectItemProps {
   project: Projects
 }
 
-const ProjectItem = ({ project }: ProjectItemProps) => {
+export const ProjectItem = ({ project }: ProjectItemProps) => {
   return (
     <Box
       p={8}
@@ -54,7 +54,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
             align="center"
           >
             {project.icon && (
-              <Icon as={project.icon} boxSize={20} color={'accent'} />
+              <Icon as={project?.icon! as any} boxSize={20} color={'accent'} />
             )}
             {project.image && project.image}
           </Flex>
@@ -120,7 +120,7 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
         <GridItem>
           <VStack align="start" zIndex="1" position="relative">
             {/* @ts-igrore: something */}
-            {project?.nodes && project?.edges && (
+            {project!.nodes && project?.edges && (
               <ArchitectureDiagram
                 nodes={project?.nodes}
                 edges={project?.edges}
@@ -190,4 +190,3 @@ const ProjectItem = ({ project }: ProjectItemProps) => {
   )
 }
 
-export default ProjectItem

@@ -19,7 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { FaArrowRight, FaCalendarAlt, FaClock } from 'react-icons/fa'
 import { Tooltip } from '../ui/tooltip'
-import { useActivityMetadataStore } from './store'
+import { useWriteupMetadataStore } from './store'
 import { useColorModeValue } from '@/components/ui/color-mode'
 
 export type BlogCardProps = {
@@ -44,8 +44,8 @@ export function BlogCard({
   variant = 'normal',
   estimatedReadTime,
 }: BlogCardProps) {
-  const markPostAsRead = useActivityMetadataStore((s) => s.markPostAsRead)
-  const readPosts = useActivityMetadataStore((s) => s.readPosts)
+  const markPostAsRead = useWriteupMetadataStore((s) => s.markPostAsRead)
+  const readPosts = useWriteupMetadataStore((s) => s.readPosts)
   const navigate = useNavigate()
 
   const isRead = readPosts.includes(slug)

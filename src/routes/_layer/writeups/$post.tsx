@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import posts from '@/posts'
-import { Activities } from '@/components/Activity'
+import { Activities } from '@/components/Writeup'
 
-export const Route = createFileRoute('/_layer/activity/$post')({
+export const Route = createFileRoute('/_layer/writeups/$post')({
   loader: ({ params: { post } }) => {
     return posts[post]
   },

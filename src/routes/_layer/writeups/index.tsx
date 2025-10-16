@@ -15,24 +15,24 @@ import {
   createListCollection,
 } from '@chakra-ui/react'
 import { FaFilter } from 'react-icons/fa'
-import { useActivityMetadataStore } from '@/components/Activity/store'
-import { Activities } from '@/components/Activity'
+import { useWriteupMetadataStore } from '@/components/Writeup/store'
+import { Activities } from '@/components/Writeup'
 import { useColorModeValue } from '@/components/ui/color-mode'
 
-export const Route = createFileRoute('/_layer/activity/')({
+export const Route = createFileRoute('/_layer/writeups/')({
   component: BlogPage,
 })
 
 function BlogPage() {
-  const selectedTags = useActivityMetadataStore((s) => s.selectedTags)
-  const searchQuery = useActivityMetadataStore((s) => s.searchQuery)
+  const selectedTags = useWriteupMetadataStore((s) => s.selectedTags)
+  const searchQuery = useWriteupMetadataStore((s) => s.searchQuery)
 
   const {
     getAllTags,
     getFilteredPosts,
     setSelectedTags,
     setSearchQuery,
-  } = useActivityMetadataStore()
+  } = useWriteupMetadataStore()
   const headingColor = useColorModeValue('gray.800', 'white')
 
   const tags = createListCollection({
@@ -56,7 +56,7 @@ function BlogPage() {
         >
           My {" "}
           <Box as="span" color={'accent'}>
-            Activities
+            Writings
           </Box>
         </Heading>
         <Text

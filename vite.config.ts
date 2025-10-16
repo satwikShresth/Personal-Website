@@ -44,7 +44,9 @@ export default defineConfig({
         rehypePlugins: [],
       }),
     },
-    tsconfigPaths(),
+    tsconfigPaths({
+       projects: ['./tsconfig.json']
+    }),
     tanstackStart(),
     nitroV2Plugin({
       preset: 'bun',
