@@ -23,8 +23,7 @@ export function StravaActivityCard({ activity }: StravaActivityCardProps) {
       align="stretch"
       transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
       _hover={{
-        transform: 'translateY(-2px)',
-        shadow: '2xl',
+        borderColor: 'accent'
       }}
       cursor="pointer"
       shadow="md"
