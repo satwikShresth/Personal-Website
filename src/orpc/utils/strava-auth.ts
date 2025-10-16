@@ -1,14 +1,33 @@
-import { redis } from './redis'
 import { env } from '@/env'
+import { redis } from './redis'
 import { StravaOAuth, type OAuthTokenResponse } from '@/strava-client/oauth'
 import { sendDiscordNotification } from './discord'
 
+const redirectUri = `${env.STRAVA_REDIRECT_URI}/${env.STRAVA_CALLBACK_KEY}`;
+console.log(redirectUri)
 export const stravaOAuth = new StravaOAuth({
   clientId: env.STRAVA_CLIENT_ID,
   clientSecret: env.STRAVA_CLIENT_SECRET,
-  redirectUri: env.STRAVA_REDIRECT_URI,
+  redirectUri,
   scopes: ["activity:read_all"],
 })
+
+// In-memory cooldown tracking for Discord notifications
+let lastNotificationTime = 0
+const NOTIFICATION_COOLDOWN_MS = 15 * 60 * 1000 // 15 minutes
+
+/**
+ * Send Discord notification with cooldown
+ * Only sends if cooldown period has passed
+ */
+async function sendNotificationWithCooldown(message: string, username?: string): Promise<void> {
+  const now = Date.now()
+  
+  if (now - lastNotificationTime >= NOTIFICATION_COOLDOWN_MS) {
+    lastNotificationTime = now
+    await sendDiscordNotification(message, username)
+  }
+}
 
 interface StoredOAuthToken {
   accessToken: string
@@ -49,21 +68,21 @@ export async function getStoredToken(): Promise<StoredOAuthToken | null> {
 
 /**
  * Validate and refresh OAuth token if needed
- * Returns valid access token or throws error
+ * Returns valid access token or null if authentication required
  */
-export async function ensureValidToken(): Promise<string> {
+export async function ensureValidToken(): Promise<string | null> {
   const storedToken = await getStoredToken()
 
   // Token not present in Redis
   if (!storedToken) {
-    await sendDiscordNotification(
+    await sendNotificationWithCooldown(
       '🏃 **Strava Authentication Alert**\n\n' +
       '❌ **OAuth token not found!**\n\n' +
       'The Strava OAuth token is missing from Redis. Please re-authenticate.\n\n' +
       `Authorization URL: ${stravaOAuth.getAuthUrl()}`,
       'Strava Auth Bot'
     )
-    throw new Error('OAuth token not found. Authentication required.')
+    return null
   }
 
   // Check if token is expired
@@ -81,16 +100,15 @@ export async function ensureValidToken(): Promise<string> {
       return refreshedToken.access_token
     })
     .catch(async (error) => {
-      return await sendDiscordNotification(
+      await sendNotificationWithCooldown(
         '🏃 **Strava Authentication Alert**\n\n' +
         '❌ **Token refresh failed!**\n\n' +
         'Failed to refresh the Strava OAuth token. Please re-authenticate.\n\n' +
         `Error: ${error instanceof Error ? error.message : 'Unknown error'}\n\n` +
         `Authorization URL: ${stravaOAuth.getAuthUrl()}`,
         'Strava Auth Bot'
-      ).then(() => {
-        throw new Error(`Token refresh failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
-      })
+      )
+      return null
     })
 }
 

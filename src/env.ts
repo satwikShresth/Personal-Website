@@ -12,6 +12,7 @@ export const env = createEnv({
     STRAVA_CLIENT_ID: z.string(),
     STRAVA_CLIENT_SECRET: z.string(),
     STRAVA_REDIRECT_URI: z.url(),
+    STRAVA_CALLBACK_KEY: z.string(),
     DISCORD_WEBHOOK_URL: z.url(),
     REDIS_STRAVA_OAUTH_TOKEN_KEY: z.string()
   },

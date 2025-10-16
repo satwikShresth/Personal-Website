@@ -21,5 +21,11 @@ export const createClientConfig: CreateClientConfig = (config) => ({
       return `${config.method}:${url}:${params}`;
     },
   }),
-  auth: async () => await ensureValidToken()
+  auth: async (): Promise<string> => {
+    const token = await ensureValidToken()
+    if (!token) {
+      throw new Error('Strava authentication required. Please authenticate with Strava.')
+    }
+    return token
+  }
 });

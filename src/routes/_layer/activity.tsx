@@ -7,7 +7,6 @@ import {
   Text,
   VStack,
   SimpleGrid,
-  Spinner,
 } from '@chakra-ui/react'
 import { useColorModeValue } from '@/components/ui/color-mode'
 import { useQuery } from '@tanstack/react-query'
@@ -29,6 +28,10 @@ function ActivityPage() {
     ...orpc.strava.getActivities.queryOptions(),
     select: (s: any) => s.activities ?? []
   })
+
+  if (error) {
+    throw new Error(`Failed to load activities: ${error.message}`)
+  }
 
   return (
     <Center>
@@ -58,20 +61,6 @@ function ActivityPage() {
                 Hiking, climbing, running....
               </Text>
             </Box>
-
-            {isLoading && (
-              <Center py={12}>
-                <Spinner size="xl" color="accent" />
-              </Center>
-            )}
-
-            {error && (
-              <Box p={4} bg="red.50" borderRadius="md">
-                <Text color="red.600">
-                  Failed to load activities: {error.message}
-                </Text>
-              </Box>
-            )}
 
             {!isLoading && activities && Array.isArray(activities) && activities.length > 0 ? (
               <SimpleGrid

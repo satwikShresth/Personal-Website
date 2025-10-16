@@ -5,6 +5,7 @@ import {
   HeadContent,
   Scripts,
   createRootRouteWithContext,
+  ErrorComponent,
 } from '@tanstack/react-router'
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import TanStackRouterDevtools from '@/integrations/tanstack-router';
@@ -38,6 +39,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     ],
   }),
   shellComponent: RootShellComponent,
+  errorComponent: () => ErrorComponent(),
   component: RootComponent,
 })
 

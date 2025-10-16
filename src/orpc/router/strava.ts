@@ -2,16 +2,23 @@ import { z } from 'zod'
 import { os } from '@orpc/server'
 import { storeOAuthToken, stravaOAuth} from '@/orpc/utils/strava-auth'
 import { getLoggedInAthleteActivities } from '@/strava-client/sdk/client/sdk.gen'
+import { env } from '@/env'
 
 export const handleCallback = os
   .route({
-    path: '/callback',
+    path: '/callback/:key',
     method: 'GET',
     successStatus: 200,
     inputStructure: 'detailed'
   })
   .input(
     z.object({
+      params: z.object({
+        key: z.string().refine(
+          (key) => key === env.STRAVA_CALLBACK_KEY,
+          { message: 'Invalid callback key' }
+        )
+      }),
       query: z.object({
         code: z.string(),
         scope: z.string().optional(),
@@ -34,6 +41,7 @@ export const handleCallback = os
     return await stravaOAuth
       .exchangeCode(code)
       .then(async (tokenResponse) => {
+      console.log(tokenResponse.athlete)
         await storeOAuthToken(tokenResponse)
         
         return {
