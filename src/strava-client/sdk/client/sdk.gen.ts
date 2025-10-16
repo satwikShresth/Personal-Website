@@ -3,7 +3,7 @@
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
 import type { CreateActivityData, CreateActivityErrors, CreateActivityResponses, CreateUploadData, CreateUploadErrors, CreateUploadResponses, ExploreSegmentsData, ExploreSegmentsErrors, ExploreSegmentsResponses, GetActivityByIdData, GetActivityByIdErrors, GetActivityByIdResponses, GetActivityStreamsData, GetActivityStreamsErrors, GetActivityStreamsResponses, GetClubActivitiesByIdData, GetClubActivitiesByIdErrors, GetClubActivitiesByIdResponses, GetClubAdminsByIdData, GetClubAdminsByIdErrors, GetClubAdminsByIdResponses, GetClubByIdData, GetClubByIdErrors, GetClubByIdResponses, GetClubMembersByIdData, GetClubMembersByIdErrors, GetClubMembersByIdResponses, GetCommentsByActivityIdData, GetCommentsByActivityIdErrors, GetCommentsByActivityIdResponses, GetEffortsBySegmentIdData, GetEffortsBySegmentIdErrors, GetEffortsBySegmentIdResponses, GetGearByIdData, GetGearByIdErrors, GetGearByIdResponses, GetKudoersByActivityIdData, GetKudoersByActivityIdErrors, GetKudoersByActivityIdResponses, GetLapsByActivityIdData, GetLapsByActivityIdErrors, GetLapsByActivityIdResponses, GetLoggedInAthleteActivitiesData, GetLoggedInAthleteActivitiesErrors, GetLoggedInAthleteActivitiesResponses, GetLoggedInAthleteClubsData, GetLoggedInAthleteClubsErrors, GetLoggedInAthleteClubsResponses, GetLoggedInAthleteData, GetLoggedInAthleteErrors, GetLoggedInAthleteResponses, GetLoggedInAthleteStarredSegmentsData, GetLoggedInAthleteStarredSegmentsErrors, GetLoggedInAthleteStarredSegmentsResponses, GetLoggedInAthleteZonesData, GetLoggedInAthleteZonesErrors, GetLoggedInAthleteZonesResponses, GetRouteAsGpxData, GetRouteAsGpxErrors, GetRouteAsGpxResponses, GetRouteAsTcxData, GetRouteAsTcxErrors, GetRouteAsTcxResponses, GetRouteByIdData, GetRouteByIdErrors, GetRouteByIdResponses, GetRoutesByAthleteIdData, GetRoutesByAthleteIdErrors, GetRoutesByAthleteIdResponses, GetRouteStreamsData, GetRouteStreamsErrors, GetRouteStreamsResponses, GetSegmentByIdData, GetSegmentByIdErrors, GetSegmentByIdResponses, GetSegmentEffortByIdData, GetSegmentEffortByIdErrors, GetSegmentEffortByIdResponses, GetSegmentEffortStreamsData, GetSegmentEffortStreamsErrors, GetSegmentEffortStreamsResponses, GetSegmentStreamsData, GetSegmentStreamsErrors, GetSegmentStreamsResponses, GetStatsData, GetStatsErrors, GetStatsResponses, GetUploadByIdData, GetUploadByIdErrors, GetUploadByIdResponses, GetZonesByActivityIdData, GetZonesByActivityIdErrors, GetZonesByActivityIdResponses, StarSegmentData, StarSegmentErrors, StarSegmentResponses, UpdateActivityByIdData, UpdateActivityByIdErrors, UpdateActivityByIdResponses, UpdateLoggedInAthleteData, UpdateLoggedInAthleteErrors, UpdateLoggedInAthleteResponses } from './types.gen';
-import { zCreateActivityData, zCreateActivityResponse, zCreateUploadData, zCreateUploadResponse, zExploreSegmentsData, zExploreSegmentsResponse, zGetActivityByIdData, zGetActivityByIdResponse, zGetActivityStreamsData, zGetActivityStreamsResponse, zGetClubActivitiesByIdData, zGetClubActivitiesByIdResponse, zGetClubAdminsByIdData, zGetClubAdminsByIdResponse, zGetClubByIdData, zGetClubByIdResponse, zGetClubMembersByIdData, zGetClubMembersByIdResponse, zGetCommentsByActivityIdData, zGetCommentsByActivityIdResponse, zGetEffortsBySegmentIdData, zGetEffortsBySegmentIdResponse, zGetGearByIdData, zGetGearByIdResponse, zGetKudoersByActivityIdData, zGetKudoersByActivityIdResponse, zGetLapsByActivityIdData, zGetLapsByActivityIdResponse, zGetLoggedInAthleteActivitiesData, zGetLoggedInAthleteActivitiesResponse, zGetLoggedInAthleteClubsData, zGetLoggedInAthleteClubsResponse, zGetLoggedInAthleteData, zGetLoggedInAthleteResponse, zGetLoggedInAthleteStarredSegmentsData, zGetLoggedInAthleteStarredSegmentsResponse, zGetLoggedInAthleteZonesData, zGetLoggedInAthleteZonesResponse, zGetRouteAsGpxData, zGetRouteAsTcxData, zGetRouteByIdData, zGetRouteByIdResponse, zGetRoutesByAthleteIdData, zGetRoutesByAthleteIdResponse, zGetRouteStreamsData, zGetRouteStreamsResponse, zGetSegmentByIdData, zGetSegmentByIdResponse, zGetSegmentEffortByIdData, zGetSegmentEffortByIdResponse, zGetSegmentEffortStreamsData, zGetSegmentEffortStreamsResponse, zGetSegmentStreamsData, zGetSegmentStreamsResponse, zGetStatsData, zGetStatsResponse, zGetUploadByIdData, zGetUploadByIdResponse, zGetZonesByActivityIdData, zGetZonesByActivityIdResponse, zStarSegmentData, zStarSegmentResponse, zUpdateActivityByIdData, zUpdateActivityByIdResponse, zUpdateLoggedInAthleteData, zUpdateLoggedInAthleteResponse } from './zod.gen';
+import { zCreateActivityData, zCreateUploadData, zExploreSegmentsData, zGetActivityByIdData, zGetActivityStreamsData, zGetClubActivitiesByIdData, zGetClubAdminsByIdData, zGetClubByIdData, zGetClubMembersByIdData, zGetCommentsByActivityIdData, zGetEffortsBySegmentIdData, zGetGearByIdData, zGetKudoersByActivityIdData, zGetLapsByActivityIdData, zGetLoggedInAthleteActivitiesData, zGetLoggedInAthleteClubsData, zGetLoggedInAthleteData, zGetLoggedInAthleteStarredSegmentsData, zGetLoggedInAthleteZonesData, zGetRouteAsGpxData, zGetRouteAsTcxData, zGetRouteByIdData, zGetRoutesByAthleteIdData, zGetRouteStreamsData, zGetSegmentByIdData, zGetSegmentEffortByIdData, zGetSegmentEffortStreamsData, zGetSegmentStreamsData, zGetStatsData, zGetUploadByIdData, zGetZonesByActivityIdData, zStarSegmentData, zUpdateActivityByIdData, zUpdateLoggedInAthleteData } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -30,9 +30,6 @@ export const getStats = <ThrowOnError extends boolean = false>(options: Options<
             return await zGetStatsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetStatsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -55,9 +52,6 @@ export const getLoggedInAthlete = <ThrowOnError extends boolean = false>(options
             return await zGetLoggedInAthleteData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetLoggedInAthleteResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -80,9 +74,6 @@ export const updateLoggedInAthlete = <ThrowOnError extends boolean = false>(opti
             return await zUpdateLoggedInAthleteData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zUpdateLoggedInAthleteResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -105,9 +96,6 @@ export const getLoggedInAthleteZones = <ThrowOnError extends boolean = false>(op
             return await zGetLoggedInAthleteZonesData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetLoggedInAthleteZonesResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -130,9 +118,6 @@ export const getSegmentById = <ThrowOnError extends boolean = false>(options: Op
             return await zGetSegmentByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetSegmentByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -155,9 +140,6 @@ export const getLoggedInAthleteStarredSegments = <ThrowOnError extends boolean =
             return await zGetLoggedInAthleteStarredSegmentsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetLoggedInAthleteStarredSegmentsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -181,9 +163,6 @@ export const starSegment = <ThrowOnError extends boolean = false>(options: Optio
             return await zStarSegmentData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zStarSegmentResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -210,9 +189,6 @@ export const getEffortsBySegmentId = <ThrowOnError extends boolean = false>(opti
             return await zGetEffortsBySegmentIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetEffortsBySegmentIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -241,9 +217,6 @@ export const exploreSegments = <ThrowOnError extends boolean = false>(options: O
             return await zExploreSegmentsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zExploreSegmentsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -266,9 +239,6 @@ export const getSegmentEffortById = <ThrowOnError extends boolean = false>(optio
             return await zGetSegmentEffortByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetSegmentEffortByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -292,9 +262,6 @@ export const createActivity = <ThrowOnError extends boolean = false>(options: Op
             return await zCreateActivityData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zCreateActivityResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -321,9 +288,6 @@ export const getActivityById = <ThrowOnError extends boolean = false>(options: O
             return await zGetActivityByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetActivityByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -346,9 +310,6 @@ export const updateActivityById = <ThrowOnError extends boolean = false>(options
             return await zUpdateActivityByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zUpdateActivityByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -375,9 +336,6 @@ export const getLoggedInAthleteActivities = <ThrowOnError extends boolean = fals
             return await zGetLoggedInAthleteActivitiesData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetLoggedInAthleteActivitiesResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -400,9 +358,6 @@ export const getLapsByActivityId = <ThrowOnError extends boolean = false>(option
             return await zGetLapsByActivityIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetLapsByActivityIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -425,9 +380,6 @@ export const getZonesByActivityId = <ThrowOnError extends boolean = false>(optio
             return await zGetZonesByActivityIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetZonesByActivityIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -450,9 +402,6 @@ export const getCommentsByActivityId = <ThrowOnError extends boolean = false>(op
             return await zGetCommentsByActivityIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetCommentsByActivityIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -475,9 +424,6 @@ export const getKudoersByActivityId = <ThrowOnError extends boolean = false>(opt
             return await zGetKudoersByActivityIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetKudoersByActivityIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -500,9 +446,6 @@ export const getClubById = <ThrowOnError extends boolean = false>(options: Optio
             return await zGetClubByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetClubByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -525,9 +468,6 @@ export const getClubMembersById = <ThrowOnError extends boolean = false>(options
             return await zGetClubMembersByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetClubMembersByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -550,9 +490,6 @@ export const getClubAdminsById = <ThrowOnError extends boolean = false>(options:
             return await zGetClubAdminsByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetClubAdminsByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -575,9 +512,6 @@ export const getClubActivitiesById = <ThrowOnError extends boolean = false>(opti
             return await zGetClubActivitiesByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetClubActivitiesByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -600,9 +534,6 @@ export const getLoggedInAthleteClubs = <ThrowOnError extends boolean = false>(op
             return await zGetLoggedInAthleteClubsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetLoggedInAthleteClubsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -625,9 +556,6 @@ export const getGearById = <ThrowOnError extends boolean = false>(options: Optio
             return await zGetGearByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetGearByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -650,9 +578,6 @@ export const getRouteById = <ThrowOnError extends boolean = false>(options: Opti
             return await zGetRouteByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetRouteByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -675,9 +600,6 @@ export const getRoutesByAthleteId = <ThrowOnError extends boolean = false>(optio
             return await zGetRoutesByAthleteIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetRoutesByAthleteIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -743,9 +665,6 @@ export const createUpload = <ThrowOnError extends boolean = false>(options?: Opt
             return await zCreateUploadData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zCreateUploadResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -772,9 +691,6 @@ export const getUploadById = <ThrowOnError extends boolean = false>(options: Opt
             return await zGetUploadByIdData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetUploadByIdResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -803,9 +719,6 @@ export const getActivityStreams = <ThrowOnError extends boolean = false>(options
             return await zGetActivityStreamsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetActivityStreamsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -834,9 +747,6 @@ export const getSegmentEffortStreams = <ThrowOnError extends boolean = false>(op
             return await zGetSegmentEffortStreamsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetSegmentEffortStreamsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -865,9 +775,6 @@ export const getSegmentStreams = <ThrowOnError extends boolean = false>(options:
             return await zGetSegmentStreamsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetSegmentStreamsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',
@@ -890,9 +797,6 @@ export const getRouteStreams = <ThrowOnError extends boolean = false>(options: O
             return await zGetRouteStreamsData.parseAsync(data);
         },
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zGetRouteStreamsResponse.parseAsync(data);
-        },
         security: [
             {
                 scheme: 'bearer',

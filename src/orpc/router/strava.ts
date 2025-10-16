@@ -1,10 +1,11 @@
 import { z } from 'zod'
 import { os } from '@orpc/server'
-import { storeOAuthToken, stravaOAuth } from '@/orpc/utils/strava-auth'
+import { storeOAuthToken, stravaOAuth} from '@/orpc/utils/strava-auth'
+import { getLoggedInAthleteActivities } from '@/strava-client/sdk/client/sdk.gen'
 
 export const handleCallback = os
   .route({
-    path: '/strava/callback',
+    path: '/callback',
     method: 'GET',
     successStatus: 200,
     inputStructure: 'detailed'
@@ -49,4 +50,25 @@ export const handleCallback = os
           `Failed to exchange authorization code: ${error instanceof Error ? error.message : 'Unknown error'}`
         )
       })
+  })
+
+export const getActivities = os
+  .route({
+    path: '/activities',
+    method: 'GET',
+    successStatus: 200,
+  })
+  .handler(async () => {
+    const activities = await getLoggedInAthleteActivities({
+      query: {
+        per_page: 5,
+        page: 1,
+      },
+    })
+
+    return {
+      success: true,
+      activities: activities.data,
+      count: activities.data?.length ?? 0,
+    }
   })

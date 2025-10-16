@@ -23,7 +23,6 @@ createClient({
          operationId: true,
          validator: {
             request: true,
-            response: true
          },
          exportFromIndex: true,
       }

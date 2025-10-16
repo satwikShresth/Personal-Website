@@ -1,35 +1,34 @@
 import { RedisClient } from "bun";
 import {env} from "@/env";
-import { buildStorage, canStale, type CacheRequestConfig, type NotEmptyStorageValue, type StorageValue } from "axios-cache-interceptor";
+import { buildStorage, type CacheRequestConfig, type NotEmptyStorageValue, type StorageValue } from "axios-cache-interceptor";
 
 export const redis = new RedisClient(env.REDIS_URL);
 export const redisStorage = buildStorage({
-    find: async(key) => 
-        await redis
-        .get(`axios-cache-${key}`)
-        .then(
-            (result)=>result 
-                ? (JSON.parse(result) as StorageValue) 
-                : undefined
-        )
-    ,
+    find: async(key) => {
+        const result = await redis.get(`axios-cache-${key}`)
+        return result ? (JSON.parse(result) as StorageValue) : undefined
+    },
 
     async set(key, value, req) {
-        const pxat = getPaxt(value,req)
-        pxat
-            ? await redis.set(`axios-cache-${key}`, JSON.stringify(value), "PXAT", pxat)
-            : await redis.set(`axios-cache-${key}`, JSON.stringify(value))
+        const pxat = getPxat(value, req)
+        const keyName = `axios-cache-${key}`
+        if (pxat) {
+            await redis.set(keyName, JSON.stringify(value), "PXAT", pxat)
+        } else {
+            await redis.set(keyName, JSON.stringify(value))
+        }
     },
 
     async remove(key) {
-        await redis.del(`axios-cache-${key}`);
+        await redis.del(`axios-cache-${key}`)
     },
 });
 
 
-function getPaxt(value:NotEmptyStorageValue,req:CacheRequestConfig<any, any> | undefined){
+function getPxat(value:NotEmptyStorageValue,req:CacheRequestConfig<any, any> | undefined){
     switch (value.state) {
         case "loading":
+            // For loading state, set short TTL (use default or explicit TTL)
             return (
                 Date.now() +
                     (
@@ -38,13 +37,14 @@ function getPaxt(value:NotEmptyStorageValue,req:CacheRequestConfig<any, any> | u
                             : env.DEFAULT_TTL
                     )
             );
-        case "stale":
-            // Only apply TTL if it's explicitly set for a stale value
-            return value.ttl ? value.createdAt + value.ttl : undefined;
         case "cached":
-            // Only apply TTL if it cannot be stale (i.e., it has a strict expiration)
-            return !canStale(value) && value.ttl ? value.createdAt + value.ttl : undefined;
+            // For cached state, always set expiration using value.ttl
+            // This is the actual cached response that should persist
+            return value.ttl ? value.createdAt + value.ttl : Date.now() + env.DEFAULT_TTL;
+        case "stale":
+            // Stale values can still be served, keep them with TTL
+            return value.ttl ? value.createdAt + value.ttl : undefined;
         default:
-            return undefined; // No expiration by default or for other states
+            return undefined;
     }
 }

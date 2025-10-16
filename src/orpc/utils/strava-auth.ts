@@ -39,7 +39,7 @@ export async function storeOAuthToken(tokenResponse: OAuthTokenResponse): Promis
 /**
  * Get OAuth token from Redis
  */
-async function getStoredToken(): Promise<StoredOAuthToken | null> {
+export async function getStoredToken(): Promise<StoredOAuthToken | null> {
   return await redis.get(env.REDIS_STRAVA_OAUTH_TOKEN_KEY)
     .then((data: string | null) => {
       if (!data) return null

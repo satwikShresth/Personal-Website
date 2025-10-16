@@ -17,6 +17,7 @@ import { Route as LayerResumeRouteImport } from './routes/_layer/resume'
 import { Route as LayerProjectsRouteImport } from './routes/_layer/projects'
 import { Route as LayerPhotographyRouteImport } from './routes/_layer/photography'
 import { Route as LayerExperienceRouteImport } from './routes/_layer/experience'
+import { Route as LayerActivityRouteImport } from './routes/_layer/activity'
 import { Route as LayerWriteupsIndexRouteImport } from './routes/_layer/writeups/index'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc.$'
 import { Route as LayerWriteupsPostRouteImport } from './routes/_layer/writeups/$post'
@@ -60,6 +61,11 @@ const LayerExperienceRoute = LayerExperienceRouteImport.update({
   path: '/experience',
   getParentRoute: () => LayerRoute,
 } as any)
+const LayerActivityRoute = LayerActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => LayerRoute,
+} as any)
 const LayerWriteupsIndexRoute = LayerWriteupsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -77,6 +83,7 @@ const LayerWriteupsPostRoute = LayerWriteupsPostRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
+  '/activity': typeof LayerActivityRoute
   '/experience': typeof LayerExperienceRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByFullPath {
   '/writeups/': typeof LayerWriteupsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/activity': typeof LayerActivityRoute
   '/experience': typeof LayerExperienceRoute
   '/photography': typeof LayerPhotographyRoute
   '/projects': typeof LayerProjectsRoute
@@ -102,6 +110,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layer': typeof LayerRouteWithChildren
+  '/_layer/activity': typeof LayerActivityRoute
   '/_layer/experience': typeof LayerExperienceRoute
   '/_layer/photography': typeof LayerPhotographyRoute
   '/_layer/projects': typeof LayerProjectsRoute
@@ -116,6 +125,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/activity'
     | '/experience'
     | '/photography'
     | '/projects'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/writeups/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/activity'
     | '/experience'
     | '/photography'
     | '/projects'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_layer'
+    | '/_layer/activity'
     | '/_layer/experience'
     | '/_layer/photography'
     | '/_layer/projects'
@@ -216,6 +228,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayerExperienceRouteImport
       parentRoute: typeof LayerRoute
     }
+    '/_layer/activity': {
+      id: '/_layer/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof LayerActivityRouteImport
+      parentRoute: typeof LayerRoute
+    }
     '/_layer/writeups/': {
       id: '/_layer/writeups/'
       path: '/'
@@ -255,6 +274,7 @@ const LayerWriteupsRouteWithChildren = LayerWriteupsRoute._addFileChildren(
 )
 
 interface LayerRouteChildren {
+  LayerActivityRoute: typeof LayerActivityRoute
   LayerExperienceRoute: typeof LayerExperienceRoute
   LayerPhotographyRoute: typeof LayerPhotographyRoute
   LayerProjectsRoute: typeof LayerProjectsRoute
@@ -264,6 +284,7 @@ interface LayerRouteChildren {
 }
 
 const LayerRouteChildren: LayerRouteChildren = {
+  LayerActivityRoute: LayerActivityRoute,
   LayerExperienceRoute: LayerExperienceRoute,
   LayerPhotographyRoute: LayerPhotographyRoute,
   LayerProjectsRoute: LayerProjectsRoute,
