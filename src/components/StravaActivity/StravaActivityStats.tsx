@@ -1,3 +1,4 @@
+import { Activity } from 'react'
 import { Flex, Stat } from '@chakra-ui/react'
 import { formatDuration, formatDistance, calculatePace } from '@/lib/activity'
 
@@ -5,12 +6,14 @@ interface StravaActivityStatsProps {
   duration?: number
   distance?: number
   averageHeartrate?: number
+  elevation?: number
 }
 
-export function StravaActivityStats({ duration, distance, averageHeartrate }: StravaActivityStatsProps) {
+export function StravaActivityStats({ duration, distance, averageHeartrate, elevation }: StravaActivityStatsProps) {
   const durationData = formatDuration(duration)
   const parts = durationData.value.split(' ')
   const distanceData = formatDistance(distance)
+  const elevationGain = elevation ? Math.round(elevation * 3.281) : null
 
   return (
     <Flex
@@ -29,16 +32,15 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
           fontWeight="bold"
           color="gray.900"
           _dark={{ color: 'white' }}
-          lineHeight="1"
         >
           {parts[0]}
-          <Stat.ValueUnit fontSize="sm" ml={0.5}>
+          <Stat.ValueUnit fontSize="sm">
             {durationData.units[0]}
           </Stat.ValueUnit>
           {parts[1] && (
             <>
               {' '}{parts[1]}
-              <Stat.ValueUnit fontSize="sm" ml={0.5}>
+              <Stat.ValueUnit fontSize="sm">
                 {durationData.units[1]}
               </Stat.ValueUnit>
             </>
@@ -50,7 +52,6 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
           fontWeight="medium"
           textTransform="uppercase"
           letterSpacing="wide"
-          mt={1.5}
         >
           Duration
         </Stat.Label>
@@ -62,7 +63,6 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
           fontWeight="bold"
           color="gray.900"
           _dark={{ color: 'white' }}
-          lineHeight="1"
         >
           {distanceData.value}
           <Stat.ValueUnit fontSize="sm" ml={1}>
@@ -75,7 +75,6 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
           fontWeight="medium"
           textTransform="uppercase"
           letterSpacing="wide"
-          mt={1.5}
         >
           Distance
         </Stat.Label>
@@ -87,11 +86,10 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
           fontWeight="bold"
           color="gray.900"
           _dark={{ color: 'white' }}
-          lineHeight="1"
         >
           {calculatePace(distance, duration)}
           <Stat.ValueUnit fontSize="sm" ml={1}>
-            /mi
+            per mile
           </Stat.ValueUnit>
         </Stat.ValueText>
         <Stat.Label
@@ -100,22 +98,45 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
           fontWeight="medium"
           textTransform="uppercase"
           letterSpacing="wide"
-          mt={1.5}
         >
           Pace
         </Stat.Label>
       </Stat.Root>
 
-      {averageHeartrate && (
+      <Activity mode={elevationGain ? 'visible' : 'hidden'}>
         <Stat.Root flex={1} minW="80px" textAlign="center">
           <Stat.ValueText
             fontSize="2xl"
             fontWeight="bold"
             color="gray.900"
             _dark={{ color: 'white' }}
-            lineHeight="1"
           >
-            {Math.round(averageHeartrate)}
+            {elevationGain || 0}
+            <Stat.ValueUnit fontSize="sm" ml={1}>
+              ft
+            </Stat.ValueUnit>
+          </Stat.ValueText>
+          <Stat.Label
+            fontSize="xs"
+            fontWeight="medium"
+            color="accent"
+            textTransform="uppercase"
+            letterSpacing="wide"
+          >
+            ELEV GAIN
+          </Stat.Label>
+        </Stat.Root>
+      </Activity>
+
+      <Activity mode={averageHeartrate ? 'visible' : 'hidden'}>
+        <Stat.Root flex={1} minW="80px" textAlign="center">
+          <Stat.ValueText
+            fontSize="2xl"
+            fontWeight="bold"
+            color="gray.900"
+            _dark={{ color: 'white' }}
+          >
+            {averageHeartrate ? Math.round(averageHeartrate) : 0}
             <Stat.ValueUnit fontSize="sm" ml={1}>
               bpm
             </Stat.ValueUnit>
@@ -126,12 +147,11 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
             color="accent"
             textTransform="uppercase"
             letterSpacing="wide"
-            mt={1.5}
           >
             AVG HR
           </Stat.Label>
         </Stat.Root>
-      )}
+      </Activity>
     </Flex>
   )
 }

@@ -9,6 +9,7 @@ interface StravaActivityCardProps {
 }
 
 export function StravaActivityCard({ activity }: StravaActivityCardProps) {
+  console.log(activity)
   return (
     <VStack
       borderRadius="2xl"
@@ -43,6 +44,7 @@ export function StravaActivityCard({ activity }: StravaActivityCardProps) {
       <StravaActivityStats
         duration={activity.moving_time}
         distance={activity.distance}
+        elevation={activity?.total_elevation_gain}
         averageHeartrate={(activity as any)?.average_heartrate}
       />
     </VStack>
