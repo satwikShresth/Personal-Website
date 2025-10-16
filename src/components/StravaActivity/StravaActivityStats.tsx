@@ -129,7 +129,7 @@ export function StravaActivityStats({ duration, distance, averageHeartrate }: St
             letterSpacing="wide"
             mt={1.5}
           >
-            Heart Rate
+            AVG HR
           </Stat.Label>
         </Stat.Root>
       )}
