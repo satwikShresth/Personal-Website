@@ -115,7 +115,10 @@ export class StravaOAuth {
     * @returns OAuth token response including athlete data
     * @throws Error if token exchange fails
     */
-   async exchangeCode(code: string): Promise<OAuthTokenResponse> {
+   async exchangeCode(
+      code: string,
+      refreshToken: boolean = false
+   ): Promise<OAuthTokenResponse> {
       const response = await fetch(STRAVA_TOKEN_URL, {
          method: 'POST',
          headers: {
@@ -124,8 +127,8 @@ export class StravaOAuth {
          body: JSON.stringify({
             client_id: this.config.clientId,
             client_secret: this.config.clientSecret,
-            code,
-            grant_type: 'authorization_code'
+            grant_type: refreshToken ? 'refresh_token' : 'authorization_code',
+            code
          })
       });
 

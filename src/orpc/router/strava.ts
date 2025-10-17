@@ -14,11 +14,9 @@ export const handleCallback = os
    .input(
       z.object({
          params: z.object({
-            key: z
-               .string()
-               .refine(key => key === env.STRAVA_CALLBACK_KEY, {
-                  message: 'Invalid callback key'
-               })
+            key: z.string().refine(key => key === env.STRAVA_CALLBACK_KEY, {
+               message: 'Invalid callback key'
+            })
          }),
          query: z.object({
             code: z.string(),

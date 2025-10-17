@@ -99,7 +99,7 @@ export async function ensureValidToken(): Promise<string | null> {
    }
 
    return await stravaOAuth
-      .exchangeCode(storedToken.refreshToken)
+      .exchangeCode(storedToken.refreshToken, true)
       .then(refreshedToken => {
          console.log('✅ Successfully refreshed Strava OAuth token');
          return refreshedToken.access_token;
