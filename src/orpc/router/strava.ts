@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { os } from '@orpc/server';
-import { storeOAuthToken, stravaOAuth } from '../../../scripts/strava.auth';
+import { storeOAuthToken, stravaOAuth } from '@pkg/scripts/strava-auth';
 import { db, activities, activityMaps } from '@/db';
 import { desc, eq } from 'drizzle-orm';
 import { env } from '@/env';
