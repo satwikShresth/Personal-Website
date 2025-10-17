@@ -6,8 +6,6 @@
     "watchPatterns": ["src/**", "packages/**"]
   },
   "deploy": {
-    "startCommand": "bun run .output/server/index.mjs",
-    "preDeployCommand": ["bun run db:migrate"],
     "healthcheckPath": "/",
     "healthcheckTimeout": 300,
     "restartPolicyType": "ON_FAILURE",
@@ -15,11 +13,4 @@
     "overlapSeconds": 60,
     "drainingSeconds": 10
   },
-  "environments": {
-    "production": {
-      "deploy": {
-        "startCommand": "bun run .output/server/index.mjs"
-      }
-    }
-  }
 }
