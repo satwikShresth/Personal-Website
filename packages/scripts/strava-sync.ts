@@ -1,9 +1,9 @@
-import { getLoggedInAthleteActivities } from '@/strava-client/sdk/client/sdk.gen';
-import { ensureValidToken, getStoredToken } from './strava.auth';
+import { eq } from 'drizzle-orm';
 import { sendDiscordNotification } from './discord';
 import { db, athletes, activities, activityMaps } from '@/db';
-import type { SummaryActivity } from '@/strava-client/sdk/client/types.gen';
-import { eq } from 'drizzle-orm';
+import { ensureValidToken, getStoredToken } from './strava-auth';
+import { getLoggedInAthleteActivities } from '@pkg/strava-client/sdk/client/sdk.gen';
+import type { SummaryActivity } from '@pkg/strava-client/sdk/client/types.gen';
 
 interface SyncResult {
    success: boolean;

@@ -95,7 +95,7 @@ export const getActivities = os
                .from(activityMaps)
                .where(eq(activityMaps.activityId, activity.id))
                .get();
-            
+
             return { ...activity, map };
          })
       );
