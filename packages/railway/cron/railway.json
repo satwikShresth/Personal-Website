@@ -3,7 +3,7 @@
   "build": {
     "builder": "DOCKERFILE",
     "dockerfilePath": "packages/railway/cron/Dockerfile",
-    "watchPatterns": ["packages/crons/**", "packages/scripts/**", "src/db/**","packages/railway/cron/**"]
+    "watchPatterns": ["packages/crons/**", "packages/build/**","packages/scripts/**", "src/db/**","packages/railway/cron/**"]
   },
   "deploy": {
     "startCommand": null,
