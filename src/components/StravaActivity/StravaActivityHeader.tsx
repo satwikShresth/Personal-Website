@@ -66,11 +66,11 @@ export function StravaActivityHeader({
                justifyContent="center"
                flexShrink={0}
             >
-               {getActivityIcon(type, sportType)}
+               {getActivityIcon(type, sportType, 'white')}
             </Box>
             <VStack align="start" gap={0.5} flex={1} minW={0}>
                <Text
-                  _dark={{ color: 'white' }}
+                  color='accent'
                   fontSize="lg"
                   fontWeight="bold"
                   lineHeight="1.2"

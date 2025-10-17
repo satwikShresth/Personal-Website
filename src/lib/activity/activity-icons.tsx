@@ -1,20 +1,23 @@
 import { Footprints, Bike, Activity, Dumbbell, Mountain } from 'lucide-react';
 import { Icon } from '@chakra-ui/react';
+import { HikeIcon, RunIcon } from './icons';
 
 type ActivityType = string | undefined;
 
+
 export function getActivityIcon(
    type?: ActivityType,
-   sportType?: ActivityType
+   sportType?: ActivityType,
+   color?: string
 ): React.ReactElement {
    const iconType = sportType || type;
-   const iconProps = { color: 'accent', size: 'lg', strokeWidth: '2.5' } as any;
+   const iconProps = { color: color ?? 'accent', size: 'lg', strokeWidth: '2.5' } as any;
 
    const iconMap: Record<string, React.ReactElement> = {
       walk: <Icon as={Footprints} {...iconProps} />,
-      hike: <Icon as={Mountain} {...iconProps} />,
-      run: <Icon as={Activity} {...iconProps} />,
-      'trail run': <Icon as={Activity} {...iconProps} />,
+      hike: <Icon as={HikeIcon} {...iconProps} />,
+      run: <Icon as={RunIcon} {...iconProps} />,
+      'trail run': <Icon as={RunIcon} {...iconProps} />,
       ride: <Icon as={Bike} {...iconProps} />,
       mountainbikeride: <Icon as={Bike} {...iconProps} />,
       virtualride: <Icon as={Bike} {...iconProps} />,

@@ -9,5 +9,6 @@ export { StravaActivityCard } from './StravaActivityCard';
 export { StravaActivityHeader } from './StravaActivityHeader';
 export { StravaActivityMapView } from './StravaActivityMapView';
 export { StravaActivityStats } from './StravaActivityStats';
+export { StravaActivityHeatMap } from './StravaActivityHeatMap';
 
 export type { SummaryActivity } from '@/strava-client/sdk';

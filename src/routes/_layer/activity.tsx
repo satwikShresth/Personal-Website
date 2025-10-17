@@ -1,5 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { Activity } from 'react';
+import * as React from 'react';
+import { z } from 'zod';
 import {
    Center,
    Box,
@@ -8,31 +10,76 @@ import {
    Text,
    VStack,
    SimpleGrid,
-   Spinner
+   Spinner,
+   Button
 } from '@chakra-ui/react';
 import { useColorModeValue } from '@/components/ui/color-mode';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { orpc } from '@/orpc/client';
-import { StravaActivityCard } from '@/components/StravaActivity';
+import { StravaActivityCard, StravaActivityHeatMap } from '@/components/StravaActivity';
+
+const activitySearchSchema = z.object({
+   year: z.number().min(2000).max(2100).catch(new Date().getFullYear())
+});
 
 export const Route = createFileRoute('/_layer/activity')({
    ssr: false,
-   loader: ({ context: { queryClient } }) =>
-      queryClient.prefetchQuery(orpc.strava.getActivities.queryOptions()),
+   validateSearch: activitySearchSchema,
    component: ActivityPage
 });
 
 function ActivityPage() {
    const headingColor = useColorModeValue('gray.800', 'white');
+   const year = Route.useSearch({ select: (s) => s.year });
+   const loadMoreRef = React.useRef<HTMLDivElement>(null);
 
    const {
-      data: activities,
+      data,
       isLoading,
-      error
-   } = useQuery({
-      ...orpc.strava.getActivities.queryOptions(),
-      select: (s: any) => s.activities ?? []
-   });
+      error,
+      fetchNextPage,
+      hasNextPage,
+      isFetchingNextPage
+   } = useInfiniteQuery(
+      orpc.strava.getActivities.infiniteOptions({
+         input: (pageParam: number | undefined) => ({
+            page: pageParam ?? 1,
+            perPage: 20,
+            ...(year && { year })
+         }),
+         context: { cache: true },
+         initialPageParam: 1,
+         getNextPageParam: (lastPage) => {
+            const hasMore = lastPage.count === lastPage.perPage;
+            return hasMore ? lastPage.page + 1 : undefined;
+         },
+         staleTime: 1000 * 60 * 5 // 5 minutes
+      })
+   );
+
+   // Flatten all pages into a single array of activities
+   const activities = React.useMemo(
+      () => data?.pages.flatMap((page: any) => page.activities) ?? [],
+      [data]
+   );
+
+   // Intersection observer for infinite scroll
+   React.useEffect(() => {
+      if (!loadMoreRef.current || !hasNextPage || isFetchingNextPage) return;
+
+      const observer = new IntersectionObserver(
+         entries => {
+            if (entries[0].isIntersecting) {
+               fetchNextPage();
+            }
+         },
+         { threshold: 0.1 }
+      );
+
+      observer.observe(loadMoreRef.current);
+
+      return () => observer.disconnect();
+   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
    if (error) {
       throw new Error(`Failed to load activities: ${error.message}`);
@@ -67,22 +114,46 @@ function ActivityPage() {
                      </Text>
                   </Box>
 
+                  {/* Year Heatmap */}
+                  <Box>
+                     <StravaActivityHeatMap year={year} />
+                  </Box>
+
                   <Activity mode={isLoading ? 'hidden' : 'visible'}>
-                     {activities &&
-                     Array.isArray(activities) &&
-                     activities.length > 0 ? (
-                        <SimpleGrid
-                           columns={{ base: 1, md: 2, xl: 3 }}
-                           gap={{ base: 3, md: 4 }}
-                           justifyItems="center"
-                        >
-                           {activities.map((activity: any) => (
-                              <StravaActivityCard
-                                 key={activity.id}
-                                 activity={activity}
-                              />
-                           ))}
-                        </SimpleGrid>
+                     {activities && activities.length > 0 ? (
+                        <VStack align="stretch" gap={6}>
+                           <SimpleGrid
+                              columns={{ base: 1, md: 2, xl: 3 }}
+                              gap={{ base: 3, md: 4 }}
+                              justifyItems="center"
+                           >
+                              {activities.map((activity: any) => (
+                                 <StravaActivityCard
+                                    key={activity.id}
+                                    activity={activity}
+                                 />
+                              ))}
+                           </SimpleGrid>
+
+                           {/* Intersection observer trigger & Load More Button */}
+                           {hasNextPage && (
+                              <Box ref={loadMoreRef} py={8}>
+                                 <Center>
+                                    {isFetchingNextPage ? (
+                                       <Spinner size="lg" color="accent" />
+                                    ) : (
+                                       <Button
+                                          onClick={() => fetchNextPage()}
+                                          variant="outline"
+                                          size="lg"
+                                       >
+                                          Load More Activities
+                                       </Button>
+                                    )}
+                                 </Center>
+                              </Box>
+                           )}
+                        </VStack>
                      ) : (
                         <Box textAlign="center" py={12}>
                            <Text fontSize="lg" opacity={0.7}>

@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { os } from '@orpc/server';
 import { storeOAuthToken, stravaOAuth } from '@pkg/scripts/strava-auth';
 import { db, activities, activityMaps } from '@/db';
-import { desc, eq } from 'drizzle-orm';
+import { desc, eq, and, gte, lte } from 'drizzle-orm';
 import { env } from '@/env';
 
 export const handleCallback = os
@@ -59,6 +59,59 @@ export const handleCallback = os
          });
    });
 
+export const getActivityDates = os
+   .route({
+      path: '/activity-dates',
+      method: 'GET',
+      successStatus: 200
+   })
+   .input(
+      z
+         .object({
+            year: z.number().min(2000).max(2100)
+         })
+         .catch({ year: new Date().getFullYear() })
+   )
+   .handler(async ({ input }) => {
+      const year = input?.year;
+      const startDate = `${year}-01-01`;
+      const endDate = `${year}-12-31T23:59:59`;
+
+      const dates = await db
+         .select({
+            date: activities.startDate,
+            type: activities.type,
+            sportType: activities.sportType
+         })
+         .from(activities)
+         .where(
+            and(
+               gte(activities.startDate, startDate),
+               lte(activities.startDate, endDate)
+            )
+         )
+         .orderBy(desc(activities.startDate))
+         .all();
+
+      const result: Record<string, { count: number; sportType: string }> = {};
+
+      dates.forEach(val => {
+         const date = val.date.split('T')[0];
+         const sportType = val.sportType || val.type || 'Unknown';
+
+         if (!result[date]) {
+            result[date] = {
+               count: 0,
+               sportType
+            };
+         }
+
+         result[date].count++;
+      });
+
+      return result;
+   });
+
 export const getActivities = os
    .route({
       path: '/activities',
@@ -68,26 +121,38 @@ export const getActivities = os
    .input(
       z
          .object({
+            year: z.number().min(2000).max(2100).optional(),
             page: z.number().min(1).optional().catch(1),
             perPage: z.number().min(1).max(100).optional().catch(30)
          })
-         .optional()
          .catch({ page: 1, perPage: 30 })
    )
    .handler(async ({ input }) => {
+      const year = input?.year;
       const page = input?.page ?? 1;
       const perPage = input?.perPage ?? 30;
       const offset = (page - 1) * perPage;
 
-      const fetchedActivities = await db
-         .select()
-         .from(activities)
+      let query = db.select().from(activities);
+
+      // Apply year filter if provided
+      if (year) {
+         const startDate = `${year}-01-01`;
+         const endDate = `${year}-12-31T23:59:59`;
+         query = query.where(
+            and(
+               gte(activities.startDate, startDate),
+               lte(activities.startDate, endDate)
+            )
+         ) as any;
+      }
+
+      const fetchedActivities = await query
          .orderBy(desc(activities.startDate))
          .limit(perPage)
          .offset(offset)
          .all();
 
-      // Fetch maps for all activities
       const activitiesWithMaps = await Promise.all(
          fetchedActivities.map(async activity => {
             const map = await db
