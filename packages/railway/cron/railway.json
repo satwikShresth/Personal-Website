@@ -1,0 +1,15 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "packages/railway/cron/Dockerfile",
+    "watchPatterns": ["packages/crons/**", "packages/scripts/**", "src/db/**"]
+  },
+  "deploy": {
+    "startCommand": null,
+    "cronSchedule": "0 */6 * * *",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 3
+  }
+}
+

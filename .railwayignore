@@ -1,0 +1,17 @@
+node_modules
+.git
+.env
+.env.local
+.DS_Store
+*.log
+.cache
+dist
+.output
+coverage
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.turbo
+
