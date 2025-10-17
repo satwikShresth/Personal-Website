@@ -1,14 +1,13 @@
 /**
  * Strava Activity Components
- * 
+ *
  * Components specifically designed for displaying Strava activity data,
  * including activity cards, maps, stats, and headers.
  */
 
-export { StravaActivityCard } from './StravaActivityCard'
-export { StravaActivityHeader } from './StravaActivityHeader'
-export { StravaActivityMapView } from './StravaActivityMapView'
-export { StravaActivityStats } from './StravaActivityStats'
+export { StravaActivityCard } from './StravaActivityCard';
+export { StravaActivityHeader } from './StravaActivityHeader';
+export { StravaActivityMapView } from './StravaActivityMapView';
+export { StravaActivityStats } from './StravaActivityStats';
 
-export type { SummaryActivity } from '@/strava-client/sdk'
-
+export type { SummaryActivity } from '@/strava-client/sdk';

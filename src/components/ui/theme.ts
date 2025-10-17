@@ -1,5 +1,9 @@
-import { createSystem, defaultBaseConfig, defineConfig } from '@chakra-ui/react'
+import {
+   createSystem,
+   defaultBaseConfig,
+   defineConfig
+} from '@chakra-ui/react';
 
-const customConfig = defineConfig({})
+const customConfig = defineConfig({});
 
-export const system = createSystem(defaultBaseConfig, customConfig)
+export const system = createSystem(defaultBaseConfig, customConfig);

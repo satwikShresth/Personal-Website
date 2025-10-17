@@ -6,464 +6,468 @@ import * as z from 'zod/mini';
  * A roll-up of metrics pertaining to a set of activities. Values are in seconds and meters.
  */
 export const zActivityTotal = z.object({
-    count: z.optional(z.int()),
-    distance: z.optional(z.number()),
-    moving_time: z.optional(z.int()),
-    elapsed_time: z.optional(z.int()),
-    elevation_gain: z.optional(z.number()),
-    achievement_count: z.optional(z.int())
+   count: z.optional(z.int()),
+   distance: z.optional(z.number()),
+   moving_time: z.optional(z.int()),
+   elapsed_time: z.optional(z.int()),
+   elevation_gain: z.optional(z.number()),
+   achievement_count: z.optional(z.int())
 });
 
 /**
  * A set of rolled-up statistics and totals for an athlete
  */
 export const zActivityStats = z.object({
-    biggest_ride_distance: z.optional(z.number()),
-    biggest_climb_elevation_gain: z.optional(z.number()),
-    recent_ride_totals: z.optional(zActivityTotal),
-    recent_run_totals: z.optional(zActivityTotal),
-    recent_swim_totals: z.optional(zActivityTotal),
-    ytd_ride_totals: z.optional(zActivityTotal),
-    ytd_run_totals: z.optional(zActivityTotal),
-    ytd_swim_totals: z.optional(zActivityTotal),
-    all_ride_totals: z.optional(zActivityTotal),
-    all_run_totals: z.optional(zActivityTotal),
-    all_swim_totals: z.optional(zActivityTotal)
+   biggest_ride_distance: z.optional(z.number()),
+   biggest_climb_elevation_gain: z.optional(z.number()),
+   recent_ride_totals: z.optional(zActivityTotal),
+   recent_run_totals: z.optional(zActivityTotal),
+   recent_swim_totals: z.optional(zActivityTotal),
+   ytd_ride_totals: z.optional(zActivityTotal),
+   ytd_run_totals: z.optional(zActivityTotal),
+   ytd_swim_totals: z.optional(zActivityTotal),
+   all_ride_totals: z.optional(zActivityTotal),
+   all_run_totals: z.optional(zActivityTotal),
+   all_swim_totals: z.optional(zActivityTotal)
 });
 
 export const zError = z.object({
-    code: z.optional(z.string()),
-    field: z.optional(z.string()),
-    resource: z.optional(z.string())
+   code: z.optional(z.string()),
+   field: z.optional(z.string()),
+   resource: z.optional(z.string())
 });
 
 /**
  * Encapsulates the errors that may be returned from the API.
  */
 export const zFault = z.object({
-    errors: z.optional(z.array(zError)),
-    message: z.optional(z.string())
+   errors: z.optional(z.array(zError)),
+   message: z.optional(z.string())
 });
 
 export const zMetaAthlete = z.object({
-    id: z.optional(z.coerce.bigint())
+   id: z.optional(z.coerce.bigint())
 });
 
-export const zSummaryAthlete = z.intersection(zMetaAthlete, z.object({
-    resource_state: z.optional(z.int()),
-    firstname: z.optional(z.string()),
-    lastname: z.optional(z.string()),
-    profile_medium: z.optional(z.string()),
-    profile: z.optional(z.string()),
-    city: z.optional(z.string()),
-    state: z.optional(z.string()),
-    country: z.optional(z.string()),
-    sex: z.optional(z.enum([
-        'M',
-        'F'
-    ])),
-    premium: z.optional(z.boolean()),
-    summit: z.optional(z.boolean()),
-    created_at: z.optional(z.iso.datetime()),
-    updated_at: z.optional(z.iso.datetime())
-}));
+export const zSummaryAthlete = z.intersection(
+   zMetaAthlete,
+   z.object({
+      resource_state: z.optional(z.int()),
+      firstname: z.optional(z.string()),
+      lastname: z.optional(z.string()),
+      profile_medium: z.optional(z.string()),
+      profile: z.optional(z.string()),
+      city: z.optional(z.string()),
+      state: z.optional(z.string()),
+      country: z.optional(z.string()),
+      sex: z.optional(z.enum(['M', 'F'])),
+      premium: z.optional(z.boolean()),
+      summit: z.optional(z.boolean()),
+      created_at: z.optional(z.iso.datetime()),
+      updated_at: z.optional(z.iso.datetime())
+   })
+);
 
 export const zMetaClub = z.object({
-    id: z.optional(z.coerce.bigint()),
-    resource_state: z.optional(z.int()),
-    name: z.optional(z.string())
+   id: z.optional(z.coerce.bigint()),
+   resource_state: z.optional(z.int()),
+   name: z.optional(z.string())
 });
 
 /**
  * An enumeration of the types an activity may have. Note that this enumeration does not include new sport types (e.g. MountainBikeRide, EMountainBikeRide), activities with these sport types will have the corresponding activity type (e.g. Ride for MountainBikeRide, EBikeRide for EMountainBikeRide)
  */
 export const zActivityType = z.enum([
-    'AlpineSki',
-    'BackcountrySki',
-    'Canoeing',
-    'Crossfit',
-    'EBikeRide',
-    'Elliptical',
-    'Golf',
-    'Handcycle',
-    'Hike',
-    'IceSkate',
-    'InlineSkate',
-    'Kayaking',
-    'Kitesurf',
-    'NordicSki',
-    'Ride',
-    'RockClimbing',
-    'RollerSki',
-    'Rowing',
-    'Run',
-    'Sail',
-    'Skateboard',
-    'Snowboard',
-    'Snowshoe',
-    'Soccer',
-    'StairStepper',
-    'StandUpPaddling',
-    'Surfing',
-    'Swim',
-    'Velomobile',
-    'VirtualRide',
-    'VirtualRun',
-    'Walk',
-    'WeightTraining',
-    'Wheelchair',
-    'Windsurf',
-    'Workout',
-    'Yoga'
+   'AlpineSki',
+   'BackcountrySki',
+   'Canoeing',
+   'Crossfit',
+   'EBikeRide',
+   'Elliptical',
+   'Golf',
+   'Handcycle',
+   'Hike',
+   'IceSkate',
+   'InlineSkate',
+   'Kayaking',
+   'Kitesurf',
+   'NordicSki',
+   'Ride',
+   'RockClimbing',
+   'RollerSki',
+   'Rowing',
+   'Run',
+   'Sail',
+   'Skateboard',
+   'Snowboard',
+   'Snowshoe',
+   'Soccer',
+   'StairStepper',
+   'StandUpPaddling',
+   'Surfing',
+   'Swim',
+   'Velomobile',
+   'VirtualRide',
+   'VirtualRun',
+   'Walk',
+   'WeightTraining',
+   'Wheelchair',
+   'Windsurf',
+   'Workout',
+   'Yoga'
 ]);
 
-export const zSummaryClub = z.intersection(zMetaClub, z.object({
-    profile_medium: z.optional(z.string()),
-    cover_photo: z.optional(z.string()),
-    cover_photo_small: z.optional(z.string()),
-    sport_type: z.optional(z.enum([
-        'cycling',
-        'running',
-        'triathlon',
-        'other'
-    ])),
-    activity_types: z.optional(z.array(zActivityType)),
-    city: z.optional(z.string()),
-    state: z.optional(z.string()),
-    country: z.optional(z.string()),
-    private: z.optional(z.boolean()),
-    member_count: z.optional(z.int()),
-    featured: z.optional(z.boolean()),
-    verified: z.optional(z.boolean()),
-    url: z.optional(z.string())
-}));
+export const zSummaryClub = z.intersection(
+   zMetaClub,
+   z.object({
+      profile_medium: z.optional(z.string()),
+      cover_photo: z.optional(z.string()),
+      cover_photo_small: z.optional(z.string()),
+      sport_type: z.optional(
+         z.enum(['cycling', 'running', 'triathlon', 'other'])
+      ),
+      activity_types: z.optional(z.array(zActivityType)),
+      city: z.optional(z.string()),
+      state: z.optional(z.string()),
+      country: z.optional(z.string()),
+      private: z.optional(z.boolean()),
+      member_count: z.optional(z.int()),
+      featured: z.optional(z.boolean()),
+      verified: z.optional(z.boolean()),
+      url: z.optional(z.string())
+   })
+);
 
 export const zSummaryGear = z.object({
-    id: z.optional(z.string()),
-    resource_state: z.optional(z.int()),
-    primary: z.optional(z.boolean()),
-    name: z.optional(z.string()),
-    distance: z.optional(z.number())
+   id: z.optional(z.string()),
+   resource_state: z.optional(z.int()),
+   primary: z.optional(z.boolean()),
+   name: z.optional(z.string()),
+   distance: z.optional(z.number())
 });
 
-export const zDetailedAthlete = z.intersection(zSummaryAthlete, z.object({
-    follower_count: z.optional(z.int()),
-    friend_count: z.optional(z.int()),
-    measurement_preference: z.optional(z.enum([
-        'feet',
-        'meters'
-    ])),
-    ftp: z.optional(z.int()),
-    weight: z.optional(z.number()),
-    clubs: z.optional(z.array(zSummaryClub)),
-    bikes: z.optional(z.array(zSummaryGear)),
-    shoes: z.optional(z.array(zSummaryGear))
-}));
+export const zDetailedAthlete = z.intersection(
+   zSummaryAthlete,
+   z.object({
+      follower_count: z.optional(z.int()),
+      friend_count: z.optional(z.int()),
+      measurement_preference: z.optional(z.enum(['feet', 'meters'])),
+      ftp: z.optional(z.int()),
+      weight: z.optional(z.number()),
+      clubs: z.optional(z.array(zSummaryClub)),
+      bikes: z.optional(z.array(zSummaryGear)),
+      shoes: z.optional(z.array(zSummaryGear))
+   })
+);
 
 export const zZoneRange = z.object({
-    min: z.optional(z.int()),
-    max: z.optional(z.int())
+   min: z.optional(z.int()),
+   max: z.optional(z.int())
 });
 
 export const zZoneRanges = z.array(zZoneRange);
 
 export const zHeartRateZoneRanges = z.object({
-    custom_zones: z.optional(z.boolean()),
-    zones: z.optional(zZoneRanges)
+   custom_zones: z.optional(z.boolean()),
+   zones: z.optional(zZoneRanges)
 });
 
 export const zPowerZoneRanges = z.object({
-    zones: z.optional(zZoneRanges)
+   zones: z.optional(zZoneRanges)
 });
 
 export const zZones = z.object({
-    heart_rate: z.optional(zHeartRateZoneRanges),
-    power: z.optional(zPowerZoneRanges)
+   heart_rate: z.optional(zHeartRateZoneRanges),
+   power: z.optional(zPowerZoneRanges)
 });
 
 /**
  * A pair of latitude/longitude coordinates, represented as an array of 2 floating point numbers.
  */
-export const zLatLng = z.tuple([
-    z.number(),
-    z.number()
-]);
+export const zLatLng = z.tuple([z.number(), z.number()]);
 
 export const zSummaryPrSegmentEffort = z.object({
-    pr_activity_id: z.optional(z.coerce.bigint()),
-    pr_elapsed_time: z.optional(z.int()),
-    pr_date: z.optional(z.iso.datetime()),
-    effort_count: z.optional(z.int())
+   pr_activity_id: z.optional(z.coerce.bigint()),
+   pr_elapsed_time: z.optional(z.int()),
+   pr_date: z.optional(z.iso.datetime()),
+   effort_count: z.optional(z.int())
 });
 
 export const zSummarySegmentEffort = z.object({
-    id: z.optional(z.coerce.bigint()),
-    activity_id: z.optional(z.coerce.bigint()),
-    elapsed_time: z.optional(z.int()),
-    start_date: z.optional(z.iso.datetime()),
-    start_date_local: z.optional(z.iso.datetime()),
-    distance: z.optional(z.number()),
-    is_kom: z.optional(z.boolean())
+   id: z.optional(z.coerce.bigint()),
+   activity_id: z.optional(z.coerce.bigint()),
+   elapsed_time: z.optional(z.int()),
+   start_date: z.optional(z.iso.datetime()),
+   start_date_local: z.optional(z.iso.datetime()),
+   distance: z.optional(z.number()),
+   is_kom: z.optional(z.boolean())
 });
 
 export const zSummarySegment = z.object({
-    id: z.optional(z.coerce.bigint()),
-    name: z.optional(z.string()),
-    activity_type: z.optional(z.enum([
-        'Ride',
-        'Run'
-    ])),
-    distance: z.optional(z.number()),
-    average_grade: z.optional(z.number()),
-    maximum_grade: z.optional(z.number()),
-    elevation_high: z.optional(z.number()),
-    elevation_low: z.optional(z.number()),
-    start_latlng: z.optional(zLatLng),
-    end_latlng: z.optional(zLatLng),
-    climb_category: z.optional(z.int()),
-    city: z.optional(z.string()),
-    state: z.optional(z.string()),
-    country: z.optional(z.string()),
-    private: z.optional(z.boolean()),
-    athlete_pr_effort: z.optional(zSummaryPrSegmentEffort),
-    athlete_segment_stats: z.optional(zSummarySegmentEffort)
+   id: z.optional(z.coerce.bigint()),
+   name: z.optional(z.string()),
+   activity_type: z.optional(z.enum(['Ride', 'Run'])),
+   distance: z.optional(z.number()),
+   average_grade: z.optional(z.number()),
+   maximum_grade: z.optional(z.number()),
+   elevation_high: z.optional(z.number()),
+   elevation_low: z.optional(z.number()),
+   start_latlng: z.optional(zLatLng),
+   end_latlng: z.optional(zLatLng),
+   climb_category: z.optional(z.int()),
+   city: z.optional(z.string()),
+   state: z.optional(z.string()),
+   country: z.optional(z.string()),
+   private: z.optional(z.boolean()),
+   athlete_pr_effort: z.optional(zSummaryPrSegmentEffort),
+   athlete_segment_stats: z.optional(zSummarySegmentEffort)
 });
 
 export const zPolylineMap = z.object({
-    id: z.optional(z.string()),
-    polyline: z.optional(z.string()),
-    summary_polyline: z.optional(z.string())
+   id: z.optional(z.string()),
+   polyline: z.optional(z.string()),
+   summary_polyline: z.optional(z.string())
 });
 
-export const zDetailedSegment = z.intersection(zSummarySegment, z.object({
-    created_at: z.optional(z.iso.datetime()),
-    updated_at: z.optional(z.iso.datetime()),
-    total_elevation_gain: z.optional(z.number()),
-    map: z.optional(zPolylineMap),
-    effort_count: z.optional(z.int()),
-    athlete_count: z.optional(z.int()),
-    hazardous: z.optional(z.boolean()),
-    star_count: z.optional(z.int())
-}));
+export const zDetailedSegment = z.intersection(
+   zSummarySegment,
+   z.object({
+      created_at: z.optional(z.iso.datetime()),
+      updated_at: z.optional(z.iso.datetime()),
+      total_elevation_gain: z.optional(z.number()),
+      map: z.optional(zPolylineMap),
+      effort_count: z.optional(z.int()),
+      athlete_count: z.optional(z.int()),
+      hazardous: z.optional(z.boolean()),
+      star_count: z.optional(z.int())
+   })
+);
 
 export const zMetaActivity = z.object({
-    id: z.optional(z.coerce.bigint())
+   id: z.optional(z.coerce.bigint())
 });
 
-export const zDetailedSegmentEffort = z.intersection(zSummarySegmentEffort, z.object({
-    name: z.optional(z.string()),
-    activity: z.optional(zMetaActivity),
-    athlete: z.optional(zMetaAthlete),
-    moving_time: z.optional(z.int()),
-    start_index: z.optional(z.int()),
-    end_index: z.optional(z.int()),
-    average_cadence: z.optional(z.number()),
-    average_watts: z.optional(z.number()),
-    device_watts: z.optional(z.boolean()),
-    average_heartrate: z.optional(z.number()),
-    max_heartrate: z.optional(z.number()),
-    segment: z.optional(zSummarySegment),
-    kom_rank: z.optional(z.int().check(z.gte(1), z.lte(10))),
-    pr_rank: z.optional(z.int().check(z.gte(1), z.lte(3))),
-    hidden: z.optional(z.boolean())
-}));
+export const zDetailedSegmentEffort = z.intersection(
+   zSummarySegmentEffort,
+   z.object({
+      name: z.optional(z.string()),
+      activity: z.optional(zMetaActivity),
+      athlete: z.optional(zMetaAthlete),
+      moving_time: z.optional(z.int()),
+      start_index: z.optional(z.int()),
+      end_index: z.optional(z.int()),
+      average_cadence: z.optional(z.number()),
+      average_watts: z.optional(z.number()),
+      device_watts: z.optional(z.boolean()),
+      average_heartrate: z.optional(z.number()),
+      max_heartrate: z.optional(z.number()),
+      segment: z.optional(zSummarySegment),
+      kom_rank: z.optional(z.int().check(z.gte(1), z.lte(10))),
+      pr_rank: z.optional(z.int().check(z.gte(1), z.lte(3))),
+      hidden: z.optional(z.boolean())
+   })
+);
 
 export const zExplorerSegment = z.object({
-    id: z.optional(z.coerce.bigint()),
-    name: z.optional(z.string()),
-    climb_category: z.optional(z.int().check(z.gte(0), z.lte(5))),
-    climb_category_desc: z.optional(z.enum([
-        'NC',
-        '4',
-        '3',
-        '2',
-        '1',
-        'HC'
-    ])),
-    avg_grade: z.optional(z.number()),
-    start_latlng: z.optional(zLatLng),
-    end_latlng: z.optional(zLatLng),
-    elev_difference: z.optional(z.number()),
-    distance: z.optional(z.number()),
-    points: z.optional(z.string())
+   id: z.optional(z.coerce.bigint()),
+   name: z.optional(z.string()),
+   climb_category: z.optional(z.int().check(z.gte(0), z.lte(5))),
+   climb_category_desc: z.optional(z.enum(['NC', '4', '3', '2', '1', 'HC'])),
+   avg_grade: z.optional(z.number()),
+   start_latlng: z.optional(zLatLng),
+   end_latlng: z.optional(zLatLng),
+   elev_difference: z.optional(z.number()),
+   distance: z.optional(z.number()),
+   points: z.optional(z.string())
 });
 
 export const zExplorerResponse = z.object({
-    segments: z.optional(z.array(zExplorerSegment))
+   segments: z.optional(z.array(zExplorerSegment))
 });
 
 /**
  * An enumeration of the sport types an activity may have. Distinct from ActivityType in that it has new types (e.g. MountainBikeRide)
  */
 export const zSportType = z.enum([
-    'AlpineSki',
-    'BackcountrySki',
-    'Badminton',
-    'Canoeing',
-    'Crossfit',
-    'EBikeRide',
-    'Elliptical',
-    'EMountainBikeRide',
-    'Golf',
-    'GravelRide',
-    'Handcycle',
-    'HighIntensityIntervalTraining',
-    'Hike',
-    'IceSkate',
-    'InlineSkate',
-    'Kayaking',
-    'Kitesurf',
-    'MountainBikeRide',
-    'NordicSki',
-    'Pickleball',
-    'Pilates',
-    'Racquetball',
-    'Ride',
-    'RockClimbing',
-    'RollerSki',
-    'Rowing',
-    'Run',
-    'Sail',
-    'Skateboard',
-    'Snowboard',
-    'Snowshoe',
-    'Soccer',
-    'Squash',
-    'StairStepper',
-    'StandUpPaddling',
-    'Surfing',
-    'Swim',
-    'TableTennis',
-    'Tennis',
-    'TrailRun',
-    'Velomobile',
-    'VirtualRide',
-    'VirtualRow',
-    'VirtualRun',
-    'Walk',
-    'WeightTraining',
-    'Wheelchair',
-    'Windsurf',
-    'Workout',
-    'Yoga'
+   'AlpineSki',
+   'BackcountrySki',
+   'Badminton',
+   'Canoeing',
+   'Crossfit',
+   'EBikeRide',
+   'Elliptical',
+   'EMountainBikeRide',
+   'Golf',
+   'GravelRide',
+   'Handcycle',
+   'HighIntensityIntervalTraining',
+   'Hike',
+   'IceSkate',
+   'InlineSkate',
+   'Kayaking',
+   'Kitesurf',
+   'MountainBikeRide',
+   'NordicSki',
+   'Pickleball',
+   'Pilates',
+   'Racquetball',
+   'Ride',
+   'RockClimbing',
+   'RollerSki',
+   'Rowing',
+   'Run',
+   'Sail',
+   'Skateboard',
+   'Snowboard',
+   'Snowshoe',
+   'Soccer',
+   'Squash',
+   'StairStepper',
+   'StandUpPaddling',
+   'Surfing',
+   'Swim',
+   'TableTennis',
+   'Tennis',
+   'TrailRun',
+   'Velomobile',
+   'VirtualRide',
+   'VirtualRow',
+   'VirtualRun',
+   'Walk',
+   'WeightTraining',
+   'Wheelchair',
+   'Windsurf',
+   'Workout',
+   'Yoga'
 ]);
 
-export const zSummaryActivity = z.intersection(zMetaActivity, z.object({
-    external_id: z.optional(z.string()),
-    upload_id: z.optional(z.coerce.bigint()),
-    athlete: z.optional(zMetaAthlete),
-    name: z.optional(z.string()),
-    distance: z.optional(z.number()),
-    moving_time: z.optional(z.int()),
-    elapsed_time: z.optional(z.int()),
-    total_elevation_gain: z.optional(z.number()),
-    elev_high: z.optional(z.number()),
-    elev_low: z.optional(z.number()),
-    type: z.optional(zActivityType),
-    sport_type: z.optional(zSportType),
-    start_date: z.optional(z.iso.datetime()),
-    start_date_local: z.optional(z.iso.datetime()),
-    timezone: z.optional(z.string()),
-    start_latlng: z.optional(zLatLng),
-    end_latlng: z.optional(zLatLng),
-    achievement_count: z.optional(z.int()),
-    kudos_count: z.optional(z.int()),
-    comment_count: z.optional(z.int()),
-    athlete_count: z.optional(z.int().check(z.gte(1))),
-    photo_count: z.optional(z.int()),
-    total_photo_count: z.optional(z.int()),
-    map: z.optional(zPolylineMap),
-    trainer: z.optional(z.boolean()),
-    commute: z.optional(z.boolean()),
-    manual: z.optional(z.boolean()),
-    private: z.optional(z.boolean()),
-    flagged: z.optional(z.boolean()),
-    workout_type: z.optional(z.int()),
-    upload_id_str: z.optional(z.string()),
-    average_speed: z.optional(z.number()),
-    max_speed: z.optional(z.number()),
-    has_kudoed: z.optional(z.boolean()),
-    hide_from_home: z.optional(z.boolean()),
-    gear_id: z.optional(z.string()),
-    kilojoules: z.optional(z.number()),
-    average_watts: z.optional(z.number()),
-    device_watts: z.optional(z.boolean()),
-    max_watts: z.optional(z.int()),
-    weighted_average_watts: z.optional(z.int())
-}));
+export const zSummaryActivity = z.intersection(
+   zMetaActivity,
+   z.object({
+      external_id: z.optional(z.string()),
+      upload_id: z.optional(z.coerce.bigint()),
+      athlete: z.optional(zMetaAthlete),
+      name: z.optional(z.string()),
+      distance: z.optional(z.number()),
+      moving_time: z.optional(z.int()),
+      elapsed_time: z.optional(z.int()),
+      total_elevation_gain: z.optional(z.number()),
+      elev_high: z.optional(z.number()),
+      elev_low: z.optional(z.number()),
+      type: z.optional(zActivityType),
+      sport_type: z.optional(zSportType),
+      start_date: z.optional(z.iso.datetime()),
+      start_date_local: z.optional(z.iso.datetime()),
+      timezone: z.optional(z.string()),
+      start_latlng: z.optional(zLatLng),
+      end_latlng: z.optional(zLatLng),
+      achievement_count: z.optional(z.int()),
+      kudos_count: z.optional(z.int()),
+      comment_count: z.optional(z.int()),
+      athlete_count: z.optional(z.int().check(z.gte(1))),
+      photo_count: z.optional(z.int()),
+      total_photo_count: z.optional(z.int()),
+      map: z.optional(zPolylineMap),
+      trainer: z.optional(z.boolean()),
+      commute: z.optional(z.boolean()),
+      manual: z.optional(z.boolean()),
+      private: z.optional(z.boolean()),
+      flagged: z.optional(z.boolean()),
+      workout_type: z.optional(z.int()),
+      upload_id_str: z.optional(z.string()),
+      average_speed: z.optional(z.number()),
+      max_speed: z.optional(z.number()),
+      has_kudoed: z.optional(z.boolean()),
+      hide_from_home: z.optional(z.boolean()),
+      gear_id: z.optional(z.string()),
+      kilojoules: z.optional(z.number()),
+      average_watts: z.optional(z.number()),
+      device_watts: z.optional(z.boolean()),
+      max_watts: z.optional(z.int()),
+      weighted_average_watts: z.optional(z.int())
+   })
+);
 
 export const zPhotosSummary = z.object({
-    count: z.optional(z.int()),
-    primary: z.optional(z.object({
-        id: z.optional(z.coerce.bigint()),
-        source: z.optional(z.int()),
-        unique_id: z.optional(z.string()),
-        urls: z.optional(z.record(z.string(), z.string()))
-    }))
+   count: z.optional(z.int()),
+   primary: z.optional(
+      z.object({
+         id: z.optional(z.coerce.bigint()),
+         source: z.optional(z.int()),
+         unique_id: z.optional(z.string()),
+         urls: z.optional(z.record(z.string(), z.string()))
+      })
+   )
 });
 
 export const zSplit = z.object({
-    average_speed: z.optional(z.number()),
-    distance: z.optional(z.number()),
-    elapsed_time: z.optional(z.int()),
-    elevation_difference: z.optional(z.number()),
-    pace_zone: z.optional(z.int()),
-    moving_time: z.optional(z.int()),
-    split: z.optional(z.int())
+   average_speed: z.optional(z.number()),
+   distance: z.optional(z.number()),
+   elapsed_time: z.optional(z.int()),
+   elevation_difference: z.optional(z.number()),
+   pace_zone: z.optional(z.int()),
+   moving_time: z.optional(z.int()),
+   split: z.optional(z.int())
 });
 
 export const zLap = z.object({
-    id: z.optional(z.coerce.bigint()),
-    activity: z.optional(zMetaActivity),
-    athlete: z.optional(zMetaAthlete),
-    average_cadence: z.optional(z.number()),
-    average_speed: z.optional(z.number()),
-    distance: z.optional(z.number()),
-    elapsed_time: z.optional(z.int()),
-    start_index: z.optional(z.int()),
-    end_index: z.optional(z.int()),
-    lap_index: z.optional(z.int()),
-    max_speed: z.optional(z.number()),
-    moving_time: z.optional(z.int()),
-    name: z.optional(z.string()),
-    pace_zone: z.optional(z.int()),
-    split: z.optional(z.int()),
-    start_date: z.optional(z.iso.datetime()),
-    start_date_local: z.optional(z.iso.datetime()),
-    total_elevation_gain: z.optional(z.number())
+   id: z.optional(z.coerce.bigint()),
+   activity: z.optional(zMetaActivity),
+   athlete: z.optional(zMetaAthlete),
+   average_cadence: z.optional(z.number()),
+   average_speed: z.optional(z.number()),
+   distance: z.optional(z.number()),
+   elapsed_time: z.optional(z.int()),
+   start_index: z.optional(z.int()),
+   end_index: z.optional(z.int()),
+   lap_index: z.optional(z.int()),
+   max_speed: z.optional(z.number()),
+   moving_time: z.optional(z.int()),
+   name: z.optional(z.string()),
+   pace_zone: z.optional(z.int()),
+   split: z.optional(z.int()),
+   start_date: z.optional(z.iso.datetime()),
+   start_date_local: z.optional(z.iso.datetime()),
+   total_elevation_gain: z.optional(z.number())
 });
 
-export const zDetailedActivity = z.intersection(zSummaryActivity, z.object({
-    description: z.optional(z.string()),
-    photos: z.optional(zPhotosSummary),
-    gear: z.optional(zSummaryGear),
-    calories: z.optional(z.number()),
-    segment_efforts: z.optional(z.array(zDetailedSegmentEffort)),
-    device_name: z.optional(z.string()),
-    embed_token: z.optional(z.string()),
-    splits_metric: z.optional(z.array(zSplit)),
-    splits_standard: z.optional(z.array(zSplit)),
-    laps: z.optional(z.array(zLap)),
-    best_efforts: z.optional(z.array(zDetailedSegmentEffort))
-}));
+export const zDetailedActivity = z.intersection(
+   zSummaryActivity,
+   z.object({
+      description: z.optional(z.string()),
+      photos: z.optional(zPhotosSummary),
+      gear: z.optional(zSummaryGear),
+      calories: z.optional(z.number()),
+      segment_efforts: z.optional(z.array(zDetailedSegmentEffort)),
+      device_name: z.optional(z.string()),
+      embed_token: z.optional(z.string()),
+      splits_metric: z.optional(z.array(zSplit)),
+      splits_standard: z.optional(z.array(zSplit)),
+      laps: z.optional(z.array(zLap)),
+      best_efforts: z.optional(z.array(zDetailedSegmentEffort))
+   })
+);
 
 export const zUpdatableActivity = z.object({
-    commute: z.optional(z.boolean()),
-    trainer: z.optional(z.boolean()),
-    hide_from_home: z.optional(z.boolean()),
-    description: z.optional(z.string()),
-    name: z.optional(z.string()),
-    type: z.optional(zActivityType),
-    sport_type: z.optional(zSportType),
-    gear_id: z.optional(z.string())
+   commute: z.optional(z.boolean()),
+   trainer: z.optional(z.boolean()),
+   hide_from_home: z.optional(z.boolean()),
+   description: z.optional(z.string()),
+   name: z.optional(z.string()),
+   type: z.optional(zActivityType),
+   sport_type: z.optional(zSportType),
+   gear_id: z.optional(z.string())
 });
 
 /**
  * A union type representing the time spent in a given zone.
  */
-export const zTimedZoneRange = z.intersection(zZoneRange, z.object({
-    time: z.optional(z.int())
-}));
+export const zTimedZoneRange = z.intersection(
+   zZoneRange,
+   z.object({
+      time: z.optional(z.int())
+   })
+);
 
 /**
  * Stores the exclusive ranges representing zones and the time spent in each.
@@ -471,172 +475,198 @@ export const zTimedZoneRange = z.intersection(zZoneRange, z.object({
 export const zTimedZoneDistribution = z.array(zTimedZoneRange);
 
 export const zActivityZone = z.object({
-    score: z.optional(z.int()),
-    distribution_buckets: z.optional(zTimedZoneDistribution),
-    type: z.optional(z.enum([
-        'heartrate',
-        'power'
-    ])),
-    sensor_based: z.optional(z.boolean()),
-    points: z.optional(z.int()),
-    custom_zones: z.optional(z.boolean()),
-    max: z.optional(z.int())
+   score: z.optional(z.int()),
+   distribution_buckets: z.optional(zTimedZoneDistribution),
+   type: z.optional(z.enum(['heartrate', 'power'])),
+   sensor_based: z.optional(z.boolean()),
+   points: z.optional(z.int()),
+   custom_zones: z.optional(z.boolean()),
+   max: z.optional(z.int())
 });
 
 export const zComment = z.object({
-    id: z.optional(z.coerce.bigint()),
-    activity_id: z.optional(z.coerce.bigint()),
-    text: z.optional(z.string()),
-    athlete: z.optional(zSummaryAthlete),
-    created_at: z.optional(z.iso.datetime())
+   id: z.optional(z.coerce.bigint()),
+   activity_id: z.optional(z.coerce.bigint()),
+   text: z.optional(z.string()),
+   athlete: z.optional(zSummaryAthlete),
+   created_at: z.optional(z.iso.datetime())
 });
 
-export const zDetailedClub = z.intersection(zSummaryClub, z.object({
-    membership: z.optional(z.enum([
-        'member',
-        'pending'
-    ])),
-    admin: z.optional(z.boolean()),
-    owner: z.optional(z.boolean()),
-    following_count: z.optional(z.int())
-}));
+export const zDetailedClub = z.intersection(
+   zSummaryClub,
+   z.object({
+      membership: z.optional(z.enum(['member', 'pending'])),
+      admin: z.optional(z.boolean()),
+      owner: z.optional(z.boolean()),
+      following_count: z.optional(z.int())
+   })
+);
 
 export const zClubAthlete = z.object({
-    resource_state: z.optional(z.int()),
-    firstname: z.optional(z.string()),
-    lastname: z.optional(z.string()),
-    member: z.optional(z.string()),
-    admin: z.optional(z.boolean()),
-    owner: z.optional(z.boolean())
+   resource_state: z.optional(z.int()),
+   firstname: z.optional(z.string()),
+   lastname: z.optional(z.string()),
+   member: z.optional(z.string()),
+   admin: z.optional(z.boolean()),
+   owner: z.optional(z.boolean())
 });
 
 export const zClubActivity = z.object({
-    athlete: z.optional(zMetaAthlete),
-    name: z.optional(z.string()),
-    distance: z.optional(z.number()),
-    moving_time: z.optional(z.int()),
-    elapsed_time: z.optional(z.int()),
-    total_elevation_gain: z.optional(z.number()),
-    type: z.optional(zActivityType),
-    sport_type: z.optional(zSportType),
-    workout_type: z.optional(z.int())
+   athlete: z.optional(zMetaAthlete),
+   name: z.optional(z.string()),
+   distance: z.optional(z.number()),
+   moving_time: z.optional(z.int()),
+   elapsed_time: z.optional(z.int()),
+   total_elevation_gain: z.optional(z.number()),
+   type: z.optional(zActivityType),
+   sport_type: z.optional(zSportType),
+   workout_type: z.optional(z.int())
 });
 
-export const zDetailedGear = z.intersection(zSummaryGear, z.object({
-    brand_name: z.optional(z.string()),
-    model_name: z.optional(z.string()),
-    frame_type: z.optional(z.int()),
-    description: z.optional(z.string())
-}));
+export const zDetailedGear = z.intersection(
+   zSummaryGear,
+   z.object({
+      brand_name: z.optional(z.string()),
+      model_name: z.optional(z.string()),
+      frame_type: z.optional(z.int()),
+      description: z.optional(z.string())
+   })
+);
 
 export const zWaypoint = z.object({
-    latlng: z.optional(zLatLng),
-    target_latlng: z.optional(zLatLng),
-    categories: z.optional(z.array(z.string()).check(z.minLength(0))),
-    title: z.optional(z.string()),
-    description: z.optional(z.string()),
-    distance_into_route: z.optional(z.int())
+   latlng: z.optional(zLatLng),
+   target_latlng: z.optional(zLatLng),
+   categories: z.optional(z.array(z.string()).check(z.minLength(0))),
+   title: z.optional(z.string()),
+   description: z.optional(z.string()),
+   distance_into_route: z.optional(z.int())
 });
 
 export const zRoute = z.object({
-    athlete: z.optional(zSummaryAthlete),
-    description: z.optional(z.string()),
-    distance: z.optional(z.number()),
-    elevation_gain: z.optional(z.number()),
-    id: z.optional(z.coerce.bigint()),
-    id_str: z.optional(z.string()),
-    map: z.optional(zPolylineMap),
-    name: z.optional(z.string()),
-    private: z.optional(z.boolean()),
-    starred: z.optional(z.boolean()),
-    timestamp: z.optional(z.int()),
-    type: z.optional(z.int()),
-    sub_type: z.optional(z.int()),
-    created_at: z.optional(z.iso.datetime()),
-    updated_at: z.optional(z.iso.datetime()),
-    estimated_moving_time: z.optional(z.int()),
-    segments: z.optional(z.array(zSummarySegment)),
-    waypoints: z.optional(z.array(zWaypoint).check(z.minLength(0)))
+   athlete: z.optional(zSummaryAthlete),
+   description: z.optional(z.string()),
+   distance: z.optional(z.number()),
+   elevation_gain: z.optional(z.number()),
+   id: z.optional(z.coerce.bigint()),
+   id_str: z.optional(z.string()),
+   map: z.optional(zPolylineMap),
+   name: z.optional(z.string()),
+   private: z.optional(z.boolean()),
+   starred: z.optional(z.boolean()),
+   timestamp: z.optional(z.int()),
+   type: z.optional(z.int()),
+   sub_type: z.optional(z.int()),
+   created_at: z.optional(z.iso.datetime()),
+   updated_at: z.optional(z.iso.datetime()),
+   estimated_moving_time: z.optional(z.int()),
+   segments: z.optional(z.array(zSummarySegment)),
+   waypoints: z.optional(z.array(zWaypoint).check(z.minLength(0)))
 });
 
 export const zUpload = z.object({
-    id: z.optional(z.coerce.bigint()),
-    id_str: z.optional(z.string()),
-    external_id: z.optional(z.string()),
-    error: z.optional(z.string()),
-    status: z.optional(z.string()),
-    activity_id: z.optional(z.coerce.bigint())
+   id: z.optional(z.coerce.bigint()),
+   id_str: z.optional(z.string()),
+   external_id: z.optional(z.string()),
+   error: z.optional(z.string()),
+   status: z.optional(z.string()),
+   activity_id: z.optional(z.coerce.bigint())
 });
 
 export const zBaseStream = z.object({
-    original_size: z.optional(z.int()),
-    resolution: z.optional(z.enum([
-        'low',
-        'medium',
-        'high'
-    ])),
-    series_type: z.optional(z.enum([
-        'distance',
-        'time'
-    ]))
+   original_size: z.optional(z.int()),
+   resolution: z.optional(z.enum(['low', 'medium', 'high'])),
+   series_type: z.optional(z.enum(['distance', 'time']))
 });
 
-export const zTimeStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.int()))
-}));
+export const zTimeStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.int()))
+   })
+);
 
-export const zDistanceStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.number()))
-}));
+export const zDistanceStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.number()))
+   })
+);
 
-export const zLatLngStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(zLatLng))
-}));
+export const zLatLngStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(zLatLng))
+   })
+);
 
-export const zAltitudeStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.number()))
-}));
+export const zAltitudeStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.number()))
+   })
+);
 
-export const zSmoothVelocityStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.number()))
-}));
+export const zSmoothVelocityStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.number()))
+   })
+);
 
-export const zHeartrateStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.int()))
-}));
+export const zHeartrateStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.int()))
+   })
+);
 
-export const zCadenceStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.int()))
-}));
+export const zCadenceStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.int()))
+   })
+);
 
-export const zPowerStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.int()))
-}));
+export const zPowerStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.int()))
+   })
+);
 
-export const zTemperatureStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.int()))
-}));
+export const zTemperatureStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.int()))
+   })
+);
 
-export const zMovingStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.boolean()))
-}));
+export const zMovingStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.boolean()))
+   })
+);
 
-export const zSmoothGradeStream = z.intersection(zBaseStream, z.object({
-    data: z.optional(z.array(z.number()))
-}));
+export const zSmoothGradeStream = z.intersection(
+   zBaseStream,
+   z.object({
+      data: z.optional(z.array(z.number()))
+   })
+);
 
 export const zStreamSet = z.object({
-    time: z.optional(zTimeStream),
-    distance: z.optional(zDistanceStream),
-    latlng: z.optional(zLatLngStream),
-    altitude: z.optional(zAltitudeStream),
-    velocity_smooth: z.optional(zSmoothVelocityStream),
-    heartrate: z.optional(zHeartrateStream),
-    cadence: z.optional(zCadenceStream),
-    watts: z.optional(zPowerStream),
-    temp: z.optional(zTemperatureStream),
-    moving: z.optional(zMovingStream),
-    grade_smooth: z.optional(zSmoothGradeStream)
+   time: z.optional(zTimeStream),
+   distance: z.optional(zDistanceStream),
+   latlng: z.optional(zLatLngStream),
+   altitude: z.optional(zAltitudeStream),
+   velocity_smooth: z.optional(zSmoothVelocityStream),
+   heartrate: z.optional(zHeartrateStream),
+   cadence: z.optional(zCadenceStream),
+   watts: z.optional(zPowerStream),
+   temp: z.optional(zTemperatureStream),
+   moving: z.optional(zMovingStream),
+   grade_smooth: z.optional(zSmoothGradeStream)
 });
 
 /**
@@ -650,11 +680,11 @@ export const zPage = z.int();
 export const zPerPage = z._default(z.int(), 30);
 
 export const zGetStatsData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -663,9 +693,9 @@ export const zGetStatsData = z.object({
 export const zGetStatsResponse = zActivityStats;
 
 export const zGetLoggedInAthleteData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.optional(z.never())
 });
 
 /**
@@ -674,11 +704,11 @@ export const zGetLoggedInAthleteData = z.object({
 export const zGetLoggedInAthleteResponse = zDetailedAthlete;
 
 export const zUpdateLoggedInAthleteData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        weight: z.number()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      weight: z.number()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -687,9 +717,9 @@ export const zUpdateLoggedInAthleteData = z.object({
 export const zUpdateLoggedInAthleteResponse = zDetailedAthlete;
 
 export const zGetLoggedInAthleteZonesData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.optional(z.never())
 });
 
 /**
@@ -698,11 +728,11 @@ export const zGetLoggedInAthleteZonesData = z.object({
 export const zGetLoggedInAthleteZonesResponse = zZones;
 
 export const zGetSegmentByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -711,27 +741,30 @@ export const zGetSegmentByIdData = z.object({
 export const zGetSegmentByIdResponse = zDetailedSegment;
 
 export const zGetLoggedInAthleteStarredSegmentsData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
  * List of the authenticated athlete's starred segments.
  */
-export const zGetLoggedInAthleteStarredSegmentsResponse = z.array(zSummarySegment);
+export const zGetLoggedInAthleteStarredSegmentsResponse =
+   z.array(zSummarySegment);
 
 export const zStarSegmentData = z.object({
-    body: z.object({
-        starred: z._default(z.boolean(), false)
-    }),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.object({
+      starred: z._default(z.boolean(), false)
+   }),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -740,14 +773,14 @@ export const zStarSegmentData = z.object({
 export const zStarSegmentResponse = zDetailedSegment;
 
 export const zGetEffortsBySegmentIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.object({
-        segment_id: z.int(),
-        start_date_local: z.optional(z.iso.datetime()),
-        end_date_local: z.optional(z.iso.datetime()),
-        per_page: z._default(z.optional(z.int()), 30)
-    })
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.object({
+      segment_id: z.int(),
+      start_date_local: z.optional(z.iso.datetime()),
+      end_date_local: z.optional(z.iso.datetime()),
+      per_page: z._default(z.optional(z.int()), 30)
+   })
 });
 
 /**
@@ -756,22 +789,14 @@ export const zGetEffortsBySegmentIdData = z.object({
 export const zGetEffortsBySegmentIdResponse = z.array(zDetailedSegmentEffort);
 
 export const zExploreSegmentsData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.object({
-        bounds: z.tuple([
-            z.number(),
-            z.number(),
-            z.number(),
-            z.number()
-        ]),
-        activity_type: z.optional(z.enum([
-            'running',
-            'riding'
-        ])),
-        min_cat: z.optional(z.int().check(z.gte(0), z.lte(5))),
-        max_cat: z.optional(z.int().check(z.gte(0), z.lte(5)))
-    })
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.object({
+      bounds: z.tuple([z.number(), z.number(), z.number(), z.number()]),
+      activity_type: z.optional(z.enum(['running', 'riding'])),
+      min_cat: z.optional(z.int().check(z.gte(0), z.lte(5))),
+      max_cat: z.optional(z.int().check(z.gte(0), z.lte(5)))
+   })
 });
 
 /**
@@ -780,11 +805,11 @@ export const zExploreSegmentsData = z.object({
 export const zExploreSegmentsResponse = zExplorerResponse;
 
 export const zGetSegmentEffortByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -793,19 +818,19 @@ export const zGetSegmentEffortByIdData = z.object({
 export const zGetSegmentEffortByIdResponse = zDetailedSegmentEffort;
 
 export const zCreateActivityData = z.object({
-    body: z.object({
-        name: z.string(),
-        type: z.optional(z.string()),
-        sport_type: z.string(),
-        start_date_local: z.iso.datetime(),
-        elapsed_time: z.int(),
-        description: z.optional(z.string()),
-        distance: z.optional(z.number()),
-        trainer: z.optional(z.int()),
-        commute: z.optional(z.int())
-    }),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+   body: z.object({
+      name: z.string(),
+      type: z.optional(z.string()),
+      sport_type: z.string(),
+      start_date_local: z.iso.datetime(),
+      elapsed_time: z.int(),
+      description: z.optional(z.string()),
+      distance: z.optional(z.number()),
+      trainer: z.optional(z.int()),
+      commute: z.optional(z.int())
+   }),
+   path: z.optional(z.never()),
+   query: z.optional(z.never())
 });
 
 /**
@@ -814,13 +839,15 @@ export const zCreateActivityData = z.object({
 export const zCreateActivityResponse = zDetailedActivity;
 
 export const zGetActivityByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.object({
-        include_all_efforts: z.optional(z.boolean())
-    }))
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(
+      z.object({
+         include_all_efforts: z.optional(z.boolean())
+      })
+   )
 });
 
 /**
@@ -829,11 +856,11 @@ export const zGetActivityByIdData = z.object({
 export const zGetActivityByIdResponse = zDetailedActivity;
 
 export const zUpdateActivityByIdData = z.object({
-    body: z.optional(zUpdatableActivity),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(zUpdatableActivity),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -842,14 +869,16 @@ export const zUpdateActivityByIdData = z.object({
 export const zUpdateActivityByIdResponse = zDetailedActivity;
 
 export const zGetLoggedInAthleteActivitiesData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.object({
-        before: z.optional(z.int()),
-        after: z.optional(z.int()),
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.optional(
+      z.object({
+         before: z.optional(z.int()),
+         after: z.optional(z.int()),
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -858,11 +887,11 @@ export const zGetLoggedInAthleteActivitiesData = z.object({
 export const zGetLoggedInAthleteActivitiesResponse = z.array(zSummaryActivity);
 
 export const zGetLapsByActivityIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -871,11 +900,11 @@ export const zGetLapsByActivityIdData = z.object({
 export const zGetLapsByActivityIdResponse = z.array(zLap);
 
 export const zGetZonesByActivityIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -884,16 +913,18 @@ export const zGetZonesByActivityIdData = z.object({
 export const zGetZonesByActivityIdResponse = z.array(zActivityZone);
 
 export const zGetCommentsByActivityIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30),
-        page_size: z._default(z.optional(z.int()), 30),
-        after_cursor: z.optional(z.string())
-    }))
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30),
+         page_size: z._default(z.optional(z.int()), 30),
+         after_cursor: z.optional(z.string())
+      })
+   )
 });
 
 /**
@@ -902,14 +933,16 @@ export const zGetCommentsByActivityIdData = z.object({
 export const zGetCommentsByActivityIdResponse = z.array(zComment);
 
 export const zGetKudoersByActivityIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -918,11 +951,11 @@ export const zGetKudoersByActivityIdData = z.object({
 export const zGetKudoersByActivityIdResponse = z.array(zSummaryAthlete);
 
 export const zGetClubByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -931,14 +964,16 @@ export const zGetClubByIdData = z.object({
 export const zGetClubByIdResponse = zDetailedClub;
 
 export const zGetClubMembersByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -947,14 +982,16 @@ export const zGetClubMembersByIdData = z.object({
 export const zGetClubMembersByIdResponse = z.array(zClubAthlete);
 
 export const zGetClubAdminsByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -963,14 +1000,16 @@ export const zGetClubAdminsByIdData = z.object({
 export const zGetClubAdminsByIdResponse = z.array(zSummaryAthlete);
 
 export const zGetClubActivitiesByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -979,12 +1018,14 @@ export const zGetClubActivitiesByIdData = z.object({
 export const zGetClubActivitiesByIdResponse = z.array(zClubActivity);
 
 export const zGetLoggedInAthleteClubsData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -993,11 +1034,11 @@ export const zGetLoggedInAthleteClubsData = z.object({
 export const zGetLoggedInAthleteClubsResponse = z.array(zSummaryClub);
 
 export const zGetGearByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.string()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.string()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -1006,11 +1047,11 @@ export const zGetGearByIdData = z.object({
 export const zGetGearByIdResponse = zDetailedGear;
 
 export const zGetRouteByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -1019,12 +1060,14 @@ export const zGetRouteByIdData = z.object({
 export const zGetRouteByIdResponse = zRoute;
 
 export const zGetRoutesByAthleteIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.optional(z.never()),
-    query: z.optional(z.object({
-        page: z.optional(z.int()),
-        per_page: z._default(z.optional(z.int()), 30)
-    }))
+   body: z.optional(z.never()),
+   path: z.optional(z.never()),
+   query: z.optional(
+      z.object({
+         page: z.optional(z.int()),
+         per_page: z._default(z.optional(z.int()), 30)
+      })
+   )
 });
 
 /**
@@ -1033,40 +1076,37 @@ export const zGetRoutesByAthleteIdData = z.object({
 export const zGetRoutesByAthleteIdResponse = z.array(zRoute);
 
 export const zGetRouteAsGpxData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 export const zGetRouteAsTcxData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 export const zCreateUploadData = z.object({
-    body: z.optional(z.object({
-        file: z.optional(z.string()),
-        name: z.optional(z.string()),
-        description: z.optional(z.string()),
-        trainer: z.optional(z.string()),
-        commute: z.optional(z.string()),
-        data_type: z.optional(z.enum([
-            'fit',
-            'fit.gz',
-            'tcx',
-            'tcx.gz',
-            'gpx',
-            'gpx.gz'
-        ])),
-        external_id: z.optional(z.string())
-    })),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
+   body: z.optional(
+      z.object({
+         file: z.optional(z.string()),
+         name: z.optional(z.string()),
+         description: z.optional(z.string()),
+         trainer: z.optional(z.string()),
+         commute: z.optional(z.string()),
+         data_type: z.optional(
+            z.enum(['fit', 'fit.gz', 'tcx', 'tcx.gz', 'gpx', 'gpx.gz'])
+         ),
+         external_id: z.optional(z.string())
+      })
+   ),
+   path: z.optional(z.never()),
+   query: z.optional(z.never())
 });
 
 /**
@@ -1075,11 +1115,11 @@ export const zCreateUploadData = z.object({
 export const zCreateUploadResponse = zUpload;
 
 export const zGetUploadByIdData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        uploadId: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      uploadId: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**
@@ -1088,26 +1128,30 @@ export const zGetUploadByIdData = z.object({
 export const zGetUploadByIdResponse = zUpload;
 
 export const zGetActivityStreamsData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.object({
-        keys: z.array(z.enum([
-            'time',
-            'distance',
-            'latlng',
-            'altitude',
-            'velocity_smooth',
-            'heartrate',
-            'cadence',
-            'watts',
-            'temp',
-            'moving',
-            'grade_smooth'
-        ])).check(z.minLength(1)),
-        key_by_type: z._default(z.boolean(), true)
-    })
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.object({
+      keys: z
+         .array(
+            z.enum([
+               'time',
+               'distance',
+               'latlng',
+               'altitude',
+               'velocity_smooth',
+               'heartrate',
+               'cadence',
+               'watts',
+               'temp',
+               'moving',
+               'grade_smooth'
+            ])
+         )
+         .check(z.minLength(1)),
+      key_by_type: z._default(z.boolean(), true)
+   })
 });
 
 /**
@@ -1116,26 +1160,30 @@ export const zGetActivityStreamsData = z.object({
 export const zGetActivityStreamsResponse = zStreamSet;
 
 export const zGetSegmentEffortStreamsData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.object({
-        keys: z.array(z.enum([
-            'time',
-            'distance',
-            'latlng',
-            'altitude',
-            'velocity_smooth',
-            'heartrate',
-            'cadence',
-            'watts',
-            'temp',
-            'moving',
-            'grade_smooth'
-        ])).check(z.minLength(1)),
-        key_by_type: z._default(z.boolean(), true)
-    })
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.object({
+      keys: z
+         .array(
+            z.enum([
+               'time',
+               'distance',
+               'latlng',
+               'altitude',
+               'velocity_smooth',
+               'heartrate',
+               'cadence',
+               'watts',
+               'temp',
+               'moving',
+               'grade_smooth'
+            ])
+         )
+         .check(z.minLength(1)),
+      key_by_type: z._default(z.boolean(), true)
+   })
 });
 
 /**
@@ -1144,18 +1192,16 @@ export const zGetSegmentEffortStreamsData = z.object({
 export const zGetSegmentEffortStreamsResponse = zStreamSet;
 
 export const zGetSegmentStreamsData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.object({
-        keys: z.array(z.enum([
-            'distance',
-            'latlng',
-            'altitude'
-        ])).check(z.minLength(1)),
-        key_by_type: z._default(z.boolean(), true)
-    })
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.object({
+      keys: z
+         .array(z.enum(['distance', 'latlng', 'altitude']))
+         .check(z.minLength(1)),
+      key_by_type: z._default(z.boolean(), true)
+   })
 });
 
 /**
@@ -1164,11 +1210,11 @@ export const zGetSegmentStreamsData = z.object({
 export const zGetSegmentStreamsResponse = zStreamSet;
 
 export const zGetRouteStreamsData = z.object({
-    body: z.optional(z.never()),
-    path: z.object({
-        id: z.coerce.bigint()
-    }),
-    query: z.optional(z.never())
+   body: z.optional(z.never()),
+   path: z.object({
+      id: z.coerce.bigint()
+   }),
+   query: z.optional(z.never())
 });
 
 /**

@@ -5,186 +5,185 @@
  * and token exchange.
  */
 
-import type { SummaryAthlete } from "./sdk/client";
-
+import type { SummaryAthlete } from './sdk/client';
 
 export interface OAuthTokenResponse {
-  readonly token_type: "Bearer";
-  readonly expires_at: number;
-  readonly expires_in: number;
-  readonly refresh_token: string;
-  readonly access_token: string;
-  readonly athlete: SummaryAthlete;
+   readonly token_type: 'Bearer';
+   readonly expires_at: number;
+   readonly expires_in: number;
+   readonly refresh_token: string;
+   readonly access_token: string;
+   readonly athlete: SummaryAthlete;
 }
 
 /**
  * Token refresh response
  */
 export interface TokenRefreshResponse {
-  readonly token_type: "Bearer";
-  readonly access_token: string;
-  readonly expires_at: number;
-  readonly expires_in: number;
-  readonly refresh_token: string;
+   readonly token_type: 'Bearer';
+   readonly access_token: string;
+   readonly expires_at: number;
+   readonly expires_in: number;
+   readonly refresh_token: string;
 }
 
 /**
  * Stored token data
  */
 export interface StoredTokens {
-  readonly athleteId: string;
-  readonly accessToken: string;
-  readonly refreshToken: string;
-  readonly expiresAt: Date;
-  readonly scopes?: readonly string[];
-  [key: string]: any;
+   readonly athleteId: string;
+   readonly accessToken: string;
+   readonly refreshToken: string;
+   readonly expiresAt: Date;
+   readonly scopes?: readonly string[];
+   [key: string]: any;
 }
 
 /**
  * Token data with refresh status
  */
 export interface TokenData {
-  readonly accessToken: string;
-  readonly refreshToken: string;
-  readonly expiresAt: Date;
-  readonly wasRefreshed: boolean;
+   readonly accessToken: string;
+   readonly refreshToken: string;
+   readonly expiresAt: Date;
+   readonly wasRefreshed: boolean;
 }
 
 /**
  * OAuth configuration
  */
 export interface OAuthConfig {
-  readonly clientId: string;
-  readonly clientSecret: string;
-  readonly redirectUri: string;
-  readonly scopes?: readonly string[];
+   readonly clientId: string;
+   readonly clientSecret: string;
+   readonly redirectUri: string;
+   readonly scopes?: readonly string[];
 }
 
 /**
  * OAuth authorization options
  */
 export interface AuthorizationOptions {
-  readonly state?: string;
-  readonly scopes?: readonly string[];
-  readonly approvalPrompt?: "auto" | "force";
+   readonly state?: string;
+   readonly scopes?: readonly string[];
+   readonly approvalPrompt?: 'auto' | 'force';
 }
 
-const STRAVA_AUTH_URL = "https://www.strava.com/oauth/authorize";
-const STRAVA_TOKEN_URL = "https://www.strava.com/oauth/token";
+const STRAVA_AUTH_URL = 'https://www.strava.com/oauth/authorize';
+const STRAVA_TOKEN_URL = 'https://www.strava.com/oauth/token';
 
 export class StravaOAuth {
-  private readonly config: OAuthConfig;
+   private readonly config: OAuthConfig;
 
-  constructor(config: OAuthConfig) {
-    const errors = validateOAuthConfig(config);
-    if (errors.length > 0) {
-      throw new Error(`OAuth configuration errors: ${errors.join(", ")}`);
-    }
-    this.config = config;
-  }
+   constructor(config: OAuthConfig) {
+      const errors = validateOAuthConfig(config);
+      if (errors.length > 0) {
+         throw new Error(`OAuth configuration errors: ${errors.join(', ')}`);
+      }
+      this.config = config;
+   }
 
-  /**
-   * Generate authorization URL for OAuth flow
-   *
-   * @param options - Authorization options
-   * @returns Authorization URL to redirect user to
-   */
-  getAuthUrl(options: AuthorizationOptions = {}): string {
-    const scopes = options.scopes ??
-      this.config.scopes ?? ["activity:read_all"];
-    const approvalPrompt = options.approvalPrompt ?? "auto";
+   /**
+    * Generate authorization URL for OAuth flow
+    *
+    * @param options - Authorization options
+    * @returns Authorization URL to redirect user to
+    */
+   getAuthUrl(options: AuthorizationOptions = {}): string {
+      const scopes = options.scopes ??
+         this.config.scopes ?? ['activity:read_all'];
+      const approvalPrompt = options.approvalPrompt ?? 'auto';
 
-    const params = new URLSearchParams({
-      client_id: this.config.clientId,
-      redirect_uri: this.config.redirectUri,
-      response_type: "code",
-      approval_prompt: approvalPrompt,
-      scope: scopes.join(","),
-    });
+      const params = new URLSearchParams({
+         client_id: this.config.clientId,
+         redirect_uri: this.config.redirectUri,
+         response_type: 'code',
+         approval_prompt: approvalPrompt,
+         scope: scopes.join(',')
+      });
 
-    if (options.state) {
-      params.set("state", options.state);
-    }
+      if (options.state) {
+         params.set('state', options.state);
+      }
 
-    return `${STRAVA_AUTH_URL}?${params.toString()}`;
-  }
+      return `${STRAVA_AUTH_URL}?${params.toString()}`;
+   }
 
-  /**
-   * Exchange authorization code for access tokens
-   *
-   * @param code - Authorization code from OAuth callback
-   * @returns OAuth token response including athlete data
-   * @throws Error if token exchange fails
-   */
-  async exchangeCode(code: string): Promise<OAuthTokenResponse> {
-    const response = await fetch(STRAVA_TOKEN_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        client_id: this.config.clientId,
-        client_secret: this.config.clientSecret,
-        code,
-        grant_type: "authorization_code",
-      }),
-    });
+   /**
+    * Exchange authorization code for access tokens
+    *
+    * @param code - Authorization code from OAuth callback
+    * @returns OAuth token response including athlete data
+    * @throws Error if token exchange fails
+    */
+   async exchangeCode(code: string): Promise<OAuthTokenResponse> {
+      const response = await fetch(STRAVA_TOKEN_URL, {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+         body: JSON.stringify({
+            client_id: this.config.clientId,
+            client_secret: this.config.clientSecret,
+            code,
+            grant_type: 'authorization_code'
+         })
+      });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Token exchange failed (${response.status}): ${errorText}`,
-      );
-    }
+      if (!response.ok) {
+         const errorText = await response.text();
+         throw new Error(
+            `Token exchange failed (${response.status}): ${errorText}`
+         );
+      }
 
-    const tokenData = (await response.json()) as OAuthTokenResponse;
+      const tokenData = (await response.json()) as OAuthTokenResponse;
 
-    if (!tokenData.athlete) {
-      throw new Error("Token response missing athlete data");
-    }
+      if (!tokenData.athlete) {
+         throw new Error('Token response missing athlete data');
+      }
 
-    return tokenData;
-  }
+      return tokenData;
+   }
 
-  /**
-   * Revoke access token
-   *
-   * @param accessToken - Access token to revoke
-   */
-  async revokeToken(accessToken: string): Promise<void> {
-    const response = await fetch("https://www.strava.com/oauth/deauthorize", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-    });
+   /**
+    * Revoke access token
+    *
+    * @param accessToken - Access token to revoke
+    */
+   async revokeToken(accessToken: string): Promise<void> {
+      const response = await fetch('https://www.strava.com/oauth/deauthorize', {
+         method: 'POST',
+         headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+         }
+      });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(
-        `Token revocation failed (${response.status}): ${errorText}`,
-      );
-    }
-  }
+      if (!response.ok) {
+         const errorText = await response.text();
+         throw new Error(
+            `Token revocation failed (${response.status}): ${errorText}`
+         );
+      }
+   }
 }
 
 function validateOAuthConfig(config: {
-  clientId?: string;
-  clientSecret?: string;
-  redirectUri?: string;
+   clientId?: string;
+   clientSecret?: string;
+   redirectUri?: string;
 }): string[] {
-  const errors: string[] = [];
+   const errors: string[] = [];
 
-  if (!config.clientId) {
-    errors.push("clientId is required");
-  }
-  if (!config.clientSecret) {
-    errors.push("clientSecret is required");
-  }
-  if (!config.redirectUri) {
-    errors.push("redirectUri is required");
-  }
+   if (!config.clientId) {
+      errors.push('clientId is required');
+   }
+   if (!config.clientSecret) {
+      errors.push('clientSecret is required');
+   }
+   if (!config.redirectUri) {
+      errors.push('redirectUri is required');
+   }
 
-  return errors;
+   return errors;
 }
