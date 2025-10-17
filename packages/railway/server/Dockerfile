@@ -30,7 +30,7 @@ COPY --from=prerelease /app/drizzle ./drizzle
 COPY --from=prerelease /app/package.json ./package.json
 
 # Expose port
-EXPOSE 3000
+EXPOSE 8080
 
 # Set user
 USER bun
