@@ -1,11 +1,10 @@
 import { VStack } from '@chakra-ui/react';
-import type { SummaryActivity } from '@/strava-client/sdk';
 import { StravaActivityHeader } from './StravaActivityHeader';
 import { StravaActivityMapView } from './StravaActivityMapView';
 import { StravaActivityStats } from './StravaActivityStats';
 
 interface StravaActivityCardProps {
-   activity: SummaryActivity;
+   activity: any;
 }
 
 export function StravaActivityCard({ activity }: StravaActivityCardProps) {
@@ -33,18 +32,18 @@ export function StravaActivityCard({ activity }: StravaActivityCardProps) {
          <StravaActivityHeader
             name={activity.name}
             type={activity.type}
-            sportType={activity.sport_type}
-            startDate={activity.start_date_local}
-            athleteId={activity.athlete?.id}
+            sportType={activity.sportType}
+            startDate={activity.startDateLocal}
+            athleteId={activity.athleteId}
          />
 
-         <StravaActivityMapView polyline={activity.map?.summary_polyline} />
+         <StravaActivityMapView polyline={activity.map?.summaryPolyline} />
 
          <StravaActivityStats
-            duration={activity.moving_time}
+            duration={activity.movingTime}
             distance={activity.distance}
-            elevation={activity?.total_elevation_gain}
-            averageHeartrate={(activity as any)?.average_heartrate}
+            elevation={activity.totalElevationGain}
+            averageHeartrate={activity.averageHeartrate}
          />
       </VStack>
    );

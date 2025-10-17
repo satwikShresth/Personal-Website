@@ -14,6 +14,8 @@ export const env = createEnv({
       STRAVA_REDIRECT_URI: z.url(),
       STRAVA_CALLBACK_KEY: z.string(),
       DISCORD_WEBHOOK_URL: z.url(),
+      TURSO_DATABASE_URL: z.url(),
+      TURSO_AUTH_TOKEN: z.string(),
       REDIS_STRAVA_OAUTH_TOKEN_KEY: z.string()
    },
    clientPrefix: 'VITE_',

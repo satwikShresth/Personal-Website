@@ -13,6 +13,4 @@ export const s3 = new S3Client({
    // endpoint: "https://<region>.digitaloceanspaces.com", // DigitalOcean Spaces
 });
 
-export * from './strava-auth';
-export * from './discord';
 export * from './redis';

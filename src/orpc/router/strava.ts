@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { os } from '@orpc/server';
-import { storeOAuthToken, stravaOAuth } from '@/orpc/utils/strava-auth';
-import { getLoggedInAthleteActivities } from '@/strava-client/sdk/client/sdk.gen';
+import { storeOAuthToken, stravaOAuth } from '../../../scripts/strava.auth';
+import { db, activities, activityMaps } from '@/db';
+import { desc, eq } from 'drizzle-orm';
 import { env } from '@/env';
 
 export const handleCallback = os
@@ -39,7 +40,7 @@ export const handleCallback = os
 
       return await stravaOAuth
          .exchangeCode(code)
-         .then(async tokenResponse => {
+         .then(async (tokenResponse: any) => {
             await storeOAuthToken(tokenResponse);
 
             return {
@@ -51,7 +52,7 @@ export const handleCallback = os
                state: state
             };
          })
-         .catch(error => {
+         .catch((error: unknown) => {
             throw new Error(
                `Failed to exchange authorization code: ${error instanceof Error ? error.message : 'Unknown error'}`
             );
@@ -64,17 +65,46 @@ export const getActivities = os
       method: 'GET',
       successStatus: 200
    })
-   .handler(async () => {
-      const activities = await getLoggedInAthleteActivities({
-         query: {
-            per_page: 5,
-            page: 1
-         }
-      });
+   .input(
+      z
+         .object({
+            page: z.number().min(1).optional().catch(1),
+            perPage: z.number().min(1).max(100).optional().catch(30)
+         })
+         .optional()
+         .catch({ page: 1, perPage: 30 })
+   )
+   .handler(async ({ input }) => {
+      const page = input?.page ?? 1;
+      const perPage = input?.perPage ?? 30;
+      const offset = (page - 1) * perPage;
+
+      const fetchedActivities = await db
+         .select()
+         .from(activities)
+         .orderBy(desc(activities.startDate))
+         .limit(perPage)
+         .offset(offset)
+         .all();
+
+      // Fetch maps for all activities
+      const activitiesWithMaps = await Promise.all(
+         fetchedActivities.map(async activity => {
+            const map = await db
+               .select()
+               .from(activityMaps)
+               .where(eq(activityMaps.activityId, activity.id))
+               .get();
+            
+            return { ...activity, map };
+         })
+      );
 
       return {
          success: true,
-         activities: activities.data,
-         count: activities.data?.length ?? 0
+         activities: activitiesWithMaps,
+         count: activitiesWithMaps.length,
+         page,
+         perPage
       };
    });

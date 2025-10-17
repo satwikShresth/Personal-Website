@@ -1,7 +1,8 @@
 import axios from 'axios';
-import type { CreateClientConfig } from './sdk/client/client.gen';
+import { redisStorage } from '@/orpc/utils';
 import { setupCache } from 'axios-cache-interceptor';
-import { redisStorage, ensureValidToken } from '@/orpc/utils';
+import { ensureValidToken } from '@pkg/scripts/strava.auth';
+import type { CreateClientConfig } from './sdk/client/client.gen';
 
 export const createClientConfig: CreateClientConfig = config => ({
    ...config,

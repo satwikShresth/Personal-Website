@@ -1,8 +1,9 @@
 import { env } from '@/env';
-import { redis } from './redis';
-import { StravaOAuth, type OAuthTokenResponse } from '@/strava-client/oauth';
+import { RedisClient } from 'bun';
 import { sendDiscordNotification } from './discord';
+import { StravaOAuth, type OAuthTokenResponse } from '@pkg/strava-client/oauth';
 
+export const redis = new RedisClient(env.REDIS_URL);
 const redirectUri = `${env.STRAVA_REDIRECT_URI}/${env.STRAVA_CALLBACK_KEY}`;
 export const stravaOAuth = new StravaOAuth({
    clientId: env.STRAVA_CLIENT_ID,
