@@ -42,15 +42,17 @@ interface StoredOAuthToken {
 
 /**
  * Store OAuth token in Redis
+ * Handles both initial auth (with athlete) and refresh (without athlete)
  */
 export async function storeOAuthToken(
-   tokenResponse: OAuthTokenResponse
+   tokenResponse: OAuthTokenResponse,
+   existingAthleteId?: number
 ): Promise<void> {
    const storedToken: StoredOAuthToken = {
       accessToken: tokenResponse.access_token,
       refreshToken: tokenResponse.refresh_token,
       expiresAt: tokenResponse.expires_at,
-      athleteId: tokenResponse.athlete?.id ?? 0,
+      athleteId: tokenResponse.athlete?.id ?? existingAthleteId ?? 0,
       scopes: []
    };
 
@@ -81,39 +83,37 @@ export async function ensureValidToken(): Promise<string | null> {
    // Token not present in Redis
    if (!storedToken) {
       await sendNotificationWithCooldown(
-         '🏃 **Strava Authentication Alert**\n\n' +
-            '❌ **OAuth token not found!**\n\n' +
-            'The Strava OAuth token is missing from Redis. Please re-authenticate.\n\n' +
-            `Authorization URL: ${stravaOAuth.getAuthUrl()}`,
-         'Strava Auth Bot'
+         `Strava Authentication Alert\n\nOAuth token not found in Redis. Please re-authenticate.\n\nAuthorization URL: ${stravaOAuth.getAuthUrl()}`,
+         'Strava Auth'
       );
       return null;
    }
 
-   // Check if token is expired
+   // Check if token is expired or will expire soon
    const now = Math.floor(Date.now() / 1000); // Current time in seconds
-   const isExpired = storedToken.expiresAt <= now;
+   const bufferTime = 300; // 5 minutes buffer before expiration
+   const needsRefresh = storedToken.expiresAt <= now + bufferTime;
 
-   if (!isExpired) {
+   if (!needsRefresh) {
       // Token is still valid
       return storedToken.accessToken;
    }
 
-   return await stravaOAuth
-      .exchangeCode(storedToken.refreshToken, true)
-      .then(refreshedToken => {
-         console.log('✅ Successfully refreshed Strava OAuth token');
-         return refreshedToken.access_token;
-      })
-      .catch(async error => {
-         await sendNotificationWithCooldown(
-            '🏃 **Strava Authentication Alert**\n\n' +
-               '❌ **Token refresh failed!**\n\n' +
-               'Failed to refresh the Strava OAuth token. Please re-authenticate.\n\n' +
-               `Error: ${error instanceof Error ? error.message : 'Unknown error'}\n\n` +
-               `Authorization URL: ${stravaOAuth.getAuthUrl()}`,
-            'Strava Auth Bot'
-         );
-         return null;
-      });
+   // Refresh the token
+   try {
+      const refreshedToken = await stravaOAuth.exchangeCode(storedToken.refreshToken, true);
+      
+      // Store the new token (CRITICAL: Strava returns a new refresh token)
+      // Pass existing athleteId since refresh response doesn't include athlete data
+      await storeOAuthToken(refreshedToken, storedToken.athleteId);
+      
+      console.log('Successfully refreshed Strava OAuth token');
+      return refreshedToken.access_token;
+   } catch (error) {
+      await sendNotificationWithCooldown(
+         `Strava Authentication Alert\n\nToken refresh failed. Please re-authenticate.\n\nError: ${error instanceof Error ? error.message : 'Unknown error'}\n\nAuthorization URL: ${stravaOAuth.getAuthUrl()}`,
+         'Strava Auth'
+      );
+      return null;
+   }
 }

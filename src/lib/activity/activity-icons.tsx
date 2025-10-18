@@ -1,6 +1,6 @@
 import { Footprints, Bike, Activity, Dumbbell, Mountain } from 'lucide-react';
 import { Icon } from '@chakra-ui/react';
-import { HikeIcon, RunIcon } from './icons';
+import { HikeIcon, RunIcon, RockClimbIcon } from './icons';
 
 type ActivityType = string | undefined;
 
@@ -24,7 +24,8 @@ export function getActivityIcon(
       workout: <Icon as={Dumbbell} {...iconProps} />,
       weighttraining: <Icon as={Dumbbell} {...iconProps} />,
       alpineski: <Icon as={Mountain} {...iconProps} />,
-      backcountryski: <Icon as={Mountain} {...iconProps} />
+      backcountryski: <Icon as={Mountain} {...iconProps} />,
+      rockclimbing: <Icon as={RockClimbIcon} {...iconProps} />
    };
 
    const normalizedType = iconType?.toLowerCase() || '';

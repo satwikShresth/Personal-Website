@@ -109,27 +109,36 @@ export class StravaOAuth {
    }
 
    /**
-    * Exchange authorization code for access tokens
+    * Exchange authorization code for access tokens or refresh an existing token
     *
-    * @param code - Authorization code from OAuth callback
+    * @param code - Authorization code from OAuth callback OR refresh token for token refresh
+    * @param isRefresh - Whether this is a token refresh (true) or initial authorization (false)
     * @returns OAuth token response including athlete data
     * @throws Error if token exchange fails
     */
    async exchangeCode(
       code: string,
-      refreshToken: boolean = false
+      isRefresh = false
    ): Promise<OAuthTokenResponse> {
+      const body = {
+         client_id: this.config.clientId,
+         client_secret: this.config.clientSecret,
+         grant_type: isRefresh ? 'refresh_token' : 'authorization_code'
+      };
+
+      // Use correct parameter name based on grant type
+      if (isRefresh) {
+         body.refresh_token = code; // For refresh, use refresh_token parameter
+      } else {
+         body.code = code; // For initial auth, use code parameter
+      }
+
       const response = await fetch(STRAVA_TOKEN_URL, {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json'
          },
-         body: JSON.stringify({
-            client_id: this.config.clientId,
-            client_secret: this.config.clientSecret,
-            grant_type: refreshToken ? 'refresh_token' : 'authorization_code',
-            code
-         })
+         body: JSON.stringify(body)
       });
 
       if (!response.ok) {
@@ -141,7 +150,8 @@ export class StravaOAuth {
 
       const tokenData = (await response.json()) as OAuthTokenResponse;
 
-      if (!tokenData.athlete) {
+      // For refresh tokens, athlete data might not be included
+      if (!isRefresh && !tokenData.athlete) {
          throw new Error('Token response missing athlete data');
       }
 
