@@ -79,18 +79,18 @@ export const getActivityDates = os
 
       const dates = await db
          .select({
-            date: activities.startDate,
+            date: activities.startDateLocal,
             type: activities.type,
             sportType: activities.sportType
          })
          .from(activities)
          .where(
             and(
-               gte(activities.startDate, startDate),
-               lte(activities.startDate, endDate)
+               gte(activities.startDateLocal, startDate),
+               lte(activities.startDateLocal, endDate)
             )
          )
-         .orderBy(desc(activities.startDate))
+         .orderBy(desc(activities.startDateLocal))
          .all();
 
       const result: Record<string, { count: number; sportType: string }> = {};
@@ -141,14 +141,14 @@ export const getActivities = os
          const endDate = `${year}-12-31T23:59:59`;
          query = query.where(
             and(
-               gte(activities.startDate, startDate),
-               lte(activities.startDate, endDate)
+               gte(activities.startDateLocal, startDate),
+               lte(activities.startDateLocal, endDate)
             )
          ) as any;
       }
 
       const fetchedActivities = await query
-         .orderBy(desc(activities.startDate))
+         .orderBy(desc(activities.startDateLocal))
          .limit(perPage)
          .offset(offset)
          .all();

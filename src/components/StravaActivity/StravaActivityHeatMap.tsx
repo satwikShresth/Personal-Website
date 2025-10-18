@@ -12,6 +12,7 @@ import { useQuery } from '@tanstack/react-query';
 import { orpc } from '@/orpc/client';
 import { Link } from '@tanstack/react-router';
 import { getActivityIcon } from '@/lib/activity';
+import { Tooltip } from '@/components/ui/tooltip';
 
 interface HeatmapGridProps {
    weeks: (Date | null)[][];
@@ -31,145 +32,208 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
    };
 
    return (
-      <ScrollArea.Root size="xs" width="full">
-         <ScrollArea.Viewport>
-            <ScrollArea.Content py="2">
-               <VStack align="start" gap={2}>
-                  {/* Month Labels */}
-                  <HStack gap={1} h="20px" flexWrap="nowrap">
-                     {weeks.map((_, weekIdx) => {
-                        const monthLabel = monthLabels.find(
-                           m => m.weekIndex === weekIdx
-                        );
-                        const isMonthStart = monthLabel !== undefined;
-                        return (
-                           <Box
-                              key={weekIdx}
-                              w="12px"
-                              flexShrink={0}
-                              ml={isMonthStart && weekIdx > 0 ? 1.5 : 0}
-                              position="relative"
-                           >
-                              {monthLabel && (
-                                 <Text
-                                    fontSize="2xs"
-                                    fontWeight="medium"
-                                    whiteSpace="nowrap"
-                                    position="absolute"
-                                 >
-                                    {monthLabel.month}
-                                 </Text>
-                              )}
-                           </Box>
-                        );
-                     })}
-                  </HStack>
-
-                  {/* Grid */}
-                  <HStack gap={1} align="start" flexWrap="nowrap">
-                     {weeks.map((week, weekIdx) => {
-                        const isMonthStart = monthLabels.find(
-                           m => m.weekIndex === weekIdx
-                        );
-                        return (
-                           <VStack
-                              key={weekIdx}
-                              gap={1.5}
-                              flexShrink={0}
-                              ml={isMonthStart && weekIdx > 0 ? 1.5 : 0}
-                           >
-                              <For
-                                 each={
-                                    Array.from({ length: 7 }) as Array<
-                                       Record<string, number>
-                                    >
-                                 }
+      <Box display="flex" justifyContent="center" width="full">
+         <ScrollArea.Root size="xs" maxWidth="fit-content">
+            <ScrollArea.Viewport>
+               <ScrollArea.Content py="2">
+                  <VStack align="start" gap={3}>
+                     {/* Month Labels */}
+                     <HStack gap={1.5} h="24px" flexWrap="nowrap">
+                        {weeks.map((_, weekIdx) => {
+                           const monthLabel = monthLabels.find(
+                              m => m.weekIndex === weekIdx
+                           );
+                           const isMonthStart = monthLabel !== undefined;
+                           return (
+                              <Box
+                                 key={weekIdx}
+                                 w="16px"
+                                 flexShrink={0}
+                                 ml={isMonthStart && weekIdx > 0 ? 2 : 0}
+                                 position="relative"
                               >
-                                 {(_, dayIdx) => {
-                                    const day = week[dayIdx];
-                                    const dateKey = day
-                                       ? day.toISOString().split('T')[0]
-                                       : '';
-                                    const activity = activityData[dateKey];
-                                    const activityCount = activity?.count ?? 0;
-                                    const sportType = activity?.sportType;
+                                 {monthLabel && (
+                                    <Text
+                                       fontSize="xs"
+                                       fontWeight="medium"
+                                       whiteSpace="nowrap"
+                                       position="absolute"
+                                    >
+                                       {monthLabel.month}
+                                    </Text>
+                                 )}
+                              </Box>
+                           );
+                        })}
+                     </HStack>
 
-                                    return (
-                                       <Box
-                                          key={`${weekIdx}-${dayIdx}`}
-                                          w="12px"
-                                          h="12px"
-                                          bg={
-                                             day
-                                                ? getActivityLevel(
-                                                     activityCount
-                                                  )
-                                                : 'transparent'
-                                          }
-                                          borderRadius="2px"
-                                          display="flex"
-                                          alignItems="center"
-                                          justifyContent="center"
-                                          position="relative"
-                                          title={
-                                             day
-                                                ? `${day.toDateString()}${activity ? ` - ${activityCount} ${activityCount === 1 ? 'activity' : 'activities'} (${sportType})` : ''}`
-                                                : ''
-                                          }
-                                          _dark={{
-                                             bg: day
-                                                ? getActivityLevelDark(
-                                                     activityCount
-                                                  )
-                                                : 'transparent'
-                                          }}
+                     {/* Grid */}
+                     <HStack gap={1.5} align="start" flexWrap="nowrap">
+                        {weeks.map((week, weekIdx) => {
+                           const isMonthStart = monthLabels.find(
+                              m => m.weekIndex === weekIdx
+                           );
+                           return (
+                              <VStack
+                                 key={weekIdx}
+                                 gap={2}
+                                 flexShrink={0}
+                                 ml={isMonthStart && weekIdx > 0 ? 2 : 0}
+                              >
+                                 <For
+                                    each={
+                                       Array.from({ length: 7 }) as Array<
+                                          Record<string, number>
                                        >
-                                          {activity && sportType && (
-                                             <Box
-                                                fontSize="8px"
-                                                color="white"
-                                                display="flex"
-                                                alignItems="center"
-                                                justifyContent="center"
-                                                css={{
-                                                   '& svg': {
-                                                      fill: 'white !important',
-                                                      color: 'white !important'
-                                                   }
-                                                }}
-                                             >
-                                                {React.cloneElement(
-                                                   getActivityIcon(
-                                                      undefined,
-                                                      sportType
-                                                   ),
-                                                   {
-                                                      //@ts-ignore: shupp
-                                                      style: {
-                                                         width: '8px',
-                                                         height: '8px',
-                                                         fill: 'white',
-                                                         color: 'white'
+                                    }
+                                 >
+                                    {(_, dayIdx) => {
+                                       const day = week[dayIdx];
+                                       // Format date as YYYY-MM-DD in local timezone
+                                       const dateKey = day
+                                          ? `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`
+                                          : '';
+                                       const activity = activityData[dateKey];
+                                       const activityCount =
+                                          activity?.count ?? 0;
+                                       const sportType = activity?.sportType;
+
+                                       // Format date info for tooltip
+                                       const dayNames = [
+                                          'Sunday',
+                                          'Monday',
+                                          'Tuesday',
+                                          'Wednesday',
+                                          'Thursday',
+                                          'Friday',
+                                          'Saturday'
+                                       ];
+                                       const dayName = day
+                                          ? dayNames[day.getDay()]
+                                          : '';
+                                       const formattedDate = day
+                                          ? day.toLocaleDateString('en-US', {
+                                               month: 'short',
+                                               day: 'numeric',
+                                               year: 'numeric'
+                                            })
+                                          : '';
+
+                                       const tooltipContent = day ? (
+                                          <VStack
+                                             align="start"
+                                             gap={1}
+                                             fontSize="xs"
+                                          >
+                                             <Text fontWeight="bold">
+                                                {dayName}
+                                             </Text>
+                                             <Text>{formattedDate}</Text>
+                                             {activity ? (
+                                                <>
+                                                   <Text>
+                                                      {activityCount}{' '}
+                                                      {activityCount === 1
+                                                         ? 'activity'
+                                                         : 'activities'}
+                                                   </Text>
+                                                   <Text textTransform="capitalize">
+                                                      {sportType}
+                                                   </Text>
+                                                </>
+                                             ) : (
+                                                <Text color="gray.500">
+                                                   No activities
+                                                </Text>
+                                             )}
+                                          </VStack>
+                                       ) : null;
+
+                                       const cellContent = (
+                                          <Box
+                                             key={`${weekIdx}-${dayIdx}`}
+                                             w="16px"
+                                             h="16px"
+                                             bg={
+                                                day
+                                                   ? getActivityLevel(
+                                                        activityCount
+                                                     )
+                                                   : 'transparent'
+                                             }
+                                             borderRadius="3px"
+                                             display="flex"
+                                             alignItems="center"
+                                             justifyContent="center"
+                                             position="relative"
+                                             _dark={{
+                                                bg: day
+                                                   ? getActivityLevelDark(
+                                                        activityCount
+                                                     )
+                                                   : 'transparent'
+                                             }}
+                                          >
+                                             {activity && sportType && (
+                                                <Box
+                                                   fontSize="10px"
+                                                   color="white"
+                                                   display="flex"
+                                                   alignItems="center"
+                                                   justifyContent="center"
+                                                   css={{
+                                                      '& svg': {
+                                                         fill: 'white !important',
+                                                         color: 'white !important'
                                                       }
-                                                   }
-                                                )}
-                                             </Box>
-                                          )}
-                                       </Box>
-                                    );
-                                 }}
-                              </For>
-                           </VStack>
-                        );
-                     })}
-                  </HStack>
-               </VStack>
-            </ScrollArea.Content>
-         </ScrollArea.Viewport>
-         <ScrollArea.Scrollbar orientation="horizontal">
-            <ScrollArea.Thumb />
-         </ScrollArea.Scrollbar>
-      </ScrollArea.Root>
+                                                   }}
+                                                >
+                                                   {React.cloneElement(
+                                                      getActivityIcon(
+                                                         undefined,
+                                                         sportType
+                                                      ),
+                                                      {
+                                                         //@ts-expect-error: shupp
+                                                         style: {
+                                                            width: '10px',
+                                                            height: '10px',
+                                                            fill: 'white',
+                                                            color: 'white'
+                                                         }
+                                                      }
+                                                   )}
+                                                </Box>
+                                             )}
+                                          </Box>
+                                       );
+
+                                       return day ? (
+                                          <Tooltip
+                                             key={`${weekIdx}-${dayIdx}`}
+                                             content={tooltipContent}
+                                             showArrow
+                                             positioning={{ placement: 'top' }}
+                                          >
+                                             {cellContent}
+                                          </Tooltip>
+                                       ) : (
+                                          cellContent
+                                       );
+                                    }}
+                                 </For>
+                              </VStack>
+                           );
+                        })}
+                     </HStack>
+                  </VStack>
+               </ScrollArea.Content>
+            </ScrollArea.Viewport>
+            <ScrollArea.Scrollbar orientation="horizontal">
+               <ScrollArea.Thumb />
+            </ScrollArea.Scrollbar>
+         </ScrollArea.Root>
+      </Box>
    );
 }
 
