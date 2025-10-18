@@ -70,7 +70,7 @@ export function StravaActivityHeader({
             </Box>
             <VStack align="start" gap={0.5} flex={1} minW={0}>
                <Text
-                  color='accent'
+                  color="accent"
                   fontSize="lg"
                   fontWeight="bold"
                   lineHeight="1.2"

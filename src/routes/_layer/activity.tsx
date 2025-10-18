@@ -16,7 +16,10 @@ import {
 import { useColorModeValue } from '@/components/ui/color-mode';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { orpc } from '@/orpc/client';
-import { StravaActivityCard, StravaActivityHeatMap } from '@/components/StravaActivity';
+import {
+   StravaActivityCard,
+   StravaActivityHeatMap
+} from '@/components/StravaActivity';
 
 const activitySearchSchema = z.object({
    year: z.number().min(2000).max(2100).catch(new Date().getFullYear())
@@ -30,7 +33,7 @@ export const Route = createFileRoute('/_layer/activity')({
 
 function ActivityPage() {
    const headingColor = useColorModeValue('gray.800', 'white');
-   const year = Route.useSearch({ select: (s) => s.year });
+   const year = Route.useSearch({ select: s => s.year });
    const loadMoreRef = React.useRef<HTMLDivElement>(null);
 
    const {
@@ -49,7 +52,7 @@ function ActivityPage() {
          }),
          context: { cache: true },
          initialPageParam: 1,
-         getNextPageParam: (lastPage) => {
+         getNextPageParam: lastPage => {
             const hasMore = lastPage.count === lastPage.perPage;
             return hasMore ? lastPage.page + 1 : undefined;
          },

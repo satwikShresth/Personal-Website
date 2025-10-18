@@ -2,8 +2,14 @@ import { eq } from 'drizzle-orm';
 import { sendDiscordNotification } from './discord';
 import { db, athletes, activities, activityMaps } from '@/db';
 import { ensureValidToken, getStoredToken } from './strava-auth';
-import { getLoggedInAthleteActivities } from '@pkg/strava-client/sdk/client/sdk.gen';
-import type { SummaryActivity } from '@pkg/strava-client/sdk/client/types.gen';
+import {
+   getLoggedInAthleteActivities,
+   getActivityById
+} from '@pkg/strava-client/sdk/client/sdk.gen';
+import type {
+   SummaryActivity,
+   DetailedActivity
+} from '@pkg/strava-client/sdk/client/types.gen';
 
 interface SyncResult {
    success: boolean;
@@ -31,51 +37,82 @@ const upsertAthlete = async (athleteId: number) => {
       : await db.insert(athletes).values({ id: athleteId }).run();
 };
 
-const upsertActivity = async (activity: SummaryActivity, athleteId: number) => {
+/**
+ * Fetch detailed activity data from Strava API
+ */
+const fetchDetailedActivity = async (
+   activityId: number,
+   token: string
+): Promise<DetailedActivity | null> => {
+   try {
+      const response = await getActivityById({
+         path: { id: activityId },
+         headers: {
+            Authorization: `Bearer ${token}`
+         }
+      });
+      return response.data ?? null;
+   } catch (error) {
+      console.error(`Failed to fetch detailed activity ${activityId}:`, error);
+      return null;
+   }
+};
+
+const upsertActivity = async (
+   activity: SummaryActivity | DetailedActivity,
+   athleteId: number,
+   detailedData?: DetailedActivity
+) => {
+   // Use detailed data if provided, otherwise use the activity data
+   const activityData = detailedData ?? activity;
+
    const data = {
-      id: activity.id!,
+      id: activityData.id!,
       athleteId,
-      externalId: activity.external_id ?? null,
-      uploadId: activity.upload_id ?? null,
-      uploadIdStr: activity.upload_id_str ?? null,
-      name: activity.name!,
-      type: activity.type ?? null,
-      sportType: activity.sport_type ?? null,
-      workoutType: activity.workout_type ?? null,
-      distance: activity.distance ?? null,
-      movingTime: activity.moving_time ?? null,
-      elapsedTime: activity.elapsed_time ?? null,
-      totalElevationGain: activity.total_elevation_gain ?? null,
-      elevHigh: activity.elev_high ?? null,
-      elevLow: activity.elev_low ?? null,
-      averageSpeed: activity.average_speed ?? null,
-      maxSpeed: activity.max_speed ?? null,
-      averageHeartrate: (activity as any).average_heartrate ?? null,
-      maxHeartrate: (activity as any).max_heartrate ?? null,
-      kilojoules: activity.kilojoules ?? null,
-      averageWatts: activity.average_watts ?? null,
-      maxWatts: activity.max_watts ?? null,
-      weightedAverageWatts: activity.weighted_average_watts ?? null,
-      deviceWatts: activity.device_watts ?? null,
-      startDate: activity.start_date!,
-      startDateLocal: activity.start_date_local!,
-      timezone: activity.timezone ?? null,
-      startLatlng: activity.start_latlng ?? null,
-      endLatlng: activity.end_latlng ?? null,
-      achievementCount: activity.achievement_count ?? 0,
-      kudosCount: activity.kudos_count ?? 0,
-      commentCount: activity.comment_count ?? 0,
-      athleteCount: activity.athlete_count ?? 1,
-      photoCount: activity.photo_count ?? 0,
-      totalPhotoCount: activity.total_photo_count ?? 0,
-      trainer: activity.trainer ?? false,
-      commute: activity.commute ?? false,
-      manual: activity.manual ?? false,
-      private: activity.private ?? false,
-      flagged: activity.flagged ?? false,
-      hasKudoed: activity.has_kudoed ?? false,
-      hideFromHome: activity.hide_from_home ?? false,
-      gearId: activity.gear_id ?? null
+      externalId: activityData.external_id ?? null,
+      uploadId: activityData.upload_id ?? null,
+      uploadIdStr: activityData.upload_id_str ?? null,
+      name: activityData.name!,
+      type: activityData.type ?? null,
+      sportType: activityData.sport_type ?? null,
+      workoutType: activityData.workout_type ?? null,
+      distance: activityData.distance ?? null,
+      movingTime: activityData.moving_time ?? null,
+      elapsedTime: activityData.elapsed_time ?? null,
+      totalElevationGain: activityData.total_elevation_gain ?? null,
+      elevHigh: (activityData as any).elev_high ?? null,
+      elevLow: (activityData as any).elev_low ?? null,
+      averageSpeed: activityData.average_speed ?? null,
+      maxSpeed: activityData.max_speed ?? null,
+      averageHeartrate: (activityData as any).average_heartrate ?? null,
+      maxHeartrate: (activityData as any).max_heartrate ?? null,
+      kilojoules: activityData.kilojoules ?? null,
+      averageWatts: activityData.average_watts ?? null,
+      maxWatts: (activityData as any).max_watts ?? null,
+      weightedAverageWatts: activityData.weighted_average_watts ?? null,
+      deviceWatts: activityData.device_watts ?? null,
+      calories: (activityData as any).calories ?? null,
+      startDate: activityData.start_date!,
+      startDateLocal: activityData.start_date_local!,
+      timezone: activityData.timezone ?? null,
+      startLatlng: activityData.start_latlng ?? null,
+      endLatlng: activityData.end_latlng ?? null,
+      achievementCount: activityData.achievement_count ?? 0,
+      kudosCount: activityData.kudos_count ?? 0,
+      commentCount: activityData.comment_count ?? 0,
+      athleteCount: activityData.athlete_count ?? 1,
+      photoCount: activityData.photo_count ?? 0,
+      totalPhotoCount: (activityData as any).total_photo_count ?? 0,
+      trainer: activityData.trainer ?? false,
+      commute: activityData.commute ?? false,
+      manual: activityData.manual ?? false,
+      private: activityData.private ?? false,
+      flagged: activityData.flagged ?? false,
+      hasKudoed: (activityData as any).has_kudoed ?? false,
+      hideFromHome: (activityData as any).hide_from_home ?? false,
+      gearId: activityData.gear_id ?? null,
+      description: (activityData as any).description ?? null,
+      photos: (activityData as any).photos ?? null
    };
 
    const existing = await db
@@ -127,6 +164,8 @@ export const syncStravaActivities = async (
       notifyOnSuccess?: boolean;
       after?: number;
       before?: number;
+      fetchDetailedData?: boolean; // Fetch detailed data for all activities
+      fetchDetailedForNew?: boolean; // Fetch detailed data only for new activities
    } = {}
 ): Promise<SyncResult> => {
    const {
@@ -134,7 +173,9 @@ export const syncStravaActivities = async (
       maxPages = 3,
       notifyOnSuccess = false,
       after,
-      before
+      before,
+      fetchDetailedData = false,
+      fetchDetailedForNew = true // Default: fetch details only for new activities
    } = options;
    const result: SyncResult = {
       success: false,
@@ -179,8 +220,8 @@ export const syncStravaActivities = async (
 
    if (result.errors.length > 0) {
       await sendDiscordNotification(
-         `🏃 **Strava Sync Failed**\n\n❌ **Error:** ${result.errors.join(', ')}\n⏰ ${new Date().toLocaleString()}`,
-         'Strava Sync Bot'
+         `Strava Sync Failed\n\nError: ${result.errors.join(', ')}\nTime: ${new Date().toLocaleString()}`,
+         'Strava Sync'
       ).catch(() => {});
       return result;
    }
@@ -211,9 +252,41 @@ export const syncStravaActivities = async (
             continue;
          }
 
+         // Determine if we should fetch detailed data
+         let detailedActivity: DetailedActivity | null = null;
+         const shouldFetchDetailed = fetchDetailedData || fetchDetailedForNew;
+
+         if (shouldFetchDetailed) {
+            // Check if activity exists to determine if it's new
+            const existing = await db
+               .select()
+               .from(activities)
+               .where(eq(activities.id, activity.id))
+               .get();
+
+            const isNew = !existing;
+
+            // Fetch detailed data if:
+            // 1. fetchDetailedData is true (always fetch), OR
+            // 2. fetchDetailedForNew is true AND it's a new activity
+            if (fetchDetailedData || (fetchDetailedForNew && isNew)) {
+               detailedActivity = await fetchDetailedActivity(
+                  activity.id,
+                  token
+               );
+
+               if (!detailedActivity) {
+                  console.warn(
+                     `Failed to fetch detailed data for activity ${activity.id}, using summary data`
+                  );
+               }
+            }
+         }
+
          const isNew = await upsertActivity(
             activity,
-            storedToken.athleteId
+            storedToken.athleteId,
+            detailedActivity ?? undefined
          ).catch(error => {
             result.errors.push(
                `Failed to process activity ${activity.id}: ${error instanceof Error ? error.message : 'Unknown error'}`
@@ -234,8 +307,8 @@ export const syncStravaActivities = async (
 
    if (result.success && notifyOnSuccess && result.newActivities > 0) {
       await sendDiscordNotification(
-         `🏃 **Strava Sync Complete**\n\n✅ **${result.newActivities} new activities** added\n🔄 **${result.updatedActivities} activities** updated\n📊 Total processed: ${result.totalProcessed}\n⏰ ${new Date().toLocaleString()}`,
-         'Strava Sync Bot'
+         `Strava Sync Complete\n\nNew activities: ${result.newActivities}\nUpdated activities: ${result.updatedActivities}\nTotal processed: ${result.totalProcessed}\nTime: ${new Date().toLocaleString()}`,
+         'Strava Sync'
       ).catch(() => {});
    }
 
@@ -246,20 +319,46 @@ export const syncStravaActivities = async (
    return result;
 };
 
+/**
+ * Quick sync - fetches recent activities with detailed data for new ones only
+ */
 export const quickSync = () =>
-   syncStravaActivities({ perPage: 30, maxPages: 1, notifyOnSuccess: false });
+   syncStravaActivities({
+      perPage: 30,
+      maxPages: 1,
+      notifyOnSuccess: false,
+      fetchDetailedForNew: true
+   });
 
+/**
+ * Full sync - fetches all activities with detailed data for all
+ * Use this to backfill detailed data for existing activities
+ */
 export const fullSync = () =>
-   syncStravaActivities({ perPage: 100, maxPages: 10, notifyOnSuccess: true });
+   syncStravaActivities({
+      perPage: 100,
+      maxPages: 10,
+      notifyOnSuccess: true,
+      fetchDetailedData: true // Fetch detailed data for ALL activities
+   });
 
+/**
+ * Sync after a specific timestamp - fetches detailed data for new activities
+ */
 export const syncAfter = (
    afterTimestamp: number,
-   options?: { before?: number; notifyOnSuccess?: boolean }
+   options?: {
+      before?: number;
+      notifyOnSuccess?: boolean;
+      fetchDetailedData?: boolean;
+   }
 ) =>
    syncStravaActivities({
       perPage: 100,
       maxPages: 10,
       after: afterTimestamp,
       before: options?.before,
-      notifyOnSuccess: options?.notifyOnSuccess ?? false
+      notifyOnSuccess: options?.notifyOnSuccess ?? false,
+      fetchDetailedData: options?.fetchDetailedData ?? false,
+      fetchDetailedForNew: true
    });

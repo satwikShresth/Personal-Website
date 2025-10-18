@@ -1,5 +1,13 @@
 import * as React from 'react';
-import { Box, Text, VStack, HStack, ScrollArea, For, Button } from '@chakra-ui/react';
+import {
+   Box,
+   Text,
+   VStack,
+   HStack,
+   ScrollArea,
+   For,
+   Button
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { orpc } from '@/orpc/client';
 import { Link } from '@tanstack/react-router';
@@ -30,7 +38,9 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
                   {/* Month Labels */}
                   <HStack gap={1} h="20px" flexWrap="nowrap">
                      {weeks.map((_, weekIdx) => {
-                        const monthLabel = monthLabels.find(m => m.weekIndex === weekIdx);
+                        const monthLabel = monthLabels.find(
+                           m => m.weekIndex === weekIdx
+                        );
                         const isMonthStart = monthLabel !== undefined;
                         return (
                            <Box
@@ -58,7 +68,9 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
                   {/* Grid */}
                   <HStack gap={1} align="start" flexWrap="nowrap">
                      {weeks.map((week, weekIdx) => {
-                        const isMonthStart = monthLabels.find(m => m.weekIndex === weekIdx);
+                        const isMonthStart = monthLabels.find(
+                           m => m.weekIndex === weekIdx
+                        );
                         return (
                            <VStack
                               key={weekIdx}
@@ -66,10 +78,18 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
                               flexShrink={0}
                               ml={isMonthStart && weekIdx > 0 ? 1.5 : 0}
                            >
-                              <For each={Array.from({ length: 7 }) as Array<Record<string, number>>}>
+                              <For
+                                 each={
+                                    Array.from({ length: 7 }) as Array<
+                                       Record<string, number>
+                                    >
+                                 }
+                              >
                                  {(_, dayIdx) => {
                                     const day = week[dayIdx];
-                                    const dateKey = day ? day.toISOString().split('T')[0] : '';
+                                    const dateKey = day
+                                       ? day.toISOString().split('T')[0]
+                                       : '';
                                     const activity = activityData[dateKey];
                                     const activityCount = activity?.count ?? 0;
                                     const sportType = activity?.sportType;
@@ -79,7 +99,13 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
                                           key={`${weekIdx}-${dayIdx}`}
                                           w="12px"
                                           h="12px"
-                                          bg={day ? getActivityLevel(activityCount) : 'transparent'}
+                                          bg={
+                                             day
+                                                ? getActivityLevel(
+                                                     activityCount
+                                                  )
+                                                : 'transparent'
+                                          }
                                           borderRadius="2px"
                                           display="flex"
                                           alignItems="center"
@@ -90,7 +116,13 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
                                                 ? `${day.toDateString()}${activity ? ` - ${activityCount} ${activityCount === 1 ? 'activity' : 'activities'} (${sportType})` : ''}`
                                                 : ''
                                           }
-                                          _dark={{ bg: day ? getActivityLevelDark(activityCount) : 'transparent' }}
+                                          _dark={{
+                                             bg: day
+                                                ? getActivityLevelDark(
+                                                     activityCount
+                                                  )
+                                                : 'transparent'
+                                          }}
                                        >
                                           {activity && sportType && (
                                              <Box
@@ -106,10 +138,21 @@ function HeatmapGrid({ weeks, monthLabels, activityData }: HeatmapGridProps) {
                                                    }
                                                 }}
                                              >
-                                                {React.cloneElement(getActivityIcon(undefined, sportType), {
-                                                   //@ts-ignore: shupp
-                                                   style: { width: '8px', height: '8px', fill: 'white', color: 'white' }
-                                                })}
+                                                {React.cloneElement(
+                                                   getActivityIcon(
+                                                      undefined,
+                                                      sportType
+                                                   ),
+                                                   {
+                                                      //@ts-ignore: shupp
+                                                      style: {
+                                                         width: '8px',
+                                                         height: '8px',
+                                                         fill: 'white',
+                                                         color: 'white'
+                                                      }
+                                                   }
+                                                )}
                                              </Box>
                                           )}
                                        </Box>
@@ -141,14 +184,14 @@ function YearNavigation({ selectedYear }: YearNavigationProps) {
       transform: 'scale(1.2)',
       bg: 'transparent',
       color: 'accent'
-   }
+   };
 
    return (
       <HStack justify="center" align="center">
          <HStack gap={2}>
             <Link to="/activity" search={{ year: selectedYear - 1 }}>
                <Button
-                  variant='ghost'
+                  variant="ghost"
                   px={3}
                   py={1}
                   fontSize="sm"
@@ -167,7 +210,7 @@ function YearNavigation({ selectedYear }: YearNavigationProps) {
                <Button
                   px={3}
                   py={1}
-                  variant='ghost'
+                  variant="ghost"
                   fontSize="sm"
                   fontWeight="medium"
                   disabled={isCurrentYear}
@@ -180,7 +223,7 @@ function YearNavigation({ selectedYear }: YearNavigationProps) {
                </Button>
             </Link>
          </HStack>
-      </HStack >
+      </HStack>
    );
 }
 
@@ -220,14 +263,30 @@ function generateYearData(year: number) {
 
    // Calculate which week starts each month
    const monthLabels: { month: string; weekIndex: number }[] = [];
-   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+   const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+   ];
 
    weeks.forEach((week, weekIdx) => {
       const firstDayOfWeek = week.find(d => d !== null);
       if (firstDayOfWeek) {
          const month = firstDayOfWeek.getMonth();
          const date = firstDayOfWeek.getDate();
-         if (date <= 7 && !monthLabels.find(m => m.month === monthNames[month])) {
+         if (
+            date <= 7 &&
+            !monthLabels.find(m => m.month === monthNames[month])
+         ) {
             monthLabels.push({ month: monthNames[month], weekIndex: weekIdx });
          }
       }
@@ -243,19 +302,27 @@ interface StravaActivityHeatMapProps {
 export function StravaActivityHeatMap({ year }: StravaActivityHeatMapProps) {
    const selectedYear = year ?? new Date().getFullYear();
 
-   const { weeks, monthLabels } = React.useMemo(() => generateYearData(selectedYear), [selectedYear]);
+   const { weeks, monthLabels } = React.useMemo(
+      () => generateYearData(selectedYear),
+      [selectedYear]
+   );
 
-   const { data: activityData = {} } = useQuery(orpc.strava.getActivityDates.queryOptions({
-      input: { year: selectedYear },
-      staleTime: 1000 * 60 * 5,
-   }));
-
+   const { data: activityData = {} } = useQuery(
+      orpc.strava.getActivityDates.queryOptions({
+         input: { year: selectedYear },
+         staleTime: 1000 * 60 * 5
+      })
+   );
 
    return (
       <VStack align="stretch" gap={4}>
          {/* Heatmap Grid */}
          <Box py={2} w="full">
-            <HeatmapGrid weeks={weeks} monthLabels={monthLabels} activityData={activityData as any} />
+            <HeatmapGrid
+               weeks={weeks}
+               monthLabels={monthLabels}
+               activityData={activityData as any}
+            />
          </Box>
 
          {/* Year Navigation */}
@@ -263,4 +330,3 @@ export function StravaActivityHeatMap({ year }: StravaActivityHeatMapProps) {
       </VStack>
    );
 }
-

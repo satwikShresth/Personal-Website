@@ -4,14 +4,17 @@ import { HikeIcon, RunIcon, RockClimbIcon } from './icons';
 
 type ActivityType = string | undefined;
 
-
 export function getActivityIcon(
    type?: ActivityType,
    sportType?: ActivityType,
    color?: string
 ): React.ReactElement {
    const iconType = sportType || type;
-   const iconProps = { color: color ?? 'accent', size: 'lg', strokeWidth: '2.5' } as any;
+   const iconProps = {
+      color: color ?? 'accent',
+      size: 'lg',
+      strokeWidth: '2.5'
+   } as any;
 
    const iconMap: Record<string, React.ReactElement> = {
       walk: <Icon as={Footprints} {...iconProps} />,

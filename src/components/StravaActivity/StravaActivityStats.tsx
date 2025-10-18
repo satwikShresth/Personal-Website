@@ -10,6 +10,7 @@ interface StravaActivityStatsProps {
    sportType?: string;
    calories?: number;
    description?: string;
+   kudosCount?: number;
 }
 
 export function StravaActivityStats({
@@ -19,7 +20,8 @@ export function StravaActivityStats({
    elevation,
    sportType,
    calories,
-   description
+   description,
+   kudosCount
 }: StravaActivityStatsProps) {
    const isRockClimbing = sportType?.toLowerCase() === 'rockclimbing';
    const durationData = formatDuration(duration);
@@ -116,6 +118,34 @@ export function StravaActivityStats({
                      </Stat.Label>
                   </Stat.Root>
                </Activity>
+
+               {/* Kudos */}
+               <Activity
+                  mode={kudosCount && kudosCount > 0 ? 'visible' : 'hidden'}
+               >
+                  <Stat.Root flex={1} minW="80px" textAlign="center">
+                     <Stat.ValueText
+                        fontSize="2xl"
+                        fontWeight="bold"
+                        color="gray.900"
+                        _dark={{ color: 'white' }}
+                     >
+                        {kudosCount || 0}
+                        <Stat.ValueUnit fontSize="sm" ml={1}>
+                           ❤️
+                        </Stat.ValueUnit>
+                     </Stat.ValueText>
+                     <Stat.Label
+                        fontSize="xs"
+                        fontWeight="medium"
+                        color="accent"
+                        textTransform="uppercase"
+                        letterSpacing="wide"
+                     >
+                        Kudos
+                     </Stat.Label>
+                  </Stat.Root>
+               </Activity>
             </Flex>
 
             {/* Description/Comments */}
@@ -135,6 +165,8 @@ export function StravaActivityStats({
                      color="gray.700"
                      _dark={{ color: 'gray.300' }}
                      lineHeight="1.6"
+                     whiteSpace="pre-wrap"
+                     wordBreak="break-word"
                   >
                      {description}
                   </Text>
@@ -147,143 +179,196 @@ export function StravaActivityStats({
    // Default layout for other activities
 
    return (
-      <Flex
-         wrap="wrap"
-         px={5}
-         py={4}
-         gap={4}
-         borderColor="gray.100"
-         _dark={{ borderColor: 'gray.800' }}
-         borderBottomRadius="2xl"
-         justify="space-between"
-      >
-         <Stat.Root flex={1} minW="80px" textAlign="center">
-            <Stat.ValueText
-               fontSize="2xl"
-               fontWeight="bold"
-               color="gray.900"
-               _dark={{ color: 'white' }}
-            >
-               {parts[0]}
-               <Stat.ValueUnit fontSize="sm">
-                  {durationData.units[0]}
-               </Stat.ValueUnit>
-               {parts[1] && (
-                  <>
-                     {' '}
-                     {parts[1]}
-                     <Stat.ValueUnit fontSize="sm">
-                        {durationData.units[1]}
+      <>
+         <Flex
+            wrap="wrap"
+            px={5}
+            py={4}
+            gap={4}
+            borderColor="gray.100"
+            _dark={{ borderColor: 'gray.800' }}
+            justify="space-between"
+         >
+            <Stat.Root flex={1} minW="80px" textAlign="center">
+               <Stat.ValueText
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  color="gray.900"
+                  _dark={{ color: 'white' }}
+               >
+                  {parts[0]}
+                  <Stat.ValueUnit fontSize="sm">
+                     {durationData.units[0]}
+                  </Stat.ValueUnit>
+                  {parts[1] && (
+                     <>
+                        {' '}
+                        {parts[1]}
+                        <Stat.ValueUnit fontSize="sm">
+                           {durationData.units[1]}
+                        </Stat.ValueUnit>
+                     </>
+                  )}
+               </Stat.ValueText>
+               <Stat.Label
+                  fontSize="xs"
+                  color="accent"
+                  fontWeight="medium"
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+               >
+                  Duration
+               </Stat.Label>
+            </Stat.Root>
+
+            <Stat.Root flex={1} minW="80px" textAlign="center">
+               <Stat.ValueText
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  color="gray.900"
+                  _dark={{ color: 'white' }}
+               >
+                  {distanceData.value}
+                  <Stat.ValueUnit fontSize="sm" ml={1}>
+                     {distanceData.unit}
+                  </Stat.ValueUnit>
+               </Stat.ValueText>
+               <Stat.Label
+                  fontSize="xs"
+                  color="accent"
+                  fontWeight="medium"
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+               >
+                  Distance
+               </Stat.Label>
+            </Stat.Root>
+
+            <Stat.Root flex={1} minW="80px" textAlign="center">
+               <Stat.ValueText
+                  fontSize="2xl"
+                  fontWeight="bold"
+                  color="gray.900"
+                  _dark={{ color: 'white' }}
+               >
+                  {calculatePace(distance, duration)}
+                  <Stat.ValueUnit fontSize="sm" ml={1}>
+                     per mile
+                  </Stat.ValueUnit>
+               </Stat.ValueText>
+               <Stat.Label
+                  fontSize="xs"
+                  color="accent"
+                  fontWeight="medium"
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+               >
+                  Pace
+               </Stat.Label>
+            </Stat.Root>
+
+            <Activity mode={elevationGain ? 'visible' : 'hidden'}>
+               <Stat.Root flex={1} minW="80px" textAlign="center">
+                  <Stat.ValueText
+                     fontSize="2xl"
+                     fontWeight="bold"
+                     color="gray.900"
+                     _dark={{ color: 'white' }}
+                  >
+                     {elevationGain || 0}
+                     <Stat.ValueUnit fontSize="sm" ml={1}>
+                        ft
                      </Stat.ValueUnit>
-                  </>
-               )}
-            </Stat.ValueText>
-            <Stat.Label
-               fontSize="xs"
-               color="accent"
-               fontWeight="medium"
-               textTransform="uppercase"
-               letterSpacing="wide"
-            >
-               Duration
-            </Stat.Label>
-         </Stat.Root>
+                  </Stat.ValueText>
+                  <Stat.Label
+                     fontSize="xs"
+                     fontWeight="medium"
+                     color="accent"
+                     textTransform="uppercase"
+                     letterSpacing="wide"
+                  >
+                     ELEV GAIN
+                  </Stat.Label>
+               </Stat.Root>
+            </Activity>
 
-         <Stat.Root flex={1} minW="80px" textAlign="center">
-            <Stat.ValueText
-               fontSize="2xl"
-               fontWeight="bold"
-               color="gray.900"
-               _dark={{ color: 'white' }}
-            >
-               {distanceData.value}
-               <Stat.ValueUnit fontSize="sm" ml={1}>
-                  {distanceData.unit}
-               </Stat.ValueUnit>
-            </Stat.ValueText>
-            <Stat.Label
-               fontSize="xs"
-               color="accent"
-               fontWeight="medium"
-               textTransform="uppercase"
-               letterSpacing="wide"
-            >
-               Distance
-            </Stat.Label>
-         </Stat.Root>
+            <Activity mode={averageHeartrate ? 'visible' : 'hidden'}>
+               <Stat.Root flex={1} minW="80px" textAlign="center">
+                  <Stat.ValueText
+                     fontSize="2xl"
+                     fontWeight="bold"
+                     color="gray.900"
+                     _dark={{ color: 'white' }}
+                  >
+                     {averageHeartrate ? Math.round(averageHeartrate) : 0}
+                     <Stat.ValueUnit fontSize="sm" ml={1}>
+                        bpm
+                     </Stat.ValueUnit>
+                  </Stat.ValueText>
+                  <Stat.Label
+                     fontSize="xs"
+                     fontWeight="medium"
+                     color="accent"
+                     textTransform="uppercase"
+                     letterSpacing="wide"
+                  >
+                     AVG HR
+                  </Stat.Label>
+               </Stat.Root>
+            </Activity>
 
-         <Stat.Root flex={1} minW="80px" textAlign="center">
-            <Stat.ValueText
-               fontSize="2xl"
-               fontWeight="bold"
-               color="gray.900"
-               _dark={{ color: 'white' }}
+            <Activity
+               mode={kudosCount && kudosCount > 0 ? 'visible' : 'hidden'}
             >
-               {calculatePace(distance, duration)}
-               <Stat.ValueUnit fontSize="sm" ml={1}>
-                  per mile
-               </Stat.ValueUnit>
-            </Stat.ValueText>
-            <Stat.Label
-               fontSize="xs"
-               color="accent"
-               fontWeight="medium"
-               textTransform="uppercase"
-               letterSpacing="wide"
-            >
-               Pace
-            </Stat.Label>
-         </Stat.Root>
+               <Stat.Root flex={1} minW="80px" textAlign="center">
+                  <Stat.ValueText
+                     fontSize="2xl"
+                     fontWeight="bold"
+                     color="gray.900"
+                     _dark={{ color: 'white' }}
+                  >
+                     {kudosCount || 0}
+                     <Stat.ValueUnit fontSize="sm" ml={1}>
+                        ❤️
+                     </Stat.ValueUnit>
+                  </Stat.ValueText>
+                  <Stat.Label
+                     fontSize="xs"
+                     fontWeight="medium"
+                     color="accent"
+                     textTransform="uppercase"
+                     letterSpacing="wide"
+                  >
+                     Kudos
+                  </Stat.Label>
+               </Stat.Root>
+            </Activity>
+         </Flex>
 
-         <Activity mode={elevationGain ? 'visible' : 'hidden'}>
-            <Stat.Root flex={1} minW="80px" textAlign="center">
-               <Stat.ValueText
-                  fontSize="2xl"
-                  fontWeight="bold"
-                  color="gray.900"
-                  _dark={{ color: 'white' }}
-               >
-                  {elevationGain || 0}
-                  <Stat.ValueUnit fontSize="sm" ml={1}>
-                     ft
-                  </Stat.ValueUnit>
-               </Stat.ValueText>
-               <Stat.Label
+         {/* Description for all activities */}
+         <Activity mode={description ? 'visible' : 'hidden'}>
+            <VStack align="start" gap={1} px={5} pb={4}>
+               <Text
                   fontSize="xs"
                   fontWeight="medium"
                   color="accent"
                   textTransform="uppercase"
                   letterSpacing="wide"
                >
-                  ELEV GAIN
-               </Stat.Label>
-            </Stat.Root>
-         </Activity>
-
-         <Activity mode={averageHeartrate ? 'visible' : 'hidden'}>
-            <Stat.Root flex={1} minW="80px" textAlign="center">
-               <Stat.ValueText
-                  fontSize="2xl"
-                  fontWeight="bold"
-                  color="gray.900"
-                  _dark={{ color: 'white' }}
+                  Details
+               </Text>
+               <Text
+                  fontSize="sm"
+                  color="gray.700"
+                  _dark={{ color: 'gray.300' }}
+                  lineHeight="1.6"
+                  whiteSpace="pre-wrap"
+                  wordBreak="break-word"
                >
-                  {averageHeartrate ? Math.round(averageHeartrate) : 0}
-                  <Stat.ValueUnit fontSize="sm" ml={1}>
-                     bpm
-                  </Stat.ValueUnit>
-               </Stat.ValueText>
-               <Stat.Label
-                  fontSize="xs"
-                  fontWeight="medium"
-                  color="accent"
-                  textTransform="uppercase"
-                  letterSpacing="wide"
-               >
-                  AVG HR
-               </Stat.Label>
-            </Stat.Root>
+                  {description}
+               </Text>
+            </VStack>
          </Activity>
-      </Flex>
+      </>
    );
 }

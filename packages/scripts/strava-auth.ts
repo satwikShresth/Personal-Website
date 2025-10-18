@@ -101,12 +101,15 @@ export async function ensureValidToken(): Promise<string | null> {
 
    // Refresh the token
    try {
-      const refreshedToken = await stravaOAuth.exchangeCode(storedToken.refreshToken, true);
-      
+      const refreshedToken = await stravaOAuth.exchangeCode(
+         storedToken.refreshToken,
+         true
+      );
+
       // Store the new token (CRITICAL: Strava returns a new refresh token)
       // Pass existing athleteId since refresh response doesn't include athlete data
       await storeOAuthToken(refreshedToken, storedToken.athleteId);
-      
+
       console.log('Successfully refreshed Strava OAuth token');
       return refreshedToken.access_token;
    } catch (error) {

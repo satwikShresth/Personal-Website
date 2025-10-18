@@ -70,6 +70,9 @@ export const activities = sqliteTable(
       weightedAverageWatts: real('weighted_average_watts'),
       deviceWatts: integer('device_watts', { mode: 'boolean' }), // boolean: from power meter or estimated
 
+      // Calories
+      calories: real('calories'),
+
       // Date and time information
       startDate: text('start_date').notNull(), // ISO 8601 format
       startDateLocal: text('start_date_local').notNull(), // ISO 8601 format in local timezone
@@ -105,6 +108,21 @@ export const activities = sqliteTable(
 
       // Equipment
       gearId: text('gear_id'),
+
+      // Activity details
+      description: text('description'),
+
+      // Photos (stored as JSON array)
+      photos: text('photos', { mode: 'json' }).$type<{
+         primary?: {
+            id?: string | null;
+            unique_id?: string;
+            urls?: Record<string, string>;
+            source?: number;
+         } | null;
+         use_primary_photo?: boolean;
+         count?: number;
+      } | null>(),
 
       // Timestamps for record keeping
       createdAt: integer('created_at', { mode: 'timestamp' })
