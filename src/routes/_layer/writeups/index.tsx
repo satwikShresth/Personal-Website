@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { FaFilter } from 'react-icons/fa';
 import { useWriteupMetadataStore } from '@/components/Writeup/store';
-import { Activities } from '@/components/Writeup';
+import { Writeup } from '@/components/Writeup';
 import { useColorModeValue } from '@/components/ui/color-mode';
 
 export const Route = createFileRoute('/_layer/writeups/')({
@@ -131,7 +131,7 @@ function BlogPage() {
             {filteredPosts.length > 0 ? (
                <SimpleGrid columns={{ base: 1, md: 2 }} gap={'5'}>
                   {filteredPosts.map(post => (
-                     <Activities.Card
+                     <Writeup.Card
                         key={post.slug}
                         slug={post.slug || 'default-slug'}
                         title={post.title}

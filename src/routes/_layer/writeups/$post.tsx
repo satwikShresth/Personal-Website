@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import posts from '@/posts';
-import { Activities } from '@/components/Writeup';
+import { Writeup } from '@/components/Writeup';
 
 export const Route = createFileRoute('/_layer/writeups/$post')({
    loader: ({ params: { post } }) => {
@@ -8,6 +8,6 @@ export const Route = createFileRoute('/_layer/writeups/$post')({
    },
    component: () => {
       const { metadata, component } = Route.useLoaderData();
-      return <Activities.Post MdxCompoenent={component} metadata={metadata} />;
+      return <Writeup.Post MdxCompoenent={component} metadata={metadata} />;
    }
 });

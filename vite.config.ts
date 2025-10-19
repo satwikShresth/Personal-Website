@@ -21,22 +21,22 @@ export default defineConfig({
          external: ['bun:sqlite', 'bun:test', 'bun:ffi', 'bun']
       }
    },
-   ssr: {
-      noExternal: [
-         '@chakra-ui/react',
-         '@emotion/react',
-         '@emotion/styled',
-         'framer-motion'
-      ]
-   },
-   optimizeDeps: {
-      include: [
-         '@emotion/react',
-         '@emotion/styled',
-         '@chakra-ui/react',
-         'framer-motion'
-      ]
-   },
+   // ssr: {
+   //    noExternal: [
+   //       '@chakra-ui/react',
+   //       '@emotion/react',
+   //       '@emotion/styled',
+   //       'framer-motion'
+   //    ]
+   // },
+   // optimizeDeps: {
+   //    include: [
+   //       '@emotion/react',
+   //       '@emotion/styled',
+   //       '@chakra-ui/react',
+   //       'framer-motion'
+   //    ]
+   // },
    plugins: [
       devtools(),
       {
@@ -52,15 +52,15 @@ export default defineConfig({
       tsconfigPaths({
          projects: ['./tsconfig.json']
       }),
-      tanstackStart(),
-      nitroV2Plugin({
-         preset: 'bun',
-         compatibilityDate: '2025-10-10'
-      }),
+      tanstackStart({ spa: { enabled: true } }),
       viteReact({
          babel: {
             plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
          }
+      }),
+      nitroV2Plugin({
+         preset: 'bun',
+         compatibilityDate: '2025-10-10'
       }),
       tailwindcss()
    ],

@@ -58,7 +58,7 @@ export function BlogCard({
 
    const handleClick = () => {
       markPostAsRead(slug);
-      navigate({ to: '/activity/$post', params: { post: slug } });
+      navigate({ to: '/writeups/$post', params: { post: slug } });
    };
 
    // Calculate estimated read time if not provided
@@ -175,7 +175,7 @@ export function BlogCard({
                </CardBody>
 
                <CardFooter p={0} mt={4}>
-                  <RouterLink to="/activity/$post" params={{ post: slug }}>
+                  <RouterLink to="/writeups/$post" params={{ post: slug }}>
                      <Button
                         borderRadius={'lg'}
                         colorScheme="teal"

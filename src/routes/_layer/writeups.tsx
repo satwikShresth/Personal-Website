@@ -14,7 +14,7 @@ import {
 import { Outlet, createFileRoute } from '@tanstack/react-router';
 import { MDXProvider } from '@mdx-js/react';
 import { useColorModeValue } from '@/components/ui/color-mode';
-import { Activities } from '@/components/Writeup';
+import { Writeup } from '@/components/Writeup';
 import posts from '@/posts';
 
 export const Route = createFileRoute('/_layer/writeups')({
@@ -225,9 +225,9 @@ export const Route = createFileRoute('/_layer/writeups')({
       return (
          <Container>
             <MDXProvider components={{ ...components }}>
-               <Activities.Root posts={posts}>
+               <Writeup.Root posts={posts}>
                   <Outlet />
-               </Activities.Root>
+               </Writeup.Root>
             </MDXProvider>
          </Container>
       );

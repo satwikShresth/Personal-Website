@@ -3,9 +3,8 @@ import Post from './Post';
 import { WriteupMetadataProvider } from './store';
 import type { ReactNode } from 'react';
 
-export const Activities = {
+export const Writeup = {
    Root: ({ posts, children }: { posts: any; children: ReactNode }) => {
-      // Fixed children prop pattern
       return (
          <WriteupMetadataProvider initialValue={{ ...posts }}>
             {children}
