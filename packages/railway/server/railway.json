@@ -3,7 +3,7 @@
   "build": {
     "builder": "DOCKERFILE",
     "dockerfilePath": "packages/railway/server/Dockerfile",
-    "watchPatterns": ["src/**", "packages/scripts/**", "packages/railway/server/**"]
+    "watchPatterns": ["src/**", "packages/scripts/**", "packages/railway/server/**", "*.ts"]
   },
   "deploy": {
     "healthcheckPath": "/",
