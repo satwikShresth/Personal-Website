@@ -87,7 +87,8 @@ export const getActivityDates = os
          .where(
             and(
                gte(activities.startDateLocal, startDate),
-               lte(activities.startDateLocal, endDate)
+               lte(activities.startDateLocal, endDate),
+               ne(activities.private, true)
             )
          )
          .orderBy(desc(activities.startDateLocal))
