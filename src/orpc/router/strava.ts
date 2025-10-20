@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { os } from '@orpc/server';
 import { storeOAuthToken, stravaOAuth } from '@pkg/scripts/strava-auth';
 import { db, activities, activityMaps } from '@/db';
-import { desc, eq, and, gte, lte } from 'drizzle-orm';
+import { desc, ne, and, gte, lte, eq } from 'drizzle-orm';
 import { env } from '@/env';
 
 export const handleCallback = os
@@ -142,7 +142,8 @@ export const getActivities = os
          query = query.where(
             and(
                gte(activities.startDateLocal, startDate),
-               lte(activities.startDateLocal, endDate)
+               lte(activities.startDateLocal, endDate),
+               ne(activities.private, true)
             )
          ) as any;
       }
