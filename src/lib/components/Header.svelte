@@ -11,9 +11,13 @@
   let projectsDropdownOpen = $state(false);
   let projectsDropdownRef = $state<HTMLDivElement | null>(null);
   
-  const navItems = [
+  type NavItem = { id: string; label: string; href?: string };
+  
+  const navItems: NavItem[] = [
     { id: 'about', label: 'About' },
-    { id: 'experience', label: 'Experience' }
+    { id: 'experience', label: 'Exprience' },
+    { id: 'projects', label: 'Projects' }, // This is a placeholder for Projects section
+    { id: 'writeups', label: 'Writeup', href: '/writeups' }
   ];
 
   const projectItems = [
@@ -84,101 +88,73 @@
       </div>
       
       <div class="flex items-center gap-6">
-        <nav class="hidden md:flex items-center gap-6 lg:gap-8 {isScrolled ? 'text-sm' : 'text-base lg:text-lg'} transition-all duration-300">
-          {#if !isInProjectsSection}
-            <!-- Default navigation: About, Experience, Projects dropdown -->
+        <div class="flex flex-col items-end gap-2">
+          <nav class="hidden md:flex items-center gap-6 lg:gap-8 {isScrolled ? 'text-sm' : 'text-base lg:text-lg'} transition-all duration-300">
             {#each navItems as item}
-              <a
-                href="#{item.id}"
-                class="relative transition-all duration-200 {activeSection === item.id 
-                  ? 'text-foreground font-semibold' 
-                  : 'text-muted-foreground hover:text-foreground font-normal'}"
-                onclick={(e) => handleClick(e, item.id)}
-                data-s-event="Navigation: {item.label}"
-                data-s-event-path="/#{item.id}"
-              >
-                {item.label}
-                {#if activeSection === item.id}
-                  <span class="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
-                {/if}
-              </a>
-            {/each}
-            
-            <!-- Writeups Link -->
-            <a
-              href="/writeups"
-              class="relative transition-all duration-200 text-muted-foreground hover:text-foreground font-normal"
-              data-s-event="Navigation: Writeups"
-              data-s-event-path="/writeups"
-            >
-              Writeups
-            </a>
-            
-            <!-- Projects Dropdown -->
-            <div 
-              bind:this={projectsDropdownRef}
-              class="relative"
-              role="group"
-              onmouseenter={() => projectsDropdownOpen = true}
-              onmouseleave={() => projectsDropdownOpen = false}
-            >
-              <button
-                type="button"
-                class="relative transition-all duration-200 text-muted-foreground hover:text-foreground font-normal"
-                onclick={(e) => {
-                  e.stopPropagation();
-                  projectsDropdownOpen = !projectsDropdownOpen;
-                }}
-                onkeydown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    projectsDropdownOpen = !projectsDropdownOpen;
-                  }
-                }}
-                aria-expanded={projectsDropdownOpen}
-                aria-haspopup="true"
-              >
-                Projects
-              </button>
-              
-              {#if projectsDropdownOpen}
-                <div class="absolute top-full left-0 w-48 bg-background border border-border/50 rounded-lg shadow-lg py-2 z-50">
-                  {#each projectItems as project}
-                    <a
-                      href="#{project.id}"
-                      class="block px-4 py-2 text-sm transition-colors duration-200 {activeSection === project.id
-                        ? 'text-foreground font-medium bg-accent/50' 
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent/30'}"
-                      onclick={(e) => handleClick(e, project.id)}
-                      data-s-event="Project: {project.label}"
-                      data-s-event-path="/#{project.id}"
-                    >
-                      {project.label}
-                    </a>
-                  {/each}
-                </div>
+              {#if item.href}
+                <!-- External link (Writeups) -->
+                <a
+                  href={item.href}
+                  class="relative transition-all duration-200 text-muted-foreground hover:text-foreground font-normal"
+                  data-s-event="Navigation: {item.label}"
+                  data-s-event-path={item.href}
+                >
+                  {item.label}
+                </a>
+              {:else}
+                <!-- Internal navigation item -->
+                <a
+                  href="#{item.id}"
+                  class="relative transition-all duration-200 {(isInProjectsSection && item.id === 'projects') || (!isInProjectsSection && activeSection === item.id)
+                    ? 'text-foreground font-semibold' 
+                    : 'text-muted-foreground hover:text-foreground font-normal'}"
+                  onclick={(e) => {
+                    if (item.id === 'projects') {
+                      e.preventDefault();
+                      // Scroll to first project
+                      const firstProject = document.getElementById(projectItems[0].id);
+                      if (firstProject && setActiveSection) {
+                        setActiveSection(projectItems[0].id);
+                        firstProject.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }
+                    } else {
+                      handleClick(e, item.id);
+                    }
+                  }}
+                  data-s-event="Navigation: {item.label}"
+                  data-s-event-path="/#{item.id}"
+                >
+                  {item.label}
+                  {#if (isInProjectsSection && item.id === 'projects') || (!isInProjectsSection && activeSection === item.id)}
+                    <span class="absolute -bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+                  {/if}
+                </a>
               {/if}
-            </div>
-          {:else}
-            <!-- Projects navigation: Show all project names -->
-            {#each projectItems as item}
-              <a
-                href="#{item.id}"
-                class="relative transition-all duration-200 {activeSection === item.id 
-                  ? 'text-foreground font-semibold' 
-                  : 'text-muted-foreground hover:text-foreground font-normal'}"
-                onclick={(e) => handleClick(e, item.id)}
-                data-s-event="Project: {item.label}"
-                data-s-event-path="/#{item.id}"
-              >
-                {item.label}
-                {#if activeSection === item.id}
-                  <span class="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
-                {/if}
-              </a>
             {/each}
+          </nav>
+          
+          <!-- Projects list - shown when in projects section -->
+          {#if isInProjectsSection}
+            <nav class="hidden md:flex items-center gap-4 text-xs lg:text-sm text-muted-foreground">
+              {#each projectItems as item}
+                <a
+                  href="#{item.id}"
+                  class="relative transition-all duration-200 {activeSection === item.id 
+                    ? 'text-foreground font-medium' 
+                    : 'hover:text-foreground'}"
+                  onclick={(e) => handleClick(e, item.id)}
+                  data-s-event="Project: {item.label}"
+                  data-s-event-path="/#{item.id}"
+                >
+                  {item.label}
+                  {#if activeSection === item.id}
+                    <span class="absolute -bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+                  {/if}
+                </a>
+              {/each}
+            </nav>
           {/if}
-        </nav>
+        </div>
         
         <div class="flex items-center gap-2">
           <Button

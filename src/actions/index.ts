@@ -3,9 +3,9 @@ import { s3Service } from '$lib/s3.service';
 
 export const server = {
   getInspirationVideoLink: defineAction({
-    handler: async () =>
-      await s3Service
-        .getPresignedUrl('assets/liveDemo.mp4', 300) // 5 min expiry
+    handler: () => 
+       s3Service
+        .getPresignedUrl('assets/liveDemo.mp4', 3600) // 1 hour expiry
         .then((preSignedUrl) => {
           return { preSignedUrl };
         })
@@ -13,5 +13,6 @@ export const server = {
           console.error('Error generating S3 presigned URL:', error);
           throw error;
         })
+    
   })
 };
