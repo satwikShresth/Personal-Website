@@ -2,6 +2,8 @@
   import { onMount } from 'svelte';
   import ModeToggle from './ModeToggle.svelte';
   import MobileHeader from './MobileHeader.svelte';
+  import Github from "@lucide/svelte/icons/github";
+  import { Button } from "$lib/components/ui/button";
   
   let { activeSection = '', setActiveSection }: { activeSection?: string; setActiveSection?: (id: string) => void } = $props();
   
@@ -178,7 +180,20 @@
           {/if}
         </nav>
         
-        <ModeToggle />
+        <div class="flex items-center gap-2">
+          <Button
+            href="https://github.com/satwik-shresth"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="ghost"
+            size="icon"
+            aria-label="GitHub"
+            class="w-9 h-9"
+          >
+            <Github class="h-4 w-4 text-muted-foreground" />
+          </Button>
+          <ModeToggle />
+        </div>
       </div>
     </div>
   </div>
