@@ -16,10 +16,10 @@
   type NavItem = { id: string; label: string; href?: string };
 
   const navItems: NavItem[] = [
-    { id: 'about', label: 'About' },
-    { id: 'experience', label: 'Exprience' },
-    { id: 'projects', label: 'Projects' }, // This is a placeholder for Projects section
-    { id: 'writeups', label: 'Writeup', href: '/writeups' }
+    { id: "about", label: "About" },
+    { id: "experience", label: "Exprience" },
+    { id: "projects", label: "Projects" }, // This is a placeholder for Projects section
+    { id: "writeups", label: "Writeups", href: "/writeups" },
   ];
 
   const projectItems = [
@@ -110,17 +110,24 @@
             <!-- Internal navigation item -->
             <a
               href="#{item.id}"
-              class="relative transition-all duration-200 {(isInProjectsSection && item.id === 'projects') || (!isInProjectsSection && activeSection === item.id)
+              class="relative transition-all duration-200 {(isInProjectsSection &&
+                item.id === 'projects') ||
+              (!isInProjectsSection && activeSection === item.id)
                 ? 'text-foreground font-semibold'
                 : 'text-muted-foreground hover:text-foreground'}"
               onclick={(e) => {
-                if (item.id === 'projects') {
+                if (item.id === "projects") {
                   e.preventDefault();
                   // Scroll to first project
-                  const firstProject = document.getElementById(projectItems[0].id);
+                  const firstProject = document.getElementById(
+                    projectItems[0].id,
+                  );
                   if (firstProject && setActiveSection) {
                     setActiveSection(projectItems[0].id);
-                    firstProject.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    firstProject.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
                   }
                 } else {
                   handleClick(e, item.id);
@@ -130,16 +137,16 @@
               data-s-event-path="/#{item.id}"
             >
               {item.label}
-              {#if (isInProjectsSection && item.id === 'projects') || (!isInProjectsSection && activeSection === item.id)}
+              {#if (isInProjectsSection && item.id === "projects") || (!isInProjectsSection && activeSection === item.id)}
                 <span
-                  class="absolute -bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
                 ></span>
               {/if}
             </a>
           {/if}
         {/each}
       </div>
-      
+
       <!-- Projects list - shown when in projects section -->
       {#if isInProjectsSection}
         <div class="flex items-center gap-3 text-xs flex-wrap">
@@ -157,7 +164,7 @@
               {item.label}
               {#if activeSection === item.id}
                 <span
-                  class="absolute -bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
                 ></span>
               {/if}
             </a>
