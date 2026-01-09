@@ -6,6 +6,7 @@
     "dev": "bunx --bun --env-file=.env astro dev",
     "build": "bunx astro build",
     "preview": "bunx --bun --env-file=.env astro preview",
+    "start": "node dist/server/entry.mjs",
     "astro": "astro"
   },
   "dependencies": {
