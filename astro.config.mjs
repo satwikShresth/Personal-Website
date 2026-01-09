@@ -21,7 +21,9 @@ export default defineConfig({
 
   integrations: [
     svelte({}),
-    mdx(),
+    mdx({
+      optimize: true,
+    }),
     sitemap()
   ],
 
