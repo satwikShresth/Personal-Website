@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "bunx --bun --env-file=.env astro dev",
-    "build": "bunx --bun --env-file=.env astro build",
+    "build": "bunx astro build",
     "preview": "bunx --bun --env-file=.env astro preview",
     "astro": "astro"
   },
