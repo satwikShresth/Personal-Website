@@ -1,297 +1,217 @@
-Welcome to your new TanStack app!
+# Engineering Portfolio - Jacob Niv
 
-# Getting Started
+My personal website: [jacobniv.xyz](https://jacobniv.xyz)
 
-To run this application:
+A modern, responsive portfolio website showcasing engineering projects, experience, and skills. Built with Astro and Svelte, featuring dark/light mode support and smooth scroll-based navigation.
 
+## 🚀 Features
+
+- **Responsive Design** - Optimized for both desktop and mobile devices
+- **Dark/Light Mode** - Toggle between themes with persistent preference
+- **Smooth Navigation** - Scroll-based active section detection with visual indicators
+- **Project Showcase** - Detailed project pages with images and descriptions
+- **Interactive Header** - Dynamic navigation that adapts based on current section
+- **Contact Integration** - Quick access to resume, email, and LinkedIn
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Astro](https://astro.build) 5.x with [Svelte](https://svelte.dev) 5 integration
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4.x
+- **Icons**: [Lucide Icons](https://lucide.dev)
+- **Theme**: [mode-watcher](https://github.com/janosh/mode-watcher) for dark/light mode
+- **Package Manager**: [Bun](https://bun.sh)
+
+## 📦 Prerequisites
+
+- [Bun](https://bun.sh) (recommended) or Node.js 18+
+- A modern web browser
+
+## 🚦 Getting Started
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd absolute-altitude
+```
+
+2. Install dependencies:
+```bash
+bun install
+```
+
+Or with npm/yarn:
 ```bash
 npm install
-npm run start
+# or
+yarn install
 ```
 
-# Building For Production
+### Development
 
-To build this application for production:
-
+Start the development server:
 ```bash
-npm run build
+bun dev
 ```
 
-## Testing
+The site will be available at `http://localhost:4321`
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+### Building
 
+Build for production:
 ```bash
-npm run test
+bun build
 ```
 
-## Styling
+The production-ready files will be in the `dist/` directory.
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+### Preview
 
-## Linting & Formatting
-
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
-
+Preview the production build locally:
 ```bash
-npm run lint
-npm run format
-npm run check
+bun preview
 ```
 
-## Routing
+## 📁 Project Structure
 
-This project uses [TanStack Router](https://tanstack.com/router). The initial setup is a file based router. Which means that the routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add another a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from '@tanstack/react-router'
+```
+absolute-altitude/
+├── public/
+│   ├── pics/              # Project images
+│   └── jn_resume.pdf      # Resume PDF
+├── src/
+│   ├── components/
+│   │   ├── About.svelte           # About section with contact info
+│   │   ├── Experience.svelte      # Work experience timeline
+│   │   ├── Header.svelte          # Desktop navigation header
+│   │   ├── MobileHeader.svelte    # Mobile navigation header
+│   │   ├── ModeToggle.svelte      # Dark/light mode toggle
+│   │   ├── Portfolio.svelte       # Main container component
+│   │   └── projects/              # Individual project components
+│   │       ├── CustomFidgets.svelte
+│   │       ├── ProstheticHand.svelte
+│   │       ├── MillenniumFalcon.svelte
+│   │       ├── Hammer.svelte
+│   │       └── CarpetSweeper.svelte
+│   ├── layouts/
+│   │   └── Layout.astro           # Base HTML layout
+│   ├── pages/
+│   │   └── index.astro            # Main page entry point
+│   ├── lib/
+│   │   ├── components/ui/         # Reusable UI components
+│   │   └── utils.ts               # Utility functions
+│   └── styles/
+│       └── global.css             # Global styles and CSS variables
+└── package.json
 ```
 
-Then anywhere in your JSX you can use it like so:
+## 🎨 Key Components
 
-```tsx
-<Link to="/about">About</Link>
+### Portfolio.svelte
+Main container that manages page layout and active section state. Handles scroll-based section detection and coordinates navigation.
+
+### Header Components
+- **Header.svelte**: Desktop navigation (visible on screens ≥ 1024px)
+- **MobileHeader.svelte**: Mobile navigation (visible on screens < 1024px)
+
+Both headers feature:
+- Dynamic navigation that shows project names when viewing projects
+- Active section indicators with underline animations
+- Projects dropdown menu
+
+### About.svelte
+About section with professional summary, resume download, and contact buttons (Email, LinkedIn).
+
+### Project Components
+Each project follows a consistent structure with:
+- Project title and number
+- Images and media
+- Detailed descriptions
+- Responsive grid layout
+
+## 🎯 Navigation System
+
+The site uses scroll-based navigation that automatically highlights the current section:
+
+- **Default Mode**: Shows "About", "Experience", and "Projects" (dropdown)
+- **Projects Mode**: When viewing any project, shows all project names directly in navigation
+- **Active Indicators**: Underline animation shows the current section
+
+## 🎨 Customization
+
+### Adding a New Project
+
+1. Create a new component in `src/components/projects/`:
+```svelte
+<script lang="ts">
+  let { id = 'new-project-id' }: { id?: string } = $props();
+</script>
+
+<section {id} data-project-section={id} class="scroll-mt-32 mb-20 pb-20 border-b border-border/20">
+  <!-- Project content -->
+</section>
 ```
 
-This will create a link that will navigate to the `/about` route.
+2. Import and add it to `Portfolio.svelte`
 
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you use the `<Outlet />` component.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { Outlet, createRootRoute } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-
-import { Link } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  component: () => (
-    <>
-      <header>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-        </nav>
-      </header>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
+3. Update navigation in `Header.svelte` and `MobileHeader.svelte`:
+```typescript
+const projectItems = [
+  // ... existing items
+  { id: 'new-project-id', label: 'Project Label' }
+];
 ```
 
-The `<TanStackRouterDevtools />` component is not required so you can remove it if you don't want it in your layout.
+### Updating Contact Information
 
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
+Edit `src/components/About.svelte` to update:
+- Email address
+- LinkedIn URL
+- Resume PDF path
 
-## Data Fetching
+### Styling
 
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
+Styles are managed through Tailwind CSS. Key customization points:
+- Color scheme: `src/styles/global.css` (CSS variables)
+- Typography: `src/layouts/Layout.astro` (Google Fonts)
+- Component styles: Inline Tailwind classes in components
 
-For example:
+## 📝 Scripts
 
-```tsx
-const peopleRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: '/people',
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json() as Promise<{
-      results: {
-        name: string
-      }[]
-    }>
-  },
-  component: () => {
-    const data = peopleRoute.useLoaderData()
-    return (
-      <ul>
-        {data.results.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    )
-  },
-})
-```
+| Command | Description |
+|---------|-------------|
+| `bun dev` | Start development server |
+| `bun build` | Build for production |
+| `bun preview` | Preview production build |
+| `bun astro ...` | Run Astro CLI commands |
 
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+## 🌐 Browser Support
 
-### React-Query
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-React-Query is an excellent addition or alternative to route loading and integrating it into you application is a breeze.
+## 📄 License
 
-First add your dependencies:
+[Add your license here]
 
-```bash
-npm install @tanstack/react-query @tanstack/react-query-devtools
-```
+## 👤 Author
 
-Next we'll need to create a query client and provider. We recommend putting those in `main.tsx`.
+Jacob Niv - Biomedical Engineer
 
-```tsx
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+- Email: jacobniv2187@gmail.com
+- LinkedIn: [Jacob Niv](https://www.linkedin.com/in/jacob-niv-56887033b/)
 
-// ...
+## 📚 Additional Resources
 
-const queryClient = new QueryClient()
+- [Astro Documentation](https://docs.astro.build)
+- [Svelte Documentation](https://svelte.dev/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Lucide Icons](https://lucide.dev)
 
-// ...
+---
 
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement)
-
-  root.render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>,
-  )
-}
-```
-
-You can also add TanStack Query Devtools to the root route (optional).
-
-```tsx
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-
-const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools />
-    </>
-  ),
-})
-```
-
-Now you can use `useQuery` to fetch your data.
-
-```tsx
-import { useQuery } from '@tanstack/react-query'
-
-import './App.css'
-
-function App() {
-  const { data } = useQuery({
-    queryKey: ['people'],
-    queryFn: () =>
-      fetch('https://swapi.dev/api/people')
-        .then((res) => res.json())
-        .then((data) => data.results as { name: string }[]),
-    initialData: [],
-  })
-
-  return (
-    <div>
-      <ul>
-        {data.map((person) => (
-          <li key={person.name}>{person.name}</li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-export default App
-```
-
-You can find out everything you need to know on how to use React-Query in the [React-Query documentation](https://tanstack.com/query/latest/docs/framework/react/overview).
-
-## State Management
-
-Another common requirement for React applications is state management. There are many options for state management in React. TanStack Store provides a great starting point for your project.
-
-First you need to add TanStack Store as a dependency:
-
-```bash
-npm install @tanstack/store
-```
-
-Now let's create a simple counter in the `src/App.tsx` file as a demonstration.
-
-```tsx
-import { useStore } from '@tanstack/react-store'
-import { Store } from '@tanstack/store'
-import './App.css'
-
-const countStore = new Store(0)
-
-function App() {
-  const count = useStore(countStore)
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-    </div>
-  )
-}
-
-export default App
-```
-
-One of the many nice features of TanStack Store is the ability to derive state from other state. That derived state will update when the base state updates.
-
-Let's check this out by doubling the count using derived state.
-
-```tsx
-import { useStore } from '@tanstack/react-store'
-import { Store, Derived } from '@tanstack/store'
-import './App.css'
-
-const countStore = new Store(0)
-
-const doubledStore = new Derived({
-  fn: () => countStore.state * 2,
-  deps: [countStore],
-})
-doubledStore.mount()
-
-function App() {
-  const count = useStore(countStore)
-  const doubledCount = useStore(doubledStore)
-
-  return (
-    <div>
-      <button onClick={() => countStore.setState((n) => n + 1)}>
-        Increment - {count}
-      </button>
-      <div>Doubled - {doubledCount}</div>
-    </div>
-  )
-}
-
-export default App
-```
-
-We use the `Derived` class to create a new store that is derived from another store. The `Derived` class has a `mount` method that will start the derived store updating.
-
-Once we've created the derived store we can use it in the `App` component just like we would any other store using the `useStore` hook.
-
-You can find out everything you need to know on how to use TanStack Store in the [TanStack Store documentation](https://tanstack.com/store/latest).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+For detailed development information, see [AGENTS.md](./AGENTS.md) (if available).

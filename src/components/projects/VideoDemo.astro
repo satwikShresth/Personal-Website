@@ -1,0 +1,41 @@
+---
+// @ts-ignore - Bun's S3Client
+const { S3Client } = await import('bun');
+
+let preSignedUrl: string | null = null;
+let error: string | null = null;
+
+try {
+  const s3 = new S3Client({
+    accessKeyId: import.meta.env.S3_ACCESSKEYID,
+    secretAccessKey: import.meta.env.S3_SECRETKEY,
+    bucket: import.meta.env.S3_BUCKET,
+    endpoint: import.meta.env.S3_ENDPOINT
+  });
+  
+  preSignedUrl = s3.presign('assets/liveDemo.mp4');
+} catch (err) {
+  error = err instanceof Error ? err.message : 'Failed to generate video link';
+  console.error('Error generating S3 presigned URL:', err);
+}
+---
+
+{error || !preSignedUrl ? (
+  <div class="p-4 text-center text-destructive">
+    Failed to load video
+  </div>
+) : (
+  <div class="w-full flex flex-col items-center gap-4">
+    <div class="w-full max-w-[600px] mx-auto rounded-lg overflow-hidden shadow-lg">
+      <video
+        controls
+        width="100%"
+        class="rounded-lg"
+        src={preSignedUrl}
+        preload="metadata"
+      >
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+)}

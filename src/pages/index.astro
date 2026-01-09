@@ -1,0 +1,17 @@
+---
+import Portfolio from '../components/Portfolio.svelte';
+import Layout from '../layouts/Layout.astro';
+import { ModeWatcher } from "mode-watcher";
+import { configure } from "onedollarstats";
+configure({
+  collectorUrl: "https://collector.onedollarstats.com/events",
+  autocollect: true, // automatically tracks pageviews & clicks
+  hashRouting: true, // track SPA hash route changes
+});
+export const prerender = true
+---
+
+<Layout>
+	<ModeWatcher client:only="svelte" />
+	<Portfolio client:only="svelte" />
+</Layout>
