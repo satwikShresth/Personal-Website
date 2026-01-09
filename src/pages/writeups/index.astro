@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import WriteupCard from '../../components/writeups/WriteupCard.svelte';
+import Footer from '../../components/Footer.svelte';
 import { getCollection } from 'astro:content';
 import * as Breadcrumb from '$lib/components/ui/breadcrumb';
 
@@ -11,8 +12,8 @@ export const prerender = true;
 ---
 
 <Layout>
-  <div class="min-h-screen bg-background">
-    <main class="w-full pt-20 lg:pt-24">
+  <div class="min-h-screen bg-background flex flex-col">
+    <main class="w-full pt-20 lg:pt-24 flex-1">
       <div class="max-w-5xl mx-auto px-6 lg:px-8 pb-16">
         <Breadcrumb.Root class="mb-6">
           <Breadcrumb.List class="text-base">
@@ -52,5 +53,7 @@ export const prerender = true;
         </div>
       </div>
     </main>
+    
+    <Footer client:load />
   </div>
 </Layout>

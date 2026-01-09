@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.svelte';
 import { getCollection, render } from 'astro:content';
 import { Badge } from '$lib/components/ui/badge';
 import { Separator } from '$lib/components/ui/separator';
@@ -26,8 +27,8 @@ export const prerender = true;
 ---
 
 <Layout title={`${writeup.data.title} | Satwik Shresth`}>
-  <div class="min-h-screen bg-background">
-    <main class="w-full pt-20 lg:pt-24">
+  <div class="min-h-screen bg-background flex flex-col">
+    <main class="w-full pt-20 lg:pt-24 flex-1">
       <div class="max-w-4xl mx-auto px-6 lg:px-8 pb-16">
         <Breadcrumb.Root class="mb-6">
           <Breadcrumb.List class="text-base">
@@ -171,5 +172,7 @@ export const prerender = true;
         </article>
       </div>
     </main>
+    
+    <Footer client:load />
   </div>
 </Layout>

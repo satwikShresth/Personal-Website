@@ -9,6 +9,7 @@
   import Shelved from './projects/Shelved.svelte';
   import PersonalWebsite from './projects/PersonalWebsite.svelte';
   import Library from './projects/Library.svelte';
+  import Footer from './Footer.svelte';
   
   let activeSection = '';
   let diamondGifElement: HTMLImageElement | null = null;
@@ -81,10 +82,10 @@
 </script>
 
 <Tooltip.Provider>
-  <div class="min-h-screen bg-background">
+  <div class="min-h-screen bg-background flex flex-col">
     <Header {activeSection} {setActiveSection} />
     
-    <main class="w-full pt-24 lg:pt-40">
+    <main class="w-full pt-24 lg:pt-40 flex-1">
       <div class="max-w-5xl mx-auto px-6 lg:px-8">
         <div class="space-y-24 lg:space-y-32 py-24 pb-24">
           <About />
@@ -97,5 +98,7 @@
         </div>
       </div>
     </main>
+    
+    <Footer />
   </div>
 </Tooltip.Provider>
