@@ -14,7 +14,7 @@
       
       <div class="flex items-center gap-2">
         <Button
-          href="https://github.com/satwik-shresth"
+          href="https://github.com/satwikShresth/satwik.dev"
           target="_blank"
           rel="noopener noreferrer"
           variant="ghost"
