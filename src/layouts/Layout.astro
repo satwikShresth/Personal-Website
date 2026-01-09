@@ -1,5 +1,11 @@
 ---
 import '../styles/global.css';
+
+interface Props {
+  title?: string;
+}
+
+const { title = 'Satwik Shresth' } = Astro.props;
 ---
 <script is:inline>
   const isBrowser = typeof localStorage !== 'undefined';
@@ -34,7 +40,7 @@ import '../styles/global.css';
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
       <link rel="manifest" href="/site.webmanifest">
       <meta name="generator" content={Astro.generator} />
-      <title>Jacob Niv - Biomedical Engineer</title>
+      <title>{title}</title>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
