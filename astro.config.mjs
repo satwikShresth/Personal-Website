@@ -9,19 +9,29 @@ import tailwindcss from '@tailwindcss/vite';
 
 import sitemap from '@astrojs/sitemap';
 
+import node from '@astrojs/node';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jacobniv.xyz',
+
   server: {
     port: 5173
   },
+
   integrations: [
     svelte({}),
     mdx(),
     sitemap()
   ],
+
   output: 'static',
+
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+
+  adapter: node({
+    mode: 'standalone'
+  })
 });
