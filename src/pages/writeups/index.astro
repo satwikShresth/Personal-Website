@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import WriteupCard from '../../components/writeups/WriteupCard.svelte';
-import Footer from '../../components/Footer.svelte';
+import WriteupCard from '$lib/components/writeups/WriteupCard.svelte';
+import Footer from '$lib/components/Footer.svelte';
 import { getCollection } from 'astro:content';
 import * as Breadcrumb from '$lib/components/ui/breadcrumb';
 
@@ -38,7 +38,7 @@ export const prerender = true;
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           {writeups.map((writeup) => (
-            <a href={`/writeups/${writeup.slug}/`} class="block">
+            <a href={`/writeups/${writeup.slug}/`} class="block" >
               <WriteupCard
                 client:load
                 slug={writeup.slug}

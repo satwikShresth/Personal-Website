@@ -1,5 +1,5 @@
 ---
-import Portfolio from '../components/Portfolio.svelte';
+import Portfolio from '$lib/components/Portfolio.svelte';
 import Layout from '../layouts/Layout.astro';
 import { ModeWatcher } from "mode-watcher";
 import { configure } from "onedollarstats";
@@ -12,6 +12,7 @@ export const prerender = true
 ---
 
 <Layout>
+	{/* @ts-ignore - ModeWatcher type issue */}
 	<ModeWatcher client:only="svelte" />
 	<Portfolio client:only="svelte" />
 </Layout>

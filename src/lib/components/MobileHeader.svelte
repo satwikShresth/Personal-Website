@@ -1,29 +1,35 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import ModeToggle from './ModeToggle.svelte';
+  import { onMount } from "svelte";
+  import ModeToggle from "./ModeToggle.svelte";
   import Github from "@lucide/svelte/icons/github";
   import { Button } from "$lib/components/ui/button";
-  
-  let { activeSection = '', setActiveSection }: { activeSection?: string; setActiveSection?: (id: string) => void } = $props();
-  
+
+  let {
+    activeSection = "",
+    setActiveSection,
+  }: { activeSection?: string; setActiveSection?: (id: string) => void } =
+    $props();
+
   let projectsDropdownOpen = $state(false);
-  let projectsDropdownRef: HTMLDivElement | null = null;
-  
+  let projectsDropdownRef = $state<HTMLDivElement | null>(null);
+
   const navItems = [
-    { id: 'about', label: 'About' },
-    { id: 'experience', label: 'Experience' }
+    { id: "about", label: "About" },
+    { id: "experience", label: "Experience" },
   ];
 
   const projectItems = [
-    { id: 'openmario', label: 'OpenMario' },
-    { id: 'inspiration', label: 'Inspiration' },
-    { id: 'shelved', label: 'Shelved' },
-    { id: 'personal-website', label: 'Personal Website' },
-    { id: 'library', label: 'Library' }
+    { id: "openmario", label: "OpenMario" },
+    { id: "inspiration", label: "Inspiration" },
+    { id: "shelved", label: "Shelved" },
+    { id: "personal-website", label: "Personal Website" },
+    { id: "library", label: "Library" },
   ];
 
   // Determine which navigation items to show
-  let isInProjectsSection = $derived(projectItems.some(item => activeSection === item.id));
+  let isInProjectsSection = $derived(
+    projectItems.some((item) => activeSection === item.id),
+  );
 
   function handleClick(e: MouseEvent, id: string) {
     e.preventDefault();
@@ -32,31 +38,36 @@
     }
     const target = document.getElementById(id);
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     projectsDropdownOpen = false;
   }
 
   onMount(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (projectsDropdownRef && !projectsDropdownRef.contains(e.target as Node)) {
+      if (
+        projectsDropdownRef &&
+        !projectsDropdownRef.contains(e.target as Node)
+      ) {
         projectsDropdownOpen = false;
       }
     }
-    
-    document.addEventListener('click', handleClickOutside);
-    
+
+    document.addEventListener("click", handleClickOutside);
+
     return () => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener("click", handleClickOutside);
     };
   });
 </script>
 
-<header class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/20 lg:hidden">
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/20 lg:hidden"
+>
   <div class="max-w-5xl mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
-      <a 
-        href="/" 
+      <a
+        href="/"
         class="text-foreground hover:opacity-80 text-xl font-semibold"
         style="font-family: 'Playfair Display', serif;"
       >
@@ -83,8 +94,9 @@
         {#each navItems as item}
           <a
             href="#{item.id}"
-            class="relative transition-all duration-200 {activeSection === item.id 
-              ? 'text-foreground font-semibold' 
+            class="relative transition-all duration-200 {activeSection ===
+            item.id
+              ? 'text-foreground font-semibold'
               : 'text-muted-foreground hover:text-foreground'}"
             onclick={(e) => handleClick(e, item.id)}
             data-s-event="Navigation: {item.label}"
@@ -92,11 +104,13 @@
           >
             {item.label}
             {#if activeSection === item.id}
-              <span class="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+              <span
+                class="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary rounded-full"
+              ></span>
             {/if}
           </a>
         {/each}
-        
+
         <!-- Writeups Link -->
         <a
           href="/writeups"
@@ -106,13 +120,9 @@
         >
           Writeups
         </a>
-        
+
         <!-- Projects Dropdown -->
-        <div 
-          bind:this={projectsDropdownRef}
-          class="relative"
-          role="group"
-        >
+        <div bind:this={projectsDropdownRef} class="relative" role="group">
           <button
             type="button"
             class="relative transition-all duration-200 text-muted-foreground hover:text-foreground"
@@ -121,7 +131,7 @@
               projectsDropdownOpen = !projectsDropdownOpen;
             }}
             onkeydown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+              if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 projectsDropdownOpen = !projectsDropdownOpen;
               }
@@ -131,14 +141,17 @@
           >
             Projects
           </button>
-          
+
           {#if projectsDropdownOpen}
-            <div class="absolute top-full left-0 mt-2 w-48 bg-background border border-border/50 rounded-lg shadow-lg py-2 z-50">
+            <div
+              class="absolute top-full left-0 mt-2 w-48 bg-background border border-border/50 rounded-lg shadow-lg py-2 z-50"
+            >
               {#each projectItems as project}
                 <a
                   href="#{project.id}"
-                  class="block px-4 py-2 text-sm transition-colors duration-200 {activeSection === project.id
-                    ? 'text-foreground font-medium bg-accent/50' 
+                  class="block px-4 py-2 text-sm transition-colors duration-200 {activeSection ===
+                  project.id
+                    ? 'text-foreground font-medium bg-accent/50'
                     : 'text-muted-foreground hover:text-foreground hover:bg-accent/30'}"
                   onclick={(e) => handleClick(e, project.id)}
                   data-s-event="Project: {project.label}"
@@ -155,8 +168,9 @@
         {#each projectItems as item}
           <a
             href="#{item.id}"
-            class="relative transition-all duration-200 {activeSection === item.id 
-              ? 'text-foreground font-semibold' 
+            class="relative transition-all duration-200 {activeSection ===
+            item.id
+              ? 'text-foreground font-semibold'
               : 'text-muted-foreground hover:text-foreground'}"
             onclick={(e) => handleClick(e, item.id)}
             data-s-event="Project: {item.label}"
@@ -164,7 +178,9 @@
           >
             {item.label}
             {#if activeSection === item.id}
-              <span class="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+              <span
+                class="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-primary rounded-full"
+              ></span>
             {/if}
           </a>
         {/each}

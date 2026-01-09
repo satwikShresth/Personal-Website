@@ -9,7 +9,7 @@
   
   let isScrolled = $state(false);
   let projectsDropdownOpen = $state(false);
-  let projectsDropdownRef: HTMLDivElement | null = null;
+  let projectsDropdownRef = $state<HTMLDivElement | null>(null);
   
   const navItems = [
     { id: 'about', label: 'About' },
@@ -75,7 +75,7 @@
     <div class="flex items-center justify-between h-full transition-all duration-300 {isScrolled ? '' : 'py-6'}">
       <div class="flex flex-col items-start">
         <a 
-          href="#" 
+          href="/"
           class="text-foreground hover:opacity-80 transition-all duration-300 {isScrolled ? 'text-xl font-semibold' : 'text-5xl font-semibold'}"
           style="font-family: 'Playfair Display', serif;"
         >

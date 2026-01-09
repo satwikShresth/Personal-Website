@@ -11,9 +11,9 @@ import Bell from '@lucide/svelte/icons/bell';
 import Layers from '@lucide/svelte/icons/layers';
 import Settings from '@lucide/svelte/icons/settings';
 import HardDrive from '@lucide/svelte/icons/hard-drive';
-import type { ComponentType } from 'svelte';
+import type { Component } from 'svelte';
 
-export const iconMap: Record<string, ComponentType> = {
+export const iconMap: Record<string, Component> = {
   'react': Code,
   'docker': Box,
   'database': Database,
@@ -32,6 +32,6 @@ export const iconMap: Record<string, ComponentType> = {
   'storage': HardDrive,
 };
 
-export function getIcon(name: string): ComponentType | null {
+export function getIcon(name: string): Component | null {
   return iconMap[name.toLowerCase()] || null;
 }
