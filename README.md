@@ -1,6 +1,6 @@
-# Engineering Portfolio - Jacob Niv
+# Personal Website - Satwik Shresth
 
-My personal website: [jacobniv.xyz](https://jacobniv.xyz)
+My personal website: [satwik.dev](https://satwik.dev)
 
 A modern, responsive portfolio website showcasing engineering projects, experience, and skills. Built with Astro and Svelte, featuring dark/light mode support and smooth scroll-based navigation.
 
@@ -33,8 +33,8 @@ A modern, responsive portfolio website showcasing engineering projects, experien
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd absolute-altitude
+git clone https://github.com/satwikShresth/satwik.dev.git
+cd satwik.dev
 ```
 
 2. Install dependencies:
@@ -77,10 +77,10 @@ bun preview
 ## 📁 Project Structure
 
 ```
-absolute-altitude/
+personal-website/
 ├── public/
 │   ├── pics/              # Project images
-│   └── jn_resume.pdf      # Resume PDF
+│   └── resume.pdf         # Resume PDF
 ├── src/
 │   ├── components/
 │   │   ├── About.svelte           # About section with contact info
@@ -90,11 +90,11 @@ absolute-altitude/
 │   │   ├── ModeToggle.svelte      # Dark/light mode toggle
 │   │   ├── Portfolio.svelte       # Main container component
 │   │   └── projects/              # Individual project components
-│   │       ├── CustomFidgets.svelte
-│   │       ├── ProstheticHand.svelte
-│   │       ├── MillenniumFalcon.svelte
-│   │       ├── Hammer.svelte
-│   │       └── CarpetSweeper.svelte
+│   │       ├── OpenMario.svelte
+│   │       ├── Inspiration.svelte
+│   │       ├── Shelved.svelte
+│   │       ├── PersonalWebsite.svelte
+│   │       └── Library.svelte
 │   ├── layouts/
 │   │   └── Layout.astro           # Base HTML layout
 │   ├── pages/
@@ -200,10 +200,11 @@ Styles are managed through Tailwind CSS. Key customization points:
 
 ## 👤 Author
 
-Jacob Niv - Biomedical Engineer
+Satwik Shresth
 
-- Email: jacobniv2187@gmail.com
-- LinkedIn: [Jacob Niv](https://www.linkedin.com/in/jacob-niv-56887033b/)
+- Email: satwik.shresth@gmail.com
+- LinkedIn: [satwik-shresth](https://linkedin.com/in/satwik-shresth/)
+- GitHub: [satwikShresth](https://github.com/satwikShresth)
 
 ## 📚 Additional Resources
 
