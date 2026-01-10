@@ -66,7 +66,7 @@
 </script>
 
 <header
-  class="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/20 lg:hidden"
+  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-border/20 lg:hidden"
 >
   <div class="max-w-5xl mx-auto px-4 py-3">
     <div class="flex items-center justify-between">
@@ -139,7 +139,7 @@
               {item.label}
               {#if (isInProjectsSection && item.id === "projects") || (!isInProjectsSection && activeSection === item.id)}
                 <span
-                  class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
                 ></span>
               {/if}
             </a>
@@ -164,7 +164,7 @@
               {item.label}
               {#if activeSection === item.id}
                 <span
-                  class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                  class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
                 ></span>
               {/if}
             </a>
