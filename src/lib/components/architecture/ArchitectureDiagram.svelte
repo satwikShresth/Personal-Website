@@ -13,6 +13,7 @@
     edges,
     direction = "TB",
     height = 1000,
+    padding = 20,
   }: ArchitectureDiagramProps = $props();
 
   let processedNodes = $state.raw<any[]>([]);
@@ -81,6 +82,7 @@
       {nodeTypes}
       {edgeTypes}
       fitView
+      fitViewOptions={{ padding: padding / 100, minZoom: 0.5, maxZoom: 1.2 }}
       panOnDrag={false}
       panOnScroll={false}
       zoomOnScroll={false}

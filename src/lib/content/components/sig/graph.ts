@@ -1,6 +1,6 @@
 import { MarkerType } from '@xyflow/svelte';
-import { makeLabel } from './makeLabel';
-import type { EdgeConfig, NodeConfig } from './types';
+import { makeLabel } from '$lib/components/architecture/makeLabel';
+import type { EdgeConfig, NodeConfig } from '$lib/components/architecture/types';
 
 export const metricsPublisherNodes: Array<NodeConfig> = [
   {

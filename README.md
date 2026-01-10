@@ -1,218 +1,192 @@
-# Personal Website - Satwik Shresth
+# satwik.dev
 
-My personal website: [satwik.dev](https://satwik.dev)
+Personal portfolio website built with SvelteKit, showcasing projects, experience, and technical writeups.
 
-A modern, responsive portfolio website showcasing engineering projects, experience, and skills. Built with Astro and Svelte, featuring dark/light mode support and smooth scroll-based navigation.
+## Features
 
-## 🚀 Features
+- 🎨 Modern, responsive design with dark mode support
+- 📊 Interactive architecture diagrams using SvelteFlow
+- 📝 MDX-based writeups and blog posts
+- 🎥 Video content delivery via S3 presigned URLs
+- 🔍 Type-safe environment variable management
+- ⚡ Built with Svelte 5 and TypeScript
 
-- **Responsive Design** - Optimized for both desktop and mobile devices
-- **Dark/Light Mode** - Toggle between themes with persistent preference
-- **Smooth Navigation** - Scroll-based active section detection with visual indicators
-- **Project Showcase** - Detailed project pages with images and descriptions
-- **Interactive Header** - Dynamic navigation that adapts based on current section
-- **Contact Integration** - Quick access to resume, email, and LinkedIn
+## Tech Stack
 
-## 🛠️ Tech Stack
+### Core
+- **SvelteKit** - Full-stack framework
+- **Svelte 5** - UI framework with runes
+- **TypeScript** - Type safety
+- **Vite** - Build tool and dev server
+- **Bun** - Runtime and package manager
 
-- **Framework**: [Astro](https://astro.build) 5.x with [Svelte](https://svelte.dev) 5 integration
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS 4.x
-- **Icons**: [Lucide Icons](https://lucide.dev)
-- **Theme**: [mode-watcher](https://github.com/janosh/mode-watcher) for dark/light mode
-- **Package Manager**: [Bun](https://bun.sh)
+### Styling
+- **Tailwind CSS 4** - Utility-first CSS
+- **Lucide Svelte** - Icon library
+- **bits-ui** - Headless UI components
 
-## 📦 Prerequisites
+### Features
+- **SvelteFlow** - Interactive graph/diagram library
+- **dagre** - Graph layout algorithm
+- **mdsvex** - Markdown/MDX preprocessing
+- **MinIO** - S3-compatible object storage client
+- **Zod** - Schema validation
+- **@t3-oss/env-core** - Type-safe environment variables
 
-- [Bun](https://bun.sh) (recommended) or Node.js 18+
-- A modern web browser
+## Prerequisites
 
-## 🚦 Getting Started
+- **Bun** (recommended) or Node.js 18+
+- A S3-compatible object storage service (for video hosting)
 
-### Installation
+## Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/satwikShresth/satwik.dev.git
-cd satwik.dev
+git clone <repository-url>
+cd Personal-Website
 ```
 
 2. Install dependencies:
 ```bash
 bun install
-```
-
-Or with npm/yarn:
-```bash
-npm install
 # or
-yarn install
+npm install
 ```
 
-### Development
+3. Set up environment variables (see [Environment Variables](#environment-variables))
+
+4. Start the development server:
+```bash
+bun run dev
+# or
+npm run dev
+```
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+# S3 Configuration (for video/media hosting)
+S3_ENDPOINT=https://your-s3-endpoint.com
+S3_BUCKET=your-bucket-name
+S3_ACCESSKEYID=your-access-key-id
+S3_SECRETKEY=your-secret-key
+
+# Clerk Authentication (optional, if using authentication)
+PUBLIC_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+```
+
+### Required Variables
+- `S3_ENDPOINT` - S3-compatible endpoint URL
+- `S3_BUCKET` - Bucket name for storing media
+- `S3_ACCESSKEYID` - S3 access key ID
+- `S3_SECRETKEY` - S3 secret access key
+
+### Optional Variables
+- `PUBLIC_CLERK_PUBLISHABLE_KEY` - Clerk publishable key (if using authentication)
+
+## Development
 
 Start the development server:
+
 ```bash
-bun dev
+bun run dev
+# or
+npm run dev
 ```
 
-The site will be available at `http://localhost:4321`
+The site will be available at `http://localhost:5173`
 
-### Building
+### Available Scripts
 
-Build for production:
+- `dev` - Start development server
+- `build` - Build for production
+- `preview` - Preview production build
+- `check` - Run Svelte type checking
+- `check:watch` - Run Svelte type checking in watch mode
+- `lint` - Run ESLint
+
+## Building for Production
+
+Build the production version:
+
 ```bash
-bun build
+bun run build
+# or
+npm run build
 ```
 
-The production-ready files will be in the `dist/` directory.
+Preview the production build:
 
-### Preview
-
-Preview the production build locally:
 ```bash
-bun preview
+bun run preview
+# or
+npm run preview
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-personal-website/
-├── public/
-│   ├── pics/              # Project images
-│   └── resume.pdf         # Resume PDF
+.
 ├── src/
-│   ├── components/
-│   │   ├── About.svelte           # About section with contact info
-│   │   ├── Experience.svelte      # Work experience timeline
-│   │   ├── Header.svelte          # Desktop navigation header
-│   │   ├── MobileHeader.svelte    # Mobile navigation header
-│   │   ├── ModeToggle.svelte      # Dark/light mode toggle
-│   │   ├── Portfolio.svelte       # Main container component
-│   │   └── projects/              # Individual project components
-│   │       ├── OpenMario.svelte
-│   │       ├── Inspiration.svelte
-│   │       ├── Shelved.svelte
-│   │       ├── PersonalWebsite.svelte
-│   │       └── Library.svelte
-│   ├── layouts/
-│   │   └── Layout.astro           # Base HTML layout
-│   ├── pages/
-│   │   └── index.astro            # Main page entry point
 │   ├── lib/
-│   │   ├── components/ui/         # Reusable UI components
-│   │   └── utils.ts               # Utility functions
-│   └── styles/
-│       └── global.css             # Global styles and CSS variables
-└── package.json
+│   │   ├── components/        # Reusable components
+│   │   │   ├── architecture/  # Architecture diagram components
+│   │   │   ├── projects/      # Project showcase components
+│   │   │   └── ui/            # UI component library
+│   │   ├── content/           # MDX content files
+│   │   │   └── writeups/      # Blog posts and writeups
+│   │   ├── api/               # Remote functions/API
+│   │   ├── env.ts             # Environment variable validation
+│   │   └── s3.service.ts      # S3 service for presigned URLs
+│   └── routes/                # SvelteKit routes
+│       ├── +page.svelte       # Home page
+│       └── writeups/          # Writeups pages
+├── static/                    # Static assets
+├── svelte.config.js           # SvelteKit configuration
+├── vite.config.ts             # Vite configuration
+└── package.json               # Dependencies and scripts
 ```
 
-## 🎨 Key Components
+## Architecture Diagrams
 
-### Portfolio.svelte
-Main container that manages page layout and active section state. Handles scroll-based section detection and coordinates navigation.
+The site features interactive architecture diagrams built with SvelteFlow and dagre. Diagrams are defined in `src/lib/components/architecture/` and can be embedded in both Svelte components and MDX files.
 
-### Header Components
-- **Header.svelte**: Desktop navigation (visible on screens ≥ 1024px)
-- **MobileHeader.svelte**: Mobile navigation (visible on screens < 1024px)
+Example usage in MDX:
+```mdx
+import ArchitectureDiagram from '$lib/components/ArchitectureDiagramWrapper.svelte';
+import { nodes, edges } from '$lib/components/architecture/your-diagram';
 
-Both headers feature:
-- Dynamic navigation that shows project names when viewing projects
-- Active section indicators with underline animations
-- Projects dropdown menu
-
-### About.svelte
-About section with professional summary, resume download, and contact buttons (Email, LinkedIn).
-
-### Project Components
-Each project follows a consistent structure with:
-- Project title and number
-- Images and media
-- Detailed descriptions
-- Responsive grid layout
-
-## 🎯 Navigation System
-
-The site uses scroll-based navigation that automatically highlights the current section:
-
-- **Default Mode**: Shows "About", "Experience", and "Projects" (dropdown)
-- **Projects Mode**: When viewing any project, shows all project names directly in navigation
-- **Active Indicators**: Underline animation shows the current section
-
-## 🎨 Customization
-
-### Adding a New Project
-
-1. Create a new component in `src/components/projects/`:
-```svelte
-<script lang="ts">
-  let { id = 'new-project-id' }: { id?: string } = $props();
-</script>
-
-<section {id} data-project-section={id} class="scroll-mt-32 mb-20 pb-20 border-b border-border/20">
-  <!-- Project content -->
-</section>
+<ArchitectureDiagram 
+  nodes={nodes}
+  edges={edges}
+  direction="TB"
+  height={500}
+  padding={20}
+/>
 ```
 
-2. Import and add it to `Portfolio.svelte`
+## Content Management
 
-3. Update navigation in `Header.svelte` and `MobileHeader.svelte`:
-```typescript
-const projectItems = [
-  // ... existing items
-  { id: 'new-project-id', label: 'Project Label' }
-];
-```
+Writeups are stored as MDX files in `src/lib/content/writeups/`. Each writeup includes frontmatter with metadata:
 
-### Updating Contact Information
-
-Edit `src/components/About.svelte` to update:
-- Email address
-- LinkedIn URL
-- Resume PDF path
-
-### Styling
-
-Styles are managed through Tailwind CSS. Key customization points:
-- Color scheme: `src/styles/global.css` (CSS variables)
-- Typography: `src/layouts/Layout.astro` (Google Fonts)
-- Component styles: Inline Tailwind classes in components
-
-## 📝 Scripts
-
-| Command | Description |
-|---------|-------------|
-| `bun dev` | Start development server |
-| `bun build` | Build for production |
-| `bun preview` | Preview production build |
-| `bun astro ...` | Run Astro CLI commands |
-
-## 🌐 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## 📄 License
-
-[Add your license here]
-
-## 👤 Author
-
-Satwik Shresth
-
-- Email: satwik.shresth@gmail.com
-- LinkedIn: [satwik-shresth](https://linkedin.com/in/satwik-shresth/)
-- GitHub: [satwikShresth](https://github.com/satwikShresth)
-
-## 📚 Additional Resources
-
-- [Astro Documentation](https://docs.astro.build)
-- [Svelte Documentation](https://svelte.dev/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Lucide Icons](https://lucide.dev)
-
+```mdx
+---
+title: 'My Writeup Title'
+date: '2025-01-01'
+description: 'A brief description'
+estimatedReadTime: 5
+tags: ['tag1', 'tag2']
 ---
 
-For detailed development information, see [AGENTS.md](./AGENTS.md) (if available).
+# Content goes here
+```
+
+## License
+
+Private project - All rights reserved
+
+## Contact
+
+For questions or inquiries, please visit the website or reach out through the provided contact methods.

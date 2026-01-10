@@ -1,13 +1,16 @@
 ---
+layout: blog
 title: 'My Time at SIG'
 date: '2025-05-06'
-description: "I worked at Susquehanna International Group for my last co-op. It was fun, got to learn a lot."
+description: "I worked at Susquehanna International Group for my last co-op. It was fun, got to learn a lot, even though my work was very intern-like (non-consequential) but still don't wanna get too in the weeds"
 estimatedReadTime: 1
 tags: ['opinion', 'portfolio', 'experience', 'co-op']
 ---
 
-import ArchitectureDiagram from '../../components/ArchitectureDiagramWrapper.astro';
-import { MetricsPublisher, MetricsTranscoder, Kafka, AlertsProxy } from '$lib/components/architecture/sig';
+<script>
+import ArchitectureDiagram from '$lib/components/ArchitectureDiagramWrapper.svelte';
+import { MetricsPublisher, MetricsTranscoder, Kafka, AlertsProxy } from '../components/sig/graph.ts';
+</script>
 
 # Here is a brief overview of the projects I have worked on:
 
