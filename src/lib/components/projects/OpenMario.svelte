@@ -25,8 +25,8 @@
       <h2 class="text-3xl lg:text-4xl font-semibold mb-6 text-foreground" style="font-family: 'Playfair Display', serif;">
         OpenMario
       </h2>
-      <div class="pt-4">
-        <img src="/openmario.png" alt="OpenMario" class="w-full rounded" />
+      <div class="pt-4 max-w-sm mx-auto lg:max-w-none">
+        <img src="/openmario.png" alt="OpenMario" class="w-full rounded object-contain" />
       </div>
       <div class="flex items-center gap-3 mt-4">
         <a 

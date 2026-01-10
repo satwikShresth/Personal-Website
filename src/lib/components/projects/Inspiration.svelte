@@ -37,8 +37,8 @@
       >
         Inspiration
       </h2>
-      <div class="pt-4 bg-white rounded p-4">
-        <img src="/inspiraiton.png" alt="Inspiration" class="w-full rounded" />
+      <div class="pt-4 bg-white rounded p-4 max-w-sm mx-auto lg:max-w-none">
+        <img src="/inspiraiton.png" alt="Inspiration" class="w-full rounded object-contain" />
       </div>
       <div class="flex items-center gap-3 mt-4">
         <a
