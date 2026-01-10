@@ -2,8 +2,11 @@ import tailwindcss from '@tailwindcss/vite';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-// import viteCppjsPlugin from '@cpp.js/plugin-vite';
+import wasm from "vite-plugin-wasm";
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit(), devtoolsJson(), /*viteCppjsPlugin()*/]
+	plugins: [tailwindcss(), sveltekit(), devtoolsJson(), wasm()],
+	build: {
+		target: 'esnext'
+	}
 });

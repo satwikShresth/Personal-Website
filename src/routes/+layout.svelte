@@ -1,9 +1,10 @@
 <script lang="ts">
+	import * as Tooltip from "$lib/components/ui/tooltip";
 	import "./layout.css";
 	import { ModeWatcher } from "mode-watcher";
-	export const prerender = true;
-	export const trailingSlash = "always";
 </script>
 
-<ModeWatcher />
-<slot />
+<Tooltip.Provider>
+	<ModeWatcher />
+	<slot />
+</Tooltip.Provider>

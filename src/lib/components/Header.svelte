@@ -80,7 +80,7 @@
 
 <!-- Desktop Header -->
 <header
-  class="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border/20 transition-all duration-300 {isScrolled
+  class="hidden lg:block fixed top-0 left-0 right-0 z-50 backdrop-blur-lg border-b border-border/20 transition-all duration-300 {isScrolled
     ? 'h-20'
     : 'h-40'}"
 >
@@ -153,7 +153,7 @@
                   {item.label}
                   {#if (isInProjectsSection && item.id === "projects") || (!isInProjectsSection && activeSection === item.id)}
                     <span
-                      class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                      class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
                     ></span>
                   {/if}
                 </a>
@@ -180,7 +180,7 @@
                   {item.label}
                   {#if activeSection === item.id}
                     <span
-                      class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+                      class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full"
                     ></span>
                   {/if}
                 </a>

@@ -6,11 +6,9 @@
   import { Button } from "$lib/components/ui/button";
   
   let { id = 'about' }: { id?: string } = $props();
-  
-  const summary = 'Lately, I have been focusing on hiking, climbing & exploring national parks.';
 </script>
 
-<section {id} data-project-section={id} class="scroll-mt-32 mb-20 pb-20 border-b border-border/20">
+<section {id} data-project-section={id} class="scroll-mt-32 mb-20 pb-20 border-b border-border/20 relative">
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
     <div class="lg:col-span-8 space-y-6 lg:flex lg:flex-col lg:justify-center">
       <div class="space-y-4 text-foreground leading-relaxed text-base">
